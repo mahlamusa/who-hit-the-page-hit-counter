@@ -141,59 +141,67 @@ msgstr ""
 msgid "Failed to remove page count(s)."
 msgstr ""
 
-#: partials/view-all.php:52
-msgid "The count for ip address: \"%s\" has been reset successfully."
+#: partials/view-all.php:48
+msgid "The Page \"%s\" has been discounted by %d"
 msgstr ""
 
-#: partials/view-all.php:56
-msgid "Failed to reset count for IP: %s"
+#: partials/view-all.php:55
+msgid "Failed to discount on the page"
 msgstr ""
 
 #: partials/view-all.php:68
-msgid "IP addresse(s) removed from the database."
+msgid "The count for ip address: \"%s\" has been reset successfully."
 msgstr ""
 
 #: partials/view-all.php:72
+msgid "Failed to reset count for IP: %s"
+msgstr ""
+
+#: partials/view-all.php:84
+msgid "IP addresse(s) removed from the database."
+msgstr ""
+
+#: partials/view-all.php:88
 msgid "Failed to remove IP addresse(s) from database"
 msgstr ""
 
-#: partials/view-all.php:81
+#: partials/view-all.php:97
 msgid "The IP Address will be ignored and will not be counted."
 msgstr ""
 
-#: partials/view-all.php:85
+#: partials/view-all.php:101
 msgid "Failed to add IP to ignore list"
 msgstr ""
 
-#: partials/view-all.php:92
+#: partials/view-all.php:108
 msgid "Visitor Data Goes Here for %s"
 msgstr ""
 
-#: partials/view-all.php:98
+#: partials/view-all.php:114
 msgid "Who Hit The Page Hit Counter"
 msgstr ""
 
-#: partials/view-all.php:100
+#: partials/view-all.php:116
 msgid "Here you will see the raw hit counter information. This page lists all your pages and their respective counts and also the visiting IP addresses with their respective counts and other information."
 msgstr ""
 
-#: partials/view-all.php:107
+#: partials/view-all.php:123
 msgid "Support"
 msgstr ""
 
-#: partials/view-all.php:125
+#: partials/view-all.php:141
 msgid "Subscribe to updates"
 msgstr ""
 
-#: partials/view-all.php:138
+#: partials/view-all.php:154
 msgid "Need More"
 msgstr ""
 
-#: partials/view-all.php:173
+#: partials/view-all.php:189
 msgid "Pages visited and number of visits per page."
 msgstr ""
 
-#: partials/view-all.php:181
+#: partials/view-all.php:197
 msgid "Visitors' IP addresses and Information"
 msgstr ""
 

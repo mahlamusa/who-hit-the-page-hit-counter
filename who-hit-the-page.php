@@ -38,8 +38,15 @@ if ( ! defined( 'WP_PLUGIN_DIR' ) ){
 	define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
 }
 
-include('includes/config.php');
-include('includes/count_who_hit.php');
+include('includes/classes/class-browser-detection.php');
+include('includes/classes/class-browser.php');
+include('includes/classes/class-hit-info.php');
+include('includes/classes/class-hits.php');
+include('includes/classes/class-ip-hits.php');
+include('includes/classes/class-ip-to-location.php');
+include('includes/classes/class-shortcodes.php');
+include('includes/classes/class-visiting-countries.php');
+include('includes/classes/class-whtp-database.php');
 include('includes/functions.php');
 
 register_activation_hook(__FILE__,'whtp_installer');

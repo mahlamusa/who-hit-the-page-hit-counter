@@ -104,7 +104,7 @@ class WHTP_Installer{
 		$user_agents = $wpdb->get_results( "SELECT ip_address, user_agent FROM ". self::$hitinfo_table );
 		if ( count( $user_agents ) > 0 ){
 			foreach ( $user_agents as $uagent ) {
-				$ua = whtp_browser_info();
+				$ua = WHTP_Broswer::browser_info();
 				$browser = $ua['name'];
 				$ip = $uagent->ip_address;
 				if ( $uagent->user_agent != $browser ){

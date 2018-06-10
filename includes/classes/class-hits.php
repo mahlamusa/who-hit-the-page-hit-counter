@@ -64,7 +64,7 @@ class WHTP_Hits extends WHTP_Database{
         $page = $page;
         
         //$ua = getBrowser(); //Get browser info
-        $ua = whtp_browser_info();
+        $ua = WHTP_Broswer::browser_info();
         $browser = $ua['name'];
             
         $page_check = $wpdb->get_var("SELECT page FROM `{self::$hits_table}` WHERE page = '$page' LIMIT 1");

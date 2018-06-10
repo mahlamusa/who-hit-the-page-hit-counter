@@ -133,7 +133,7 @@ class WHTP_Hit_Info extends WHTP_Database{
         $date_ltime			= date("Y/m/d") . ' ' . date('H:i:s'); # visitor's last visit
         
         //$ua = getBrowser(); //Get browser info
-        $ua = whtp_browser_info();
+        $ua = WHTP_Broswer::browser_info();
         $browser = $ua['name'];
         
         $page_id = WHTP_Hits::get_page_id( $page );

@@ -59,7 +59,7 @@
                             if(isset($_POST['whtpsubscr']) && $_POST['whtpsubscr'] == "y"){
                                 WHTP_Functions::whtp_admin_message_sender();
                             }
-                            WHTP_Functions::whtp_signup_form();
+                            WHTP_Functions::signup_form();
                         ?>
                         <p>Thank you once again!</p>
                     </div>

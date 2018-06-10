@@ -10,7 +10,7 @@ class WHTP_Functions{
 		self::$visiting_countries_table = $wpdb->prefix . 'whtp_visiting_countries';
 		self::$ip2loacation_table 		= $wpdb->prefix . 'whtp_ip2location';
 	}
-	
+
 	public static function plugin_info(){
 		$plugin_data = get_plugin_data( __FILE__ );
 
@@ -162,5 +162,30 @@ class WHTP_Functions{
 			return true;
 		}
 		else return false;
+	}
+
+	public static function signup_form(){?>
+		<form action="" method="post" id="signup">
+			<input type="hidden" name="whtpsubscr" value="y" />
+			<label for="asubscribe_email">Enter your email address to subscribe to updates</label>
+			<input type="email" placeholder="e.g. <?php echo get_option('admin_email'); ?>" name="asubscribe_email" value="" class="90" /><br />
+			<input type="submit" value="Subscribe to updates" class="button button-primary button-hero" />
+		</form>
+		<?php 
+	}
+
+	public static function deny_wordpress_host_ip(){
+	
+		$local 		= $_SERVER['HTTP_HOST'];	# this host's name
+		$siteurl 	= get_option('siteurl');	# wordpress site url
+		$ref 		= $_SERVER['HTTP_REFERER']; # referrer host name	
+		$rem 		= $_SERVER['REMOTE_ADDR'];  # visitor's ip address
+		
+		if ( isset ( $_SERVER['SERVER_ADDR'] ) ) {
+			$local_addr	= $_SERVER['SERVER_ADDR'];  # this host's ip address
+		}
+		
+		
+		return $deny;
 	}
 }
