@@ -6,6 +6,9 @@
  * @package
  * @since 1.4.6
  */
+ if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 class WHTP_Shortcodes extends WHTP_Database{
 	public function __construct(){
 		add_shortcode('whohit',			array( $this, 'hit_counter_shortcode') );

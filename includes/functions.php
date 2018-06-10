@@ -1,5 +1,7 @@
 <?php
-	
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}	
 class WHTP_Functions{
 	
 	public function __construct(){

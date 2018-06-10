@@ -1,5 +1,8 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 class WHTP_Broswer extends WHTP_Database{
     public function __construct(){
         parent::_construct();

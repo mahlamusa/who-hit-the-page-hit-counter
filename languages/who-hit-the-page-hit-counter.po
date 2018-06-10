@@ -13,31 +13,31 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: who-hit-the-page.php:69, who-hit-the-page.php:70
+#: who-hit-the-page.php:76, who-hit-the-page.php:77
 msgid "Who Hit The Page"
 msgstr ""
 
-#: who-hit-the-page.php:87, who-hit-the-page.php:88
+#: who-hit-the-page.php:94, who-hit-the-page.php:95
 msgid "View All Details"
 msgstr ""
 
-#: who-hit-the-page.php:95, who-hit-the-page.php:96
+#: who-hit-the-page.php:102, who-hit-the-page.php:103
 msgid "Visitor Stats"
 msgstr ""
 
-#: who-hit-the-page.php:103, who-hit-the-page.php:104
+#: who-hit-the-page.php:110, who-hit-the-page.php:111
 msgid "Denied IPs"
 msgstr ""
 
-#: who-hit-the-page.php:111, who-hit-the-page.php:112
+#: who-hit-the-page.php:118, who-hit-the-page.php:119
 msgid "Export / Import"
 msgstr ""
 
-#: who-hit-the-page.php:119, who-hit-the-page.php:120
+#: who-hit-the-page.php:126, who-hit-the-page.php:127
 msgid "Settings"
 msgstr ""
 
-#: who-hit-the-page.php:127, who-hit-the-page.php:128
+#: who-hit-the-page.php:134, who-hit-the-page.php:135
 msgid "Help"
 msgstr ""
 

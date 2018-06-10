@@ -76,6 +76,9 @@
  * @link http://chrisschuld.com/
  * @link http://www.apptools.com/phptools/browser/
  */
+ if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 class BrowserDetection
 {
 

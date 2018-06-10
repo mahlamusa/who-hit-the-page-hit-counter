@@ -28,7 +28,7 @@ License: GPL
  */
 define( 'WHTP_PLUGIN_URL', 		plugins_url( '/who-hit-the-page-hit-counter/' ) );
 define( 'WHTP_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) . 'who-hit-the-page-hit-counter/');
-define( 'WHTP_PLUGIN_URL', 		WP_CONTENT_URL . '/plugins/who-hit-the-page-hit-counter/');
+//define( 'WHTP_PLUGIN_URL', 		WP_CONTENT_URL . '/plugins/who-hit-the-page-hit-counter/');
 define( 'WHTP_IMAGES_URL', 		WHTP_PLUGIN_URL . 'images/');
 define( 'WHTP_FLAGS_URL', 		WHTP_IMAGES_URL . 'flags/');
 define( 'WHTP_BROSWERS_URL', 	WHTP_IMAGES_URL . 'browsers/');
@@ -37,6 +37,11 @@ define( 'WHTP_GEODATA_URL', 	WHTP_PLUGIN_URL . 'geodata/');
 if ( ! defined( 'WP_PLUGIN_DIR' ) ){
 	define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
 }
+
+function whtp_text_domain(){
+	load_plugin_textdomain( 'whtp', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+}
+add_action( 'plugins_loaded', 'whtp_text_domain' );
 
 include('includes/classes/class-browser-detection.php');
 include('includes/classes/class-browser.php');
@@ -62,6 +67,7 @@ function whtp_installer(){
 
 function whtp_remove(){
 	require_once('includes/uninstaller.php');
+	$deactivator = new WHTP_Deactivator();
 }
 
 class Who_Hit_The_Page_Admin extends WHTP_Database{
@@ -79,15 +85,6 @@ class Who_Hit_The_Page_Admin extends WHTP_Database{
 			'whtp-admin-menu',
 			array( $this, 'whtp_object_page_callback' )
 		);
-		/**add_menu_page(
-			__( 'Who Hit The Page'), 
-			__( 'Who Hit The Page'), 
-			'manage_options', 
-			'whtp-admin-menu',
-			'whtp_object_page_callback',
-			'dashicons-admin-stats'
-		);
-		**/
 		
 		add_submenu_page(
 			'whtp-admin-menu',
@@ -165,13 +162,40 @@ class Who_Hit_The_Page_Admin extends WHTP_Database{
 		include('partials/help.php');//admin page
 	}
 
-	public function admin_styles(){
+	public function enqueue_styles(){
+		wp_register_style( 
+            'mdl-admin-css', 
+            'https://code.getmdl.io/1.3.0/material.indigo-pink.min.css'
+        );
+        wp_register_style( 
+            'mdl-admin-icons', 
+            'https://fonts.googleapis.com/icon?family=Material+Icons'
+		);
 		wp_register_style( 
 			'whtp-admin-css', 
 			WHTP_PLUGIN_URL . 'assets/css/whtp-admin.min.css'
 		);
 
+		wp_enqueue_style( 'mdl-admin-css' );
+        wp_enqueue_style( 'mdl-admin-icons' );
         wp_enqueue_style( 'whtp-admin-css' );
+	}
+
+	public function enqueue_scripts() {
+		wp_register_script( 
+            'mdl-admin-js', 
+            'https://code.getmdl.io/1.3.0/material.min.js',
+            null, null, true
+		);
+		wp_register_script( 
+			'whtp-main-js', 
+			WP_HOST_PANEL_PLUGIN_URL . 'assets/js/whtp-admin.min.js', 
+			array( 'jquery' ), 
+			null
+		);
+
+		wp_enqueue_script( 'mdl-admin-js' );
+		wp_enqueue_script( 'whtp-admin-js' );
 	}
 }
 add_action("plugins_loaded", function(){

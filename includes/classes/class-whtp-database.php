@@ -1,5 +1,7 @@
 <?php
-
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 abstract class WHTP_Database{
 	private $hits_table;
 	private $hitinfo_table;

@@ -1,5 +1,8 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 class WHTP_Hit_Info extends WHTP_Database{
     public function __construct(){
         parent::__construct();

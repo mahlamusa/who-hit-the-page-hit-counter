@@ -1,6 +1,8 @@
 <?php
 
-
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 class WHTP_Installer{
 	private $hits_table;
 	private $hitinfo_table;

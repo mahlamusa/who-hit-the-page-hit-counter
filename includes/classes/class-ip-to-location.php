@@ -1,5 +1,7 @@
 <?php
-
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 class WHTP_IP_Location extends WHTP_Database{
     public function __construct(){
         parent::__construct();
