@@ -2,6 +2,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+
 $total_hits = WHTP_Hits::total();
 if ( isset( $_GET['number'] ) ) {
     $number = esc_attr( $_GET['number'] );
