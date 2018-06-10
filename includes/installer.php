@@ -1,7 +1,7 @@
 <?php
 
 
-class WHTP_Installer(){
+class WHTP_Installer{
 	private $hits_table;
 	private $hitinfo_table;
 	private $user_agents_table;
@@ -54,11 +54,11 @@ class WHTP_Installer(){
 
 	public static function check_rename_tables(){
 		if ( self::table_exists("hits") && ! self::table_exists( self::$hits_table ) ){
-			self::rename_table("hits", self::$hits_table) );
+			self::rename_table("hits", self::$hits_table);
 		}
 
 		if ( self::table_exists( "hitinfo" ) && ! self::table_exists( self::$hitinfo_table ) ) { 
-			self::rename_table("hitinfo", self::$hitinfo_table ) );
+			self::rename_table("hitinfo", self::$hitinfo_table );
 		}
 
 		if ( self::table_exists( 'whtp_hits' ) && ! self::table_exists( self::$hits_table  ) ) { 
@@ -71,10 +71,6 @@ class WHTP_Installer(){
 
 		if ( self::table_exists( 'whtp_user_agents' ) && ! self::table_exists(self::$user_agents_table  ) ) { 
 			self::rename_table( 'whtp_user_agents', self::$user_agents_table );
-		}
-
-		if ( self::table_exists(  ) && ! self::table_exists(  ) ) { 
-			self::rename_table( , self::$hitinfo_table );
 		}
 
 		if ( self::table_exists( 'whtp_ip_hits' ) && ! self::table_exists( self::$ip_hits_table ) ) { 

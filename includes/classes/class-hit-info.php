@@ -221,4 +221,33 @@ class WHTP_Hit_Info extends WHTP_Database{
         else return false;
            
     }
+
+    public static function add_denied_ip(){
+		global $wpdb;
+		
+		$ip_address = stripslashes( $_POST['ip_address'] );
+		
+		$add_ip = $wpdb->insert(
+            self::$hitinfo_table, 
+            array("ip_status" => "denied" ,"ip_address" => $ip_address ), 
+            array("%s", "%s", "%s")
+        );
+        
+        if ( $add_ip ) return true;
+        else return false;
+    }
+    
+    public static function allow_ip(){
+		global $wpdb;
+		$ip_address = stripslashes( esc_attr( $_POST['ip_address'] ) );
+		
+		$allow = $wpdb->update(
+            self::$hitinfo_table, 
+            array("ip_status"=>"active"), 
+            array("ip_address"=>$ip_address), array("%s"), array("%s") 
+        );
+		
+        if ( $allow ) return true;
+        else return false;
+	}
 }

@@ -1,13 +1,16 @@
 <?php
 	
-class WHTP_Functions(){
-	self::$hits_table 				= $wpdb->prefix . 'whtp_hits';
-	self::$hitinfo_table 			= $wpdb->prefix . 'whtp_hitinfo';
-	self::$user_agents_table 		= $wpdb->prefix . 'whtp_user_agents';
-	self::$ip_hits_table 			= $wpdb->prefix . 'whtp_ip_hits';
-	self::$visiting_countries_table = $wpdb->prefix . 'whtp_visiting_countries';
-	self::$ip2loacation_table 		= $wpdb->prefix . 'whtp_ip2location';
-
+class WHTP_Functions{
+	
+	public function __construct(){
+		self::$hits_table 				= $wpdb->prefix . 'whtp_hits';
+		self::$hitinfo_table 			= $wpdb->prefix . 'whtp_hitinfo';
+		self::$user_agents_table 		= $wpdb->prefix . 'whtp_user_agents';
+		self::$ip_hits_table 			= $wpdb->prefix . 'whtp_ip_hits';
+		self::$visiting_countries_table = $wpdb->prefix . 'whtp_visiting_countries';
+		self::$ip2loacation_table 		= $wpdb->prefix . 'whtp_ip2location';
+	}
+	
 	public static function plugin_info(){
 		$plugin_data = get_plugin_data( __FILE__ );
 

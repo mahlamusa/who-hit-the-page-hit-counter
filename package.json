@@ -1,26 +1,25 @@
 {
-    "name": "whtp",
-    "version": "1.0.0",
-    "description": "Who Hit The Page Hit Counter",
-    "main": "index.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Lindeni Mahlalela",
-    "license": "ISC",
-    "dependencies": {},
-    "devDependencies": {
-      "gulp": "^3.9.1",
-      "gulp-clean": "^0.4.0",
-      "gulp-concat": "^2.6.1",
-      "gulp-copy": "^1.1.0",
-      "gulp-filter": "^5.1.0",
-      "gulp-notify": "^3.2.0",
-      "gulp-rename": "^1.2.2",
-      "gulp-sass": "^4.0.1",
-      "gulp-uglify": "^3.0.0",
-      "gulp-wp-pot": "^2.2.0",
-      "gulp-zip": "^4.1.0"
-    }
+  "name": "whtp",
+  "version": "1.0.0",
+  "description": "Who Hit The Page Hit Counter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lindeni Mahlalela",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.4.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-copy": "^1.1.0",
+    "gulp-filter": "^5.1.0",
+    "gulp-notify": "^3.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^4.0.1",
+    "gulp-uglify": "^3.0.0",
+    "gulp-wp-pot": "^2.2.0",
+    "gulp-zip": "^4.1.0"
   }
-  
+}

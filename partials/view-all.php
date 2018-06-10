@@ -3,12 +3,12 @@
 	/**
 	* check if there is an action to reset counters
 	*/
-	if ( isset ( $_POST['reset_page'] ) ){
+	if ( isset ( $_POST['reset_page'] ) ):
 		if ( $page == ""){
             $page = stripslashes( $_POST['reset_page'] );
         }
 		if ( WHTP_Hits::reset_page_count() ) :
-			if ( $page != "" ){ ?>
+			if ( $page != "" ): ?>
                 <div class="updated">
                     <p>
                         <?php echo sprintf( __('The count for the page "%s" has been reset successfully.', 'whtp'), esc_attr( $page ) ); ?>
@@ -22,9 +22,9 @@
 		else: ?>
 			<div class="update-nag">
                 <p><?php _e( 'Failed to reset page counts', 'whtp' ); ?></p>
-            </div>
-        <?php endif;
-    }
+            </div><?php
+        endif;
+    endif;
     
 	if ( isset( $_POST['delete_page'] ) ) {
 		if ( WHTP_Hits::delete_page() ){ ?>
@@ -37,25 +37,41 @@
 				<p><?php _e( 'Failed to remove page count(s).', 'whtp' ); ?></p>
 			</div>
 		<?php }
-	}
-	if ( isset( $_POST['discount_page'] ) ) {
-		whtp_discount_page();
-	}
+    }
+    
+
+	if ( isset( $_POST['discount_page'] ) ) :
+        if ( WHTP_Hits::discount_page() ) : ?>
+            <div class="updated fade" id="message">
+                <p>The Page "' . $page . '" has been discounted by ' . $discountby .'</p>
+                <?php echo sprintf( 
+                    __('The Page "%s" has been discounted by %d', 'whtp'), 
+                    esc_attr( $page ), 
+                    esc_attr( $discountby)
+                ); ?>
+            </div><?php
+        else: ?>
+                <div class="update-nag">
+                    <p><?php _e( 'Failed to discount on the page', 'whtp' ); ?></p>
+                </div><?php
+        endif;
+    endif;
+
 	/**
 	* Check if there is an action to be performed
 	* to reset ip info
 	*/
 	if ( isset( $_POST['reset_ip'] ) ) :
-		if ( WHTP_Hit_Info::reset_ip_info() ){ ?>
+		if ( WHTP_Hit_Info::reset_ip_info() ) : ?>
 			<div class="updated">
 				<p>
                     <?php echo sprintf( __( 'The count for ip address: "%s" has been reset successfully.', 'whtp' ), esc_attr( $_POST['reset_ip'] ) ); ?></p>
-			</div>
-		<?php else: ?>
+            </div><?php 
+        else: ?>
 			<div class="update-nag">
 				<p><?php echo sprintf( __( 'Failed to reset count for IP: %s', 'whtp' ), esc_attr( $_POST['reset_ip'] ) ); ?></p>
-			</div>
-		<?php endif; 
+            </div><?php
+        endif; 
 	endif;
 
 if ( isset( $_POST['delete_ip'] ) ) :

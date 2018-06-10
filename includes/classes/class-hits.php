@@ -39,6 +39,22 @@ class WHTP_Hits extends WHTP_Database{
         }
     }
 
+    function discount_page(){
+        global $wpdb;
+        $page = stripslashes( $_POST['discount_page'] );
+        $discountby = stripslashes( $_POST['discountby'] );
+        $old_count = $wpdb->get_var( "SELECT count FROM `{self::$hits_table}` WHERE page='$page'" );
+        
+        $discount_page = $wpdb->update(
+            self::$hits_table, 
+            array( "count" => $old_count - $discountby ), 
+            array("page" => $page)
+        );
+        
+        if ( $discount_page ) return true;
+        else return false;
+    }
+
     /*
     * Check if the page has been visited then
     * update or create new counter

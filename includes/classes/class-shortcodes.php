@@ -8,7 +8,7 @@
  */
 class WHTP_Shortcodes extends WHTP_Database{
 	public function __construct(){
-		add_shortcode('whohit',			array( $this, 'hit_counter_shortcode');
+		add_shortcode('whohit',			array( $this, 'hit_counter_shortcode') );
 		add_shortcode('whlinkback',		array( $this, 'link_back') );
 	}
 
@@ -17,7 +17,7 @@ class WHTP_Shortcodes extends WHTP_Database{
 		if ( $content != ""){
 			$page = $content;
 		}
-		who_hit_the_page( $page );
+		WHTP_Hits::count_page( $page );
 	}
 	
 	public static function link_back(){

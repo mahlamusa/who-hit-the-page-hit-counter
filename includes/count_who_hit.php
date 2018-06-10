@@ -17,19 +17,7 @@
 * Discount a page's counter by -1
 *
 */
-function whtp_discount_page(){
-	global $wpdb;
-	$page = stripslashes( $_POST['discount_page'] );
-	$discountby = stripslashes( $_POST['discountby'] );
-	$old_count = $wpdb->get_var( "SELECT count FROM whtp_hits WHERE page='$page'" );
-	$discount_page = $wpdb->update("whtp_hits", array("count"=>$old_count-$discountby), array("page"=>$page));
-	
-	if ( $discount_page ) {
-		echo '<div class="updated fade" id="message"><p><b>Discounted</b>. The Page "' . $page . '" has been discounted by ' . $discountby .'</p></div>';
-	}else{
-		echo '<div class="update-nag"><p>Failed to Discount on the page "' . $page . '."</p></div';
-	}
-}
+
 
 
 # updates signup form

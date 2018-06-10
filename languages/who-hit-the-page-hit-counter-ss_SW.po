@@ -1,0 +1,218 @@
+# Copyright (C) 2018 Who Hit The Page Hit COunter
+# This file is distributed under the same license as the Who Hit The Page Hit COunter package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Who Hit The Page Hit COunter\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: who-hit-the-page.php:69, who-hit-the-page.php:70
+msgid "Who Hit The Page"
+msgstr ""
+
+#: who-hit-the-page.php:87, who-hit-the-page.php:88
+msgid "View All Details"
+msgstr ""
+
+#: who-hit-the-page.php:95, who-hit-the-page.php:96
+msgid "Visitor Stats"
+msgstr ""
+
+#: who-hit-the-page.php:103, who-hit-the-page.php:104
+msgid "Denied IPs"
+msgstr ""
+
+#: who-hit-the-page.php:111, who-hit-the-page.php:112
+msgid "Export / Import"
+msgstr ""
+
+#: who-hit-the-page.php:119, who-hit-the-page.php:120
+msgid "Settings"
+msgstr ""
+
+#: who-hit-the-page.php:127, who-hit-the-page.php:128
+msgid "Help"
+msgstr ""
+
+#: partials/denied-ips.php:64
+msgid "Please add an IP address to your deny list. All IP addresses in this list will not be counted when visiting your website. To allow an IP to be counted again, click 'Allow This IP' then it will be visible in your IP list on the counters' page and to remove it from the list click 'Delete This IP.'"
+msgstr ""
+
+#: partials/denied-ips.php:71
+msgid "The IP Address \"%s\" has been added to your deny list. This IP address will not be counted the next time it visits your website"
+msgstr ""
+
+#: partials/denied-ips.php:78
+msgid "Failed to Add IP Address \"%s\" to deny list."
+msgstr ""
+
+#: partials/denied-ips.php:90
+msgid "The IP \"%\" has been allowed and will now be counted the next time it visits your website."
+msgstr ""
+
+#: partials/denied-ips.php:99
+msgid "Failed to Allow \"%s\""
+msgstr ""
+
+#: partials/denied-ips.php:116
+msgid "The IP address \"%s\"\" has been removed from the database."
+msgstr ""
+
+#: partials/denied-ips.php:123
+msgid "Failed to remove IP from database."
+msgstr ""
+
+#: partials/denied-ips.php:133
+msgid "Enter IP address to add to deny list"
+msgstr ""
+
+#: partials/denied-ips.php:140
+msgid "Add To Deny List"
+msgstr ""
+
+#: partials/denied-ips.php:150
+msgid "Currently denied IP Addresses"
+msgstr ""
+
+#: partials/denied-ips.php:153
+msgid "Here is a list of currently denied IP addresses"
+msgstr ""
+
+#: partials/denied-ips.php:160
+msgid "Visitor's  IP Address"
+msgstr ""
+
+#: partials/denied-ips.php:161
+msgid "Allow Count"
+msgstr ""
+
+#: partials/denied-ips.php:162
+msgid "Reset"
+msgstr ""
+
+#: partials/denied-ips.php:163
+msgid "Delete IP"
+msgstr ""
+
+#: partials/denied-ips.php:175
+msgid "Allow This IP"
+msgstr ""
+
+#: partials/denied-ips.php:182
+msgid "Delete This IP"
+msgstr ""
+
+#: partials/denied-ips.php:191
+msgid "Total Denied IP´s "
+msgstr ""
+
+#: partials/denied-ips.php:200
+msgid "There are currently no registered IP addresses, please read above to get started"
+msgstr ""
+
+#: partials/stats-summary.php:155
+msgid "Used Browsers"
+msgstr ""
+
+#: partials/stats-summary.php:167
+msgid "No Browsers used so far"
+msgstr ""
+
+#: partials/view-all.php:14
+msgid "The count for the page \"%s\" has been reset successfully."
+msgstr ""
+
+#: partials/view-all.php:19
+msgid "The count for all pages has been reset successfully."
+msgstr ""
+
+#: partials/view-all.php:24
+msgid "Failed to reset page counts"
+msgstr ""
+
+#: partials/view-all.php:37
+msgid "Failed to remove page count(s)."
+msgstr ""
+
+#: partials/view-all.php:52
+msgid "The count for ip address: \"%s\" has been reset successfully."
+msgstr ""
+
+#: partials/view-all.php:56
+msgid "Failed to reset count for IP: %s"
+msgstr ""
+
+#: partials/view-all.php:68
+msgid "IP addresse(s) removed from the database."
+msgstr ""
+
+#: partials/view-all.php:72
+msgid "Failed to remove IP addresse(s) from database"
+msgstr ""
+
+#: partials/view-all.php:81
+msgid "The IP Address will be ignored and will not be counted."
+msgstr ""
+
+#: partials/view-all.php:85
+msgid "Failed to add IP to ignore list"
+msgstr ""
+
+#: partials/view-all.php:92
+msgid "Visitor Data Goes Here for %s"
+msgstr ""
+
+#: partials/view-all.php:98
+msgid "Who Hit The Page Hit Counter"
+msgstr ""
+
+#: partials/view-all.php:100
+msgid "Here you will see the raw hit counter information. This page lists all your pages and their respective counts and also the visiting IP addresses with their respective counts and other information."
+msgstr ""
+
+#: partials/view-all.php:107
+msgid "Support"
+msgstr ""
+
+#: partials/view-all.php:125
+msgid "Subscribe to updates"
+msgstr ""
+
+#: partials/view-all.php:138
+msgid "Need More"
+msgstr ""
+
+#: partials/view-all.php:173
+msgid "Pages visited and number of visits per page."
+msgstr ""
+
+#: partials/view-all.php:181
+msgid "Visitors' IP addresses and Information"
+msgstr ""
+
+#: includes/classes/class-shortcodes.php:25
+msgid "<a href=\"http://lindeni.co.za\" rel=\"bookmark\" title=\"%s\" target=\"_blank\">%s</a>"
+msgstr ""
+
+#: includes/classes/class-shortcodes.php:26
+msgid "Wordpress plugins and web design resources"
+msgstr ""
+
+#: includes/classes/class-shortcodes.php:27
+msgid "Wordpress plugins by Mahlamusa Mahlalela"
+msgstr ""
+
+#: partials/view/all-page-hits.php:80
+msgid "No Data Found"
+msgstr ""
+
+#: partials/view/all-page-hits.php:83
+msgid "No Page visits yet or the page counters have been reset. Read documentation to learn how to get started"
+msgstr ""
