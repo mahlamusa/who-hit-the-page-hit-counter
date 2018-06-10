@@ -26,8 +26,17 @@ License: GPL
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-define( 'WHTP_PLUGIN_URL', plugins_url( '/who-hit-the-page-hit-counter/' ) );
+define( 'WHTP_PLUGIN_URL', 		plugins_url( '/who-hit-the-page-hit-counter/' ) );
 define( 'WHTP_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) . 'who-hit-the-page-hit-counter/');
+define( 'WHTP_PLUGIN_URL', 		WP_CONTENT_URL . '/plugins/who-hit-the-page-hit-counter/');
+define( 'WHTP_IMAGES_URL', 		WHTP_PLUGIN_URL . 'images/');
+define( 'WHTP_FLAGS_URL', 		WHTP_IMAGES_URL . 'flags/');
+define( 'WHTP_BROSWERS_URL', 	WHTP_IMAGES_URL . 'browsers/');
+define( 'WHTP_GEODATA_URL', 	WHTP_PLUGIN_URL . 'geodata/');
+
+if ( ! defined( 'WP_PLUGIN_DIR' ) ){
+	define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
+}
 
 include('includes/config.php');
 include('includes/count_who_hit.php');

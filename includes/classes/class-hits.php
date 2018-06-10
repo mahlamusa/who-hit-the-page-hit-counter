@@ -32,7 +32,7 @@ class WHTP_Hits extends WHTP_Database{
         $ip_address	= $_SERVER["REMOTE_ADDR"];	# visitor's ip address 
         
         #count if the IP is not denied
-        if ( !ip_is_denied ( $ip_address ) ) {
+        if ( ! WHTP_Hit_Info::ip_is_denied ( $ip_address ) ) {
             $page = $page;
             self::count_hits( $page );
             WHTP_Hit_Info::hit_info( $page );

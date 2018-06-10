@@ -7,17 +7,25 @@
 		if ( $page == ""){
             $page = stripslashes( $_POST['reset_page'] );
         }
-		if ( WHTP_Hits::reset_page_count() ) {
-			if ( $page != "" ){
-                echo '<div class="updated"><p>The count for the page "' .$page . '" has been reset successfully.</p></div>'; 
-            }else{
-				echo '<div class="updated"><p>The count for "All" pages has been reset successfully.</p></div>';
-			}
-		}
-		else{
-			echo '<div class="update-nag"><p>Failed to reset page counts</p></div>';
-		}
-	}
+		if ( WHTP_Hits::reset_page_count() ) :
+			if ( $page != "" ){ ?>
+                <div class="updated">
+                    <p>
+                        <?php echo sprintf( __('The count for the page "%s" has been reset successfully.', 'whtp'), esc_attr( $page ) ); ?>
+                    </p>
+                </div>'; 
+            <?php else: ?>
+				<div class="updated">
+                    <p><?php _e( 'The count for all pages has been reset successfully.', 'whtp' ); ?></p>
+                </div>
+            <?php endif;		
+		else: ?>
+			<div class="update-nag">
+                <p><?php _e( 'Failed to reset page counts', 'whtp' ); ?></p>
+            </div>
+        <?php endif;
+    }
+    
 	if ( isset( $_POST['delete_page'] ) ) {
 		if ( WHTP_Hits::delete_page() ){ ?>
 			<div class="updated fade" id="message">
@@ -26,7 +34,7 @@
 			</div><?php
 		}else{ ?>
 			<div class="update-nag fade">
-				<p>Failed to remove page count(s).</p>
+				<p><?php _e( 'Failed to remove page count(s).', 'whtp' ); ?></p>
 			</div>
 		<?php }
 	}
@@ -40,11 +48,12 @@
 	if ( isset( $_POST['reset_ip'] ) ) :
 		if ( WHTP_Hit_Info::reset_ip_info() ){ ?>
 			<div class="updated">
-				<p>The count for ip address: '<?php echo $_POST['reset_ip']; ?>' has been reset successfully.</p>
+				<p>
+                    <?php echo sprintf( __( 'The count for ip address: "%s" has been reset successfully.', 'whtp' ), esc_attr( $_POST['reset_ip'] ) ); ?></p>
 			</div>
 		<?php else: ?>
 			<div class="update-nag">
-				<p>Failed to reset count for IP: '<?php echo $_POST['reset_ip']; ?>'</p>
+				<p><?php echo sprintf( __( 'Failed to reset count for IP: %s', 'whtp' ), esc_attr( $_POST['reset_ip'] ) ); ?></p>
 			</div>
 		<?php endif; 
 	endif;
@@ -67,9 +76,18 @@ if ( isset( $_POST['delete_ip'] ) ) :
 <?php endif;
 	
 if ( isset ( $_POST['deny_ip'] ) ): 
-	whtp_deny_ip();
-<?php
+    if ( WHTP_Hit_Info::deny_ip() ) : ?>
+        <div class="updated fade"  id="message">
+            <p><?php _e( 'The IP Address will be ignored and will not be counted.', 'whtp' ); ?></p>
+        </div>
+    <?php else: ?>
+        <div class="updated">
+            <p><?php _e( 'Failed to add IP to ignore list', 'whtp'); ?></p>
+        </div>
+    <?php endif;
 endif;
+
+
 if (isset ($_POST['view_visitor'] ) ): ?>
 	<h1><?php sprintf( __( "Visitor Data Goes Here for %s"), esc_attr( $view_visitor) ); ?></h1>";
 <?php
@@ -77,14 +95,16 @@ endif;
 ?>
 </div>
 <div class="wrap">	
-	<h2>Who Hit The Page Hit Counter</h2>
-    <p>Here you will see the raw hit counter information. This page lists all your pages and their respective counts and also the visiting IP addresses with their respective counts and other information.</p>
+	<h2><?php _e( 'Who Hit The Page Hit Counter', 'whtp' ); ?></h2>
+    <p>
+        <?php _e( 'Here you will see the raw hit counter information. This page lists all your pages and their respective counts and also the visiting IP addresses with their respective counts and other information.', 'whtp' ); ?>
+    </p>
     <div id="poststuff" class="metabox-holder has-right-sidebar">
         <div id="side-info-column" class="inner-sidebar">
             <div id="side-sortables" class="meta-box-sortables ui-sortable">
                 <div class="postbox">
                     <div class="handlediv" title="Click to toggle"><br /></div>
-                    <h3 class="hndle">Support</h3>
+                    <h3 class="hndle"><?php _e( 'Support', 'whtp' ); ?></h3>
                     <div class="inside welcome-panel-column welcome-panel-last">
                        <h4>Donate $10 via 2Checkout</h4>
                         <p>Any Amount is highly Appreciated</p>
@@ -102,7 +122,7 @@ endif;
                 
                 <div class="postbox">
                     <div class="handlediv" title="Click to toggle"><br /></div>
-                    <h3 class="hndle">Subscribe to updates</h3>
+                    <h3 class="hndle"><?php _e( 'Subscribe to updates', 'whtp' ); ?></h3>
                     <div class="inside welcome-panel-column welcome-panel-last">
 					   <?php
                             if(isset($_POST['whtpsubscr']) && $_POST['whtpsubscr'] == "y"){
@@ -115,7 +135,7 @@ endif;
                 </div>
                 <div class="postbox">
                     <div class="handlediv" title="Click to toggle"><br /></div>
-                    <h3 class="hndle">Need More</h3>
+                    <h3 class="hndle"><?php _e( 'Need More', 'whtp' ); ?></h3>
                     <div class="inside welcome-panel-column welcome-panel-last">
                         <h4>Display a hit counter widget on any page or post. Its easy to change the colors and the font sizes for the numbers.</h4>
                         <a href="http://shop.whohit.co.za/" target="_blank">
@@ -149,13 +169,17 @@ endif;
                 <div id="normal-sortables" class="meta-box-sortables ui-sortable">
                     <div class="postbox inside">
                     	<div class="handlediv" title="Click to toggle"><br /></div>
-                    	<h3 class="hndle">Pages visited and number of visits per page.</h3>
+                    	<h3 class="hndle">
+                            <?php _e( 'Pages visited and number of visits per page.', 'whtp' ); ?>
+                        </h3>
                         <div class="inside">
 							<?php require_once( WHTP_PLUGIN_DIR_PATH . 'partials/view/all-page-hits.php'); ?>
     					</div>
                     </div>
 					<div class="postbox inside">
-                    	<h3 class="handle"><h2>Visitors' IP addresses and Information</h2></h3>
+                    	<h3 class="handle">
+                            <?php _e( 'Visitors\' IP addresses and Information', 'whtp' ); ?>    
+                        </h3>
                         <div class="inside">
 							<?php require_once( WHTP_PLUGIN_DIR_PATH . 'partials/view/visiting-ip-addresses.php'); ?>
 						</div>

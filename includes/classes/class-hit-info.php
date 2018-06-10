@@ -31,7 +31,7 @@ class WHTP_Hit_Info extends WHTP_Database{
         $ips  = $wpdb->get_results("SELECT ip_address FROM `{self::$hitinfo_table}` WHERE ip_status = 'active'");
         if ( $ips ){
             foreach ($ips as $ip ){
-                $country_code = WHTP_IP_Location::sget_country_code( $ip->ip_address );
+                $country_code = WHTP_IP_Location::get_country_code( $ip->ip_address );
                 if ( WHTP_Visiting_Countries::country_count( $country_code ) )
                     return true;
                 else return false;				
@@ -80,7 +80,7 @@ class WHTP_Hit_Info extends WHTP_Database{
     }
     
     # delete ip address
-    public function delete_ip ( $ip, $all = "" ){
+    public static function delete_ip ( $ip, $all = "" ){
         global $wpdb;
         
         if ( $delete_ip == "this_ip" ) {
@@ -190,5 +190,35 @@ class WHTP_Hit_Info extends WHTP_Database{
         // get the country code corresponding to the visitor's IP
         $country_code   = WHTP_Visiting_Countries::get_country_code( $ip_address );
         $counted        = WHTP_Visiting_Countries::country_count( $country_code );
+    }
+
+    public static function ip_is_denied ( $ip_address ){
+        global $wpdb;
+        $denied_ip	= $wpdb->get_var(
+            "SELECT ip_address 
+            FROM `{self::$hitinfo_table}` 
+            WHERE ip_status='denied' AND ip_address='$ip_address' 
+            LIMIT 1"
+        );
+        
+        if ( $denied_ip && $denied_ip != "" ) return true;
+        else return false;
+    }
+    
+    # set an IP's status as denied
+    public static function deny_ip( $ip_address = ""){
+        global $wpdb;
+
+        $ip_address = $ip_address != "" ? $ip_address : esc_attr( $_POST['ip_address'] );
+        
+        $deny = $wpdb->update(
+            self::$hitinfo_table, 
+            array("ip_status"=>"denied"), 
+            array("ip_address"=>$ip_address), array("%s"), array("%s")
+        );
+        
+        if ( $deny ) return true;
+        else return false;
+           
     }
 }

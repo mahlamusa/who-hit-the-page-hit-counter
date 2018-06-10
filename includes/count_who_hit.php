@@ -12,32 +12,7 @@
 
 
 # check if an IP is denied
-function ip_is_denied ( $ip_address ){
-	global $wpdb;
-	$denied_ip	= $wpdb->get_var("SELECT ip_address FROM whtp_hitinfo WHERE ip_status='denied' AND ip_address='$ip_address' LIMIT 1");
-	
-	if ( $denied_ip && $denied_ip != "" ){
-		return true;
-	}
-	else{
-		//echo mysql_error();
-		return false;	
-	}
-}
 
-# set an IP's status as denied
-function whtp_deny_ip(){
-	global $wpdb;
-	$ip_address = stripslashes( $_POST['ip_address'] );
-	
-	$deny = $wpdb->update("whtp_hitinfo", array("ip_status"=>"denied"), array("ip_address"=>$ip_address), array("%s"), array("%s"));
-	
-	if ( $deny ) {
-		echo '<div class="updated fade"  id="message"><p>Denied . The IP "' . $ip_address . '" has been denied and will not be counted the next time it visits your website.</p></div>';
-	}else{
-		echo '<div class="updated"><p>Failed to Deny "' . $ip_address . '" </p></div>';
-	}
-}
 /*
 * Discount a page's counter by -1
 *
