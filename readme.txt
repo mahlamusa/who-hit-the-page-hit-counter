@@ -79,6 +79,7 @@ If you know the IP address of your own devices like Home/Work Computer, you can 
 * Added: Support for multisite subsites, now can activate per blog in multisite
 * Added: Translation compatibility
 * Fix: Activation error if plugin was previously installed
+* Fix: Avoid direct access to plugin files
 * Minor bug fixes
 
 = 1.4.5 =

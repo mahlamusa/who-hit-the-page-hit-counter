@@ -6,7 +6,7 @@
  * @package
  * @since 1.4.6
  */
- if ( ! defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 class WHTP_Shortcodes extends WHTP_Database{

@@ -26,6 +26,11 @@ License: GPL
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 define( 'WHTP_PLUGIN_URL', 		plugins_url( '/who-hit-the-page-hit-counter/' ) );
 define( 'WHTP_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) . 'who-hit-the-page-hit-counter/');
 //define( 'WHTP_PLUGIN_URL', 		WP_CONTENT_URL . '/plugins/who-hit-the-page-hit-counter/');

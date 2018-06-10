@@ -1,6 +1,9 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 	global $wpdb;
-	$num_ips = $wpdb->get_var("SELECT COUNT(ip_address) AS num_ips FROM whtp_hitinfo WHERE ip_status='active'");
+	$num_ips = WHTP_Hit_Info::count();
 	/*
 	/*
 	* if there are some ips already listed, then proceed with the statistics

@@ -25,32 +25,7 @@ $hit_info_result = $wpdb->get_results("SELECT * FROM whtp_hitinfo WHERE ip_statu
                           <input name='quantity' type='number' size='5' value="1">
                           <input name='submit' type='submit' class="button button-primary" value='Donate through 2CO'>
                         </form>
-                        <span>2Checkout.com Inc. (Ohio, USA) is a payment facilitator for goods and services provided by Three Pixels Web Solutions.</span>
                     </div>  
-                </div>
-                <div class="postbox">
-                    <div class="handlediv" title="Click to toggle"><br /></div>
-                    <h3 class="hndle">Subscribe to updates</h3>
-                    <div class="inside welcome-panel-column welcome-panel-last">
-					   <?php
-                            if(isset($_POST['whtpsubscr']) && $_POST['whtpsubscr'] == "y"){
-                                WHTP_Functions::whtp_admin_message_sender();
-                            }
-                            WHTP_Functions::signup_form();
-                        ?>
-                        <p>Thank you once again!</p>
-                    </div>
-                </div>
-                
-                <div class="postbox">
-                    <div class="handlediv" title="Click to toggle"><br /></div>
-                    <h3 class="hndle">Please Rate this plugin</h3>
-                    <div class="inside welcome-panel-column welcome-panel-last">
-                        <p><b>Dear User</b></p>
-                        <p>Please 
-                        <a href="http://wordpress.org/support/view/plugin-reviews/who-hit-the-page-hit-counter">Rate this plugin now.</a> if you appreciate it.<br />
-                        </p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -59,7 +34,7 @@ $hit_info_result = $wpdb->get_results("SELECT * FROM whtp_hitinfo WHERE ip_statu
                 <div id="normal-sortables" class="meta-box-sortables ui-sortable">
                 	<div class="postbox inside">
 						<div class="handlediv" title="Click to toggle"><br /></div>
-                    	<h3 class="hndle">Add Denied IP</h3>
+                    	<h3 class="hndle"><?php _e( 'Add Denied IP', 'whtp' ); ?></h3>
     					<div class="inside">
                             <p> <?php _e("Please add an IP address to your deny list. All IP addresses in this list will not be counted when visiting your website. To allow an IP to be counted again, click 'Allow This IP' then it will be visible in your IP list on the counters' page and to remove it from the list click 'Delete This IP.'", 'whtp'); ?></p>
                         <?php
@@ -155,7 +130,7 @@ $hit_info_result = $wpdb->get_results("SELECT * FROM whtp_hitinfo WHERE ip_statu
 
                         if ( $total_ips && $total_ips > 0) :
                             if( $hit_info_result ) : ?>
-                                <table class="denied-ip-table" cellspacing="0" cellpadding="5px" width="98%">
+                                <table class="denied-ip-table mdl-data-table mdl-js-data-table mdl-shadow--2dp" cellspacing="0" cellpadding="5px" width="98%">
                                     <tr>
                                         <td class="title-footer"><h4><?php _e("Visitor's  IP Address", "whtp"); ?></h4></td>
                                         <td class="title-footer"><h4><?php _e("Allow Count", "whtp"); ?></h4></td>

@@ -1,3 +1,8 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+?>
 <div class="wrap">	
 	<h2>Who Hit The Page Hit Counter</h2>
     <p></p>

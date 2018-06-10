@@ -19,8 +19,8 @@ class WHTP_Hit_Info extends WHTP_Database{
         else return array();
     }
 
-    public static function count(){
-        $count = $wpdb->get_var("SELECT COUNT(ip_address) FROM `{self::$hitinfo_table}` WHERE ip_status='active'");
+    public static function count( $status = 'active'){
+        $count = $wpdb->get_var("SELECT COUNT(ip_address) FROM `{self::$hitinfo_table}` WHERE ip_status='{$status}'");
 
         if ( $count ) return $count;
         else return 0;

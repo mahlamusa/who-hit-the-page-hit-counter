@@ -34,32 +34,6 @@ class WHTP_Functions{
 		return false;
 	}
 	
-	
-	/*
-	* get all IP addresses previously registered
-	* get country_code for each ip and
-	* add the country to the list of visiting countries
-	*/ 
-	public static function update_visiting_countries(){
-		global $wpdb;
-		 $ips = WHTP_Functions::all_ips();
-		 for ( $count = 0; $count < count ( $ips ); $count ++ ){				
-			$country_code = $wpdb->get_var( "SELECT country_code FROM whtp_ip2location WHERE INET_ATON('" . $ips[$count] . "') 
-                    BETWEEN decimal_ip_from AND decimal_ip_to LIMIT 1" );
-			
-			$exists = $wpdb->get_var( "SELECT country_code FROM whtp_visiting_countries WHERE country_code='$country_code'" );
-			
-			if ( $exists ) {
-				if ( $exists == "" ) {
-					$wpdb->query ( "INSERT INTO whtp_visiting_countries (country_code, count) VALUES ('$country_code', 1)" );
-				}
-				else{
-					$wpdb->query ( "UPDATE whtp_visiting_countries SET count=count+1 WHERE country_code='$country_code'" );
-				}
-			}
-		 }
-	}	
-	
 	/*
 	* Return all ip addresse
 	*
@@ -67,7 +41,7 @@ class WHTP_Functions{
 	public static function all_ips(){
 		global $wpdb;
 		$all_ips = array();
-		$all_ips = $wpdb->get_col ( "SELECT ip_address FROM whtp_hitinfo" );		
+		$all_ips = $wpdb->get_col ( "SELECT ip_address FROM `{self::$hitinfo_table}`" );		
 		
 		return $all_ips;
 	}
@@ -115,7 +89,7 @@ class WHTP_Functions{
 	* subscription sent from current admin, forward to developer's email address
 	* Developer's email address hard coded below
 	*/	
-	public static function whtp_admin_message_sender(){
+	public static function admin_message_sender(){
 		$s_email = stripslashes($_POST['asubscribe_email']);
 		if($s_email != ""){
 			$s_email = $s_email;
@@ -189,5 +163,138 @@ class WHTP_Functions{
 		
 		
 		return $deny;
+	}
+
+	/*
+	* $out = fopen('php://output','w'); to send output to the browser_id
+	* Functions to import and export csv files
+	*/
+	public static function write_csv($file_name, array $list, $delimeter = ",", $enclosure = '"'){
+		$handle = fopen( $file_name, "w" );	
+		foreach ( $list as $fields ){
+			if ( fputcsv ( $handle, $fields ) ) $done = true; // flag successful write
+			else $done = false; // flag failed write
+		}
+		/*
+		fputcsv( $out, $list );*/
+		fclose( $handle );
+		return $done; // return success or failed as true/false
+	}
+	
+	
+	/*
+	* export the hits table to a CSV file
+	* uses the function write_csv
+	* returns the file's url and file name as an array
+	*/
+	public static function export_hits( $backup_date ){
+		global $wpdb;
+		$filename_url = WHTP_BACKUP_DIR;		
+		$filename = $filename_url . "/" . $backup_date . "/whtp-hits.csv";
+		$hits = $wpdb->get_results ( "SELECT * FROM `{self::$hits_table}`" );
+		
+		$fields = array(); // csv rows / whole document
+		if ( count ( $hits ) ){			
+			foreach ( $hits as $hit  ){				
+				$csv_row  = array($hit->page,$hit->count);	 // new row				
+				$fields[] = $csv_row; // append row to others
+			}
+			//whtp_write_csv( $filename, $fields);
+			if ( whtp_write_csv( $filename, $fields) ){
+				$export_url = WP_CONTENT_URL . '/uploads/whtp_backups/' . $backup_date . "/whtp-hits.csv";
+				echo '<p>Page "Hits" backup successful.</p>';
+			}
+		}
+		return $recent_backup = array( 'link'=>$export_url, 'filename'=>'whtp-hits' );
+		
+	}
+	
+	/*
+	* export the hitinfo table to a CSV file
+	* uses the function write_csv
+	* returns the file's url and file name as an array
+	*/
+	public static function export_hitinfo( $backup_date ){
+		global $wpdb;
+		$filename_url = WHTP_BACKUP_DIR;		
+		$filename = $filename_url . "/" . $backup_date . "/whtp-hitinfo.csv";
+		
+		$hitsinfo = $wpdb->get_results ( "SELECT * FROM `{self::$hitinfo_table}`" );
+		
+		$fields = array(); // csv rows / whole document
+		if ( count( $hitsinfo ) > 0 ){			
+			foreach ( $hitsinfo as $hitinfo  ){
+				$csv_row  = array(
+					$hitinfo->ip_address,$hitinfo->ip_total_visits,
+					$hitinfo->user_agent,$hitinfo->datetime_first_visit,
+					$hitinfo->datetime_last_visit
+				);	 // new row				
+				$fields[] = $csv_row;	 // new row;				
+			}
+			if ( whtp_write_csv( $filename, $fields) ){
+				$export_url = WP_CONTENT_URL . '/uploads/whtp_backups/' . $backup_date . "/whtp-hitinfo.csv";
+				echo '<p>Hitinfo backup successful.</p>';
+			}	
+		}
+		return $recent_backup = array( 'link'=>$export_url, 'filename'=>'whtp-hitinfo' );
+	}
+	
+	/*
+	* export the user_agents table to a CSV file
+	* uses the function write_csv
+	* returns the file's url and file name as an array
+	*/
+	public static function export_user_agents( $backup_date ){
+		global $wpdb;
+		$filename_url = WHTP_BACKUP_DIR;		
+		$filename = $filename_url . "/" . $backup_date . "/whtp-user-agents.csv";
+		
+		$user_agents = $wpdb->get_results ( "SELECT * FROM `{self::$user_agents_table}`" );
+		$fields = array();
+		
+		if ( count( $user_agents ) > 0 ){			
+			foreach ( $user_agents as $user_agent  ){
+				$csv_row  = array($user_agent->agent_id,$user_agent->agent_name,$user_agent->agent_details);				
+				$fields[] = $csv_row;
+			}	
+			// write to csv
+			//whtp_write_csv( $filename, $fields);
+			if ( whtp_write_csv( $filename, $fields) ){
+				$export_url = WP_CONTENT_URL . '/uploads/whtp_backups/' . $backup_date . "/whtp-user-agents.csv";
+				echo '<p>User Agents backup successful.</p>';
+			}	
+		}
+		return $recent_backup = array( 'link'=>$export_url, 'filename'=>'whtp-user-agents' );	
+	}
+	
+	/*
+	* export the ip_hits table to a CSV file
+	* uses the function write_csv
+	* returns the file's url and file name as an array
+	*/
+	public static function export_ip_hits( $backup_date ){
+		global $wpdb;
+		$filename_url = WHTP_BACKUP_DIR;		
+		$filename = $filename_url . "/" . $backup_date . "/whtp-ip-hits.csv";
+		
+		$ip_hits = $wpdb->get_results( "SELECT * FROM `{self::$ip_hits_table}`" );
+		$fields = array();
+		if ( count( $ip_hits ) > 0 ){			
+			foreach ( $ip_hits as $ip_hit  ){
+				$csv_row  = array(
+					$ip_hit->ip_id,
+					$ip_hit->page_id,
+					$ip_hit->datetime_first_visit,
+					$ip_hit->datetime_last_visit,
+					$ip_hit->browser_id
+				);
+				$fields[] = $csv_row;
+			}
+			if ( whtp_write_csv( $filename, $fields, ',', '') ){
+				$export_url = WP_CONTENT_URL . '/uploads/whtp_backups/' . $backup_date . "/whtp-ip-hits.csv";
+				echo '<p>IP Hits Table backup successful.</p>';
+			}	
+		}
+		return $recent_backup = array( 'link'=>$export_url, 'filename'=>'whtp-ip-hits' );
 	}
 }

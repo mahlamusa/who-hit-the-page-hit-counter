@@ -1,4 +1,7 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
 	/*
 	* define backup directory
 	*/
@@ -6,138 +9,7 @@
 		WHTP_Functions::make_backup_dir ();
 	}	
 	$recent_backups = array();
-	/*
-	* $out = fopen('php://output','w'); to send output to the browser_id
-	* Functions to import and export csv files
-	*/
-	function whtp_write_csv($file_name, array $list, $delimeter = ",", $enclosure = '"'){
-		$handle = fopen( $file_name, "w" );	
-		foreach ( $list as $fields ){
-			if ( fputcsv ( $handle, $fields ) ) $done = true; // flag successful write
-			else $done = false; // flag failed write
-		}
-		/*
-		fputcsv( $out, $list );*/
-		fclose( $handle );
-		return $done; // return success or failed as true/false
-	}
 	
-	
-	/*
-	* export the hits table to a CSV file
-	* uses the function whtp_write_csv
-	* returns the file's url and file name as an array
-	*/
-	function whtp_export_hits( $backup_date ){
-		global $wpdb;
-		$filename_url = WHTP_BACKUP_DIR;		
-		$filename = $filename_url . "/" . $backup_date . "/whtp-hits.csv";
-		$hits = $wpdb->get_results ( "SELECT * FROM whtp_hits" );
-		
-		$fields = array(); // csv rows / whole document
-		if ( count ( $hits ) ){			
-			foreach ( $hits as $hit  ){				
-				$csv_row  = array($hit->page,$hit->count);	 // new row				
-				$fields[] = $csv_row; // append row to others
-			}
-			//whtp_write_csv( $filename, $fields);
-			if ( whtp_write_csv( $filename, $fields) ){
-				$export_url = WP_CONTENT_URL . '/uploads/whtp_backups/' . $backup_date . "/whtp-hits.csv";
-				echo '<p>Page "Hits" backup successful.</p>';
-			}
-		}
-		return $recent_backup = array( 'link'=>$export_url, 'filename'=>'whtp-hits' );
-		
-	}
-	
-	/*
-	* export the hitinfo table to a CSV file
-	* uses the function whtp_write_csv
-	* returns the file's url and file name as an array
-	*/
-	function whtp_export_hitinfo( $backup_date ){
-		global $wpdb;
-		$filename_url = WHTP_BACKUP_DIR;		
-		$filename = $filename_url . "/" . $backup_date . "/whtp-hitinfo.csv";
-		
-		$hitsinfo = $wpdb->get_results ( "SELECT * FROM whtp_hitinfo" );
-		
-		$fields = array(); // csv rows / whole document
-		if ( count( $hitsinfo ) > 0 ){			
-			foreach ( $hitsinfo as $hitinfo  ){
-				$csv_row  = array(
-					$hitinfo->ip_address,$hitinfo->ip_total_visits,
-					$hitinfo->user_agent,$hitinfo->datetime_first_visit,
-					$hitinfo->datetime_last_visit
-				);	 // new row				
-				$fields[] = $csv_row;	 // new row;				
-			}
-			if ( whtp_write_csv( $filename, $fields) ){
-				$export_url = WP_CONTENT_URL . '/uploads/whtp_backups/' . $backup_date . "/whtp-hitinfo.csv";
-				echo '<p>Hitinfo backup successful.</p>';
-			}	
-		}
-		return $recent_backup = array( 'link'=>$export_url, 'filename'=>'whtp-hitinfo' );
-	}
-	
-	/*
-	* export the user_agents table to a CSV file
-	* uses the function whtp_write_csv
-	* returns the file's url and file name as an array
-	*/
-	function whtp_export_user_agents( $backup_date ){
-		global $wpdb;
-		$filename_url = WHTP_BACKUP_DIR;		
-		$filename = $filename_url . "/" . $backup_date . "/whtp-user-agents.csv";
-		
-		$user_agents = $wpdb->get_results ( "SELECT * FROM whtp_user_agents" );
-		$fields = array();
-		
-		if ( count( $user_agents ) > 0 ){			
-			foreach ( $user_agents as $user_agent  ){
-				$csv_row  = array($user_agent->agent_id,$user_agent->agent_name,$user_agent->agent_details);				
-				$fields[] = $csv_row;
-			}	
-			// write to csv
-			//whtp_write_csv( $filename, $fields);
-			if ( whtp_write_csv( $filename, $fields) ){
-				$export_url = WP_CONTENT_URL . '/uploads/whtp_backups/' . $backup_date . "/whtp-user-agents.csv";
-				echo '<p>User Agents backup successful.</p>';
-			}	
-		}
-		return $recent_backup = array( 'link'=>$export_url, 'filename'=>'whtp-user-agents' );	
-	}
-	
-	/*
-	* export the ip_hits table to a CSV file
-	* uses the function whtp_write_csv
-	* returns the file's url and file name as an array
-	*/
-	function whtp_export_ip_hits( $backup_date ){
-		global $wpdb;
-		$filename_url = WHTP_BACKUP_DIR;		
-		$filename = $filename_url . "/" . $backup_date . "/whtp-ip-hits.csv";
-		
-		$ip_hits = $wpdb->get_results( "SELECT * FROM whtp_ip_hits" );
-		$fields = array();
-		if ( count( $ip_hits ) > 0 ){			
-			foreach ( $ip_hits as $ip_hit  ){
-				$csv_row  = array(
-					$ip_hit->ip_id,
-					$ip_hit->page_id,
-					$ip_hit->datetime_first_visit,
-					$ip_hit->datetime_last_visit,
-					$ip_hit->browser_id
-				);
-				$fields[] = $csv_row;
-			}
-			if ( whtp_write_csv( $filename, $fields, ',', '') ){
-				$export_url = WP_CONTENT_URL . '/uploads/whtp_backups/' . $backup_date . "/whtp-ip-hits.csv";
-				echo '<p>IP Hits Table backup successful.</p>';
-			}	
-		}
-		return $recent_backup = array( 'link'=>$export_url, 'filename'=>'whtp-ip-hits' );
-	}
 ?>
 
 <div class="wrap">	
@@ -163,31 +35,6 @@
                         <span>2Checkout.com Inc. (Ohio, USA) is a payment facilitator for goods and services provided by Three Pixels Web Solutions.</span>
                     </div>  
                 </div>
-                <div class="postbox">
-                    <div class="handlediv" title="Click to toggle"><br /></div>
-                    <h3 class="hndle">Subscribe to updates</h3>
-                    <div class="inside welcome-panel-column welcome-panel-last">
-					   <?php
-                            if(isset($_POST['whtpsubscr']) && $_POST['whtpsubscr'] == "y"){
-                                WHTP_Functions::whtp_admin_message_sender();
-                            }
-                            WHTP_Functions::signup_form();
-                        ?>
-                        <p>Thank you once again!</p>
-                    </div>
-                </div>
-                
-                <div class="postbox">
-                    <div class="handlediv" title="Click to toggle"><br /></div>
-                    <h3 class="hndle">Please Rate this plugin</h3>
-                    <div class="inside welcome-panel-column welcome-panel-last">
-                        <p><b>Dear User</b></p>
-                        <p>Please 
-                        <a href="http://wordpress.org/support/view/plugin-reviews/who-hit-the-page-hit-counter">Rate this plugin now.</a> if you appreciate it.
-                        Rating this plugin will help other people like you to find this plugin because on wordpress plugins are sorted by rating, so rate it high and give it a fair review to help others find it.<br />
-                        </p>
-                    </div>
-                </div>
             </div>
         </div>
         <div id="post-body">
@@ -206,7 +53,7 @@
                                             <h4>Export All Now</h4>
                                             <?php
                                                 if ( !defined ('WHTP_BACKUP_DIR'  ) ){
-                                                    if (WHTP_Functions::make_backup_dir () ){
+                                                    if ( WHTP_Functions::make_backup_dir () ){
                                                         echo '<div class="success"><p>Backup directory setup complete. Now you can backup your data and CSV files will be saved on : ' . WHTP_BACKUP_DIR . '</p></div>';	
                                                     }
                                                 }
@@ -220,18 +67,16 @@
                                                     if ( isset( $_POST["export-all"] ) ) {
                                                         echo '<div class="success"><p>';
                                                         // export hits table (page, count)
-                                                        $recent_backups[] = whtp_export_hits ( $backup_date );
+                                                        $recent_backups[] = WHTP_Functions::export_hits ( $backup_date );
                                                         
                                                         // export hitinfo table (ip_address, ip_total_count, user_agent, datetime_first_visit, atetime_last_visit)
-                                                        $recent_backups[] = whtp_export_hitinfo( $backup_date );
+                                                        $recent_backups[] = WHTP_Functions::export_hitinfo( $backup_date );
                                                         
                                                         // export user agents (agent_name, agent_details)
-                                                        $recent_backups[] = whtp_export_user_agents( $backup_date );
+                                                        $recent_backups[] = WHTP_Functions::export_user_agents( $backup_date );
                                                         
                                                         // export ip hits
-                                                        $recent_backups[] = whtp_export_ip_hits( $backup_date );
-                                                        
-                                                        
+                                                        $recent_backups[] = WHTP_Functions::export_ip_hits( $backup_date );
                                                         
                                                         update_option('whtp_recent_backups', $recent_backups);
                                                         

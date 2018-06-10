@@ -24,4 +24,15 @@ class WHTP_IP_Location extends WHTP_Database{
         }	
         else return "AA";
     }
+
+    public static function get_country_name( $country_code ){
+		global $wpdb;
+		$country_name = $wpdb->get_var(
+            "SELECT country_name FROM `{self::$ip2loacation_table}` 
+            WHERE country_code='$country_code' LIMIT 0,1"
+        );
+        
+		if ( $country_name == "") return "Unknown Country";
+		else return $country_name;
+    }
 }
