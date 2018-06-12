@@ -9,7 +9,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-class WHTP_Shortcodes extends WHTP_Database{
+class WHTP_Shortcodes{
 	public function __construct(){
 		add_shortcode('whohit',			array( $this, 'hit_counter_shortcode') );
 		add_shortcode('whlinkback',		array( $this, 'link_back') );

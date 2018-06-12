@@ -2,16 +2,20 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-class WHTP_Ip_Hits extends WHTP_Database{
+class WHTP_Ip_Hits{
+	private static $ip_hits_table;
+
     public function __construct(){
-        parent::__construct();
+		global $wpdb;
+		
+		self::$ip_hits_table	= $wpdb->prefix . 'whtp_ip_hits';
 	}
 	
 	public static function ip_hit($ip_id,$page_id,$date_ftime,$ua_id){
-        global $wpdb;
+        global $wpdb, $ip_hits_table;
 
         $wpdb->insert(
-            self::$ip_hits_table, 
+            $ip_hits_table, 
             array(
                 "ip_id"                 => $ip_id,
                 "page_id"               => $page_id,
@@ -26,9 +30,10 @@ class WHTP_Ip_Hits extends WHTP_Database{
 	* Return as an array of agent_ids
 	*/
 	public static function agent_ids_from_ip_id( $ip_id ){
-		global $wpdb;
+		global $wpdb, $ip_hits_table;
+
 		$agent_ids = array();
-		$ids = $wpdb->get_col( "SELECT browser_id FROM whtp_ip_hits WHERE ip_id = '$ip_id'" );
+		$ids = $wpdb->get_col( "SELECT browser_id FROM `$ip_hits_table` WHERE ip_id = '$ip_id'" );
 		if ( count ( $ids ) ){			
 			for( $count=0; $count < count ($ids); $count ++){
 				if  ( !in_array( $ids[$count], $agent_ids )	){
@@ -43,8 +48,9 @@ class WHTP_Ip_Hits extends WHTP_Database{
 	* Return as an array of page_ids
 	*/
 	public static function page_ids_from_ip_id($ip_id){
-		global $wpdb;
-		$results = $wpdb->get_col( "SELECT page_id FROM whtp_ip_hits WHERE ip_id = '$ip_id'" );
+		global $wpdb, $ip_hits_table;
+
+		$results = $wpdb->get_col( "SELECT page_id FROM `$ip_hits_table` WHERE ip_id = '$ip_id'" );
 		if ($results){
 			$page_ids = array();
 			for( $count = 0; $count < count($results); $count ++ ){

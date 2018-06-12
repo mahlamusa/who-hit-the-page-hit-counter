@@ -3,24 +3,34 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-class WHTP_Hit_Info extends WHTP_Database{
+class WHTP_Hit_Info{
+    private static $hitinfo_table;
+    
     public function __construct(){
-        parent::__construct();
+        global $wpdb;
+        
+        self::$hitinfo_table	= $wpdb->prefix . 'whtp_hitinfo';
     }
 
-    public static function get_hits( $page, $number ){
-        $hits = $wpdb->get_results(
-            "SELECT * FROM `{self::$hitinfo_table}` 
-            WHERE ip_status='active' 
-            ORDER BY ip_total_visits DESC"
-        );
+    public static function get_hitinfo( $offset = 0, $number = 15, $status = 'active' ){
+        global $wpdb, $hitinfo_table;
+
+        $sql = "SELECT * FROM `$hitinfo_table` 
+        WHERE ip_status='$status' 
+        ORDER BY ip_total_visits DESC";
+
+        $sql = $number != 'all' ? $sql . " LIMIT $offset, $number" : $sql;
+        
+        $hits = $wpdb->get_results( $sql );
 
         if ( $hits ) return $hits;
         else return array();
     }
 
     public static function count( $status = 'active'){
-        $count = $wpdb->get_var("SELECT COUNT(ip_address) FROM `{self::$hitinfo_table}` WHERE ip_status='{$status}'");
+        global $wpdb, $hitinfo_table;
+
+        $count = $wpdb->get_var("SELECT COUNT(ip_address) FROM `$hitinfo_table` WHERE ip_status='{$status}'");
 
         if ( $count ) return $count;
         else return 0;
@@ -30,8 +40,9 @@ class WHTP_Hit_Info extends WHTP_Database{
     * count the existing ips into the country count
     */
     public static function update_count_visiting_countries(){
-        global $wpdb;
-        $ips  = $wpdb->get_results("SELECT ip_address FROM `{self::$hitinfo_table}` WHERE ip_status = 'active'");
+        global $wpdb, $hitinfo_table;
+
+        $ips  = $wpdb->get_results("SELECT ip_address FROM `$hitinfo_table` WHERE ip_status = 'active'");
         if ( $ips ){
             foreach ($ips as $ip ){
                 $country_code = WHTP_IP_Location::get_country_code( $ip->ip_address );
@@ -45,15 +56,17 @@ class WHTP_Hit_Info extends WHTP_Database{
     }
 
     public static function get_ip_id( $ip_address ){
-        global $wpdb;
-        $ip_id  = $wpdb->get_var("SELECT id FROM `{self::$hitinfo_table}` WHERE ip_address='$ip_address' LIMIT 1");			
+        global $wpdb, $hitinfo_table;
+
+        $ip_id  = $wpdb->get_var("SELECT id FROM `$hitinfo_table` WHERE ip_address='$ip_address' LIMIT 1");			
         if ($ip_id){
             return $ip_id;
         }
     }
 
     public static function reset_ip_info( $resetips = ""){	
-        global $wpdb;
+        global $wpdb, $hitinfo_table;
+
         if ( isset ( $_POST['ip_address'] ) )
             $ip_address = $_POST['ip_address'];
             
@@ -66,7 +79,7 @@ class WHTP_Hit_Info extends WHTP_Database{
         if ($reset_ip != "all" && isset( $ip_address )){
             # reset specific
             $reset = $wpdb->update(
-                self::$hitinfo_table, 
+                $hitinfo_table, 
                 array("ip_total_visits" => 0),
                 array("ip_address" => $ip_address), 
                 array("%d"), array("%s")
@@ -74,7 +87,7 @@ class WHTP_Hit_Info extends WHTP_Database{
         }
         else{
             # reset all ip counters
-            $reset_all = $wpdb->query( "UPDATE `{self::$hitinfo_table}` SET ip_total_visits = 0");
+            $reset_all = $wpdb->query( "UPDATE `$hitinfo_table` SET ip_total_visits = 0");
         }
         
         if ( $reset || $reset_all ) return true;
@@ -84,15 +97,15 @@ class WHTP_Hit_Info extends WHTP_Database{
     
     # delete ip address
     public static function delete_ip ( $ip, $all = "" ){
-        global $wpdb;
+        global $wpdb, $hitinfo_table;
         
         if ( $delete_ip == "this_ip" ) {
-            $del = $wpdb->query ("DELETE FROM `{self::$hitinfo_table}` WHERE ip_address='$ip_address'");
+            $del = $wpdb->query ("DELETE FROM `$hitinfo_table` WHERE ip_address='$ip_address'");
             
                 
         }
         elseif ( $delete_ip == "all" ){
-            $del = $wpdb->query("DELETE FROM `{self::$hitinfo_table}`");            
+            $del = $wpdb->query("DELETE FROM `$hitinfo_table`");            
         }
 
         if ( $del ) return true;
@@ -100,26 +113,32 @@ class WHTP_Hit_Info extends WHTP_Database{
     }
 
     public static function hits_for_ip( $visitor_ip ) {
+        global $wpdb, $hitinfo_table;
+
         return $wpdb->get_row(
-            "SELECT * FROM `{self::$hitinfo_table}` 
+            "SELECT * FROM `$hitinfo_table` 
             WHERE ip_address='$visitor_ip'"
         );
     }
 
     public static function count_unique(){
+        global $wpdb, $hitinfo_table;
+
         return $wpdb->get_var(
             "SELECT COUNT(ip_address) AS totalunique 
-            FROM `{self::$hitinfo_table}` 
+            FROM `$hitinfo_table` 
             WHERE ip_status='active'"
         );
     }
 
     public static function top( $number = 10) {
+        global $wpdb, $hitinfo_table;
+
         return $wpdb->get_results( 
             "SELECT ip_address, ip_total_visits 
-            FROM `{self::$hitinfo_table}` 
+            FROM `$hitinfo_table` 
             WHERE ip_status='active' 
-            ORDER BY ip_total_visits DESC LIMIT '$number'"
+            ORDER BY ip_total_visits DESC LIMIT $number"
         );
     }
 
@@ -128,7 +147,8 @@ class WHTP_Hit_Info extends WHTP_Database{
     * and update the table
     */
     public static function hit_info( $page ){
-        global $wpdb;
+        global $wpdb, $hitinfo_table;
+
         $page = $page;
         
         $ip_address			= $_SERVER["REMOTE_ADDR"];	# visitor's ip address
@@ -136,7 +156,7 @@ class WHTP_Hit_Info extends WHTP_Database{
         $date_ltime			= date("Y/m/d") . ' ' . date('H:i:s'); # visitor's last visit
         
         //$ua = getBrowser(); //Get browser info
-        $ua = WHTP_Broswer::browser_info();
+        $ua = WHTP_Browser::browser_info();
         $browser = $ua['name'];
         
         $page_id = WHTP_Hits::get_page_id( $page );
@@ -146,11 +166,11 @@ class WHTP_Hit_Info extends WHTP_Database{
         * otherwise update
         */
         
-        $ip_check  =  $wpdb->get_var( "SELECT ip_address FROM `{self::$hitinfo_table}` WHERE ip_address = '$ip_address'" );
+        $ip_check  =  $wpdb->get_var( "SELECT ip_address FROM `$hitinfo_table` WHERE ip_address = '$ip_address'" );
 
         if ( $ip_check == ""){
             $insert_hit_info = $wpdb->insert(
-                self::$hitinfo_table, 
+                $hitinfo_table, 
                 array(
                     "ip_address"            => $ip_address,
                     "ip_total_visits"       =>1,
@@ -165,11 +185,11 @@ class WHTP_Hit_Info extends WHTP_Database{
             $ip_id      = $wpdb->insert_id;				
         }
         else{
-            $ip_total_visits = $wpdb->get_var("SELECT ip_total_visits FROM `{self::$hitinfo_table}` WHERE ip_address = '$ip_address'");
+            $ip_total_visits = $wpdb->get_var("SELECT ip_total_visits FROM `$hitinfo_table` WHERE ip_address = '$ip_address'");
 
             $ip_total_visits += 1;
             $update_ip_visit = $wpdb->update(
-                self::$hitinfo_table, 
+                $hitinfo_table, 
                 array(
                     "ip_total_visits"       => $ip_total_visits, 
                     "user_agent"            => $browser, 
@@ -181,25 +201,25 @@ class WHTP_Hit_Info extends WHTP_Database{
         }
         
             
-        $ua_id      = WHTP_Broswer::get_agent_id( $browser );
+        $ua_id      = WHTP_Browser::get_agent_id( $browser );
         $ip_id      = WHTP_Hit_Info::get_ip_id( $ip_address );
-        $page_id    = WHTP_Hit::get_page_id ( $page );
+        $page_id    = WHTP_Hits::get_page_id ( $page );
         
-        if ( !  WHTP_Broswer::browser_exists( $browser ) ){
-            WHTP_Broswer::add_browser( $browser );
+        if ( !  WHTP_Browser::browser_exists( $browser ) ){
+            WHTP_Browser::add_browser( $browser );
         }
         WHTP_Ip_Hits::ip_hit( $ip_id, $page_id, $date_ftime, $ua_id ); //insert new hit
 
         // get the country code corresponding to the visitor's IP
-        $country_code   = WHTP_Visiting_Countries::get_country_code( $ip_address );
+        $country_code   = WHTP_IP_Location::get_country_code( $ip_address );
         $counted        = WHTP_Visiting_Countries::country_count( $country_code );
     }
 
     public static function ip_is_denied ( $ip_address ){
-        global $wpdb;
+        global $wpdb, $hitinfo_table;
         $denied_ip	= $wpdb->get_var(
             "SELECT ip_address 
-            FROM `{self::$hitinfo_table}` 
+            FROM `$hitinfo_table` 
             WHERE ip_status='denied' AND ip_address='$ip_address' 
             LIMIT 1"
         );
@@ -210,12 +230,12 @@ class WHTP_Hit_Info extends WHTP_Database{
     
     # set an IP's status as denied
     public static function deny_ip( $ip_address = ""){
-        global $wpdb;
+        global $wpdb, $hitinfo_table;
 
         $ip_address = $ip_address != "" ? $ip_address : esc_attr( $_POST['ip_address'] );
         
         $deny = $wpdb->update(
-            self::$hitinfo_table, 
+            $hitinfo_table, 
             array("ip_status"=>"denied"), 
             array("ip_address"=>$ip_address), array("%s"), array("%s")
         );
@@ -226,12 +246,12 @@ class WHTP_Hit_Info extends WHTP_Database{
     }
 
     public static function add_denied_ip(){
-		global $wpdb;
+        global $wpdb, $hitinfo_table;
 		
 		$ip_address = stripslashes( $_POST['ip_address'] );
 		
 		$add_ip = $wpdb->insert(
-            self::$hitinfo_table, 
+            $hitinfo_table, 
             array("ip_status" => "denied" ,"ip_address" => $ip_address ), 
             array("%s", "%s", "%s")
         );
@@ -241,11 +261,12 @@ class WHTP_Hit_Info extends WHTP_Database{
     }
     
     public static function allow_ip(){
-		global $wpdb;
+        global $wpdb, $hitinfo_table;
+
 		$ip_address = stripslashes( esc_attr( $_POST['ip_address'] ) );
 		
 		$allow = $wpdb->update(
-            self::$hitinfo_table, 
+            $hitinfo_table, 
             array("ip_status"=>"active"), 
             array("ip_address"=>$ip_address), array("%s"), array("%s") 
         );

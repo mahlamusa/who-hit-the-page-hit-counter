@@ -3,14 +3,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }	
 class WHTP_Functions{
-	
+	private static $hits_table;
+	private static $hitinfo_table;
+	private static $user_agents_table;
+	private static $ip_hits_table;
+	private static $visiting_countries_table;
+	private static $ip_to_location_table;
+
 	public function __construct(){
 		self::$hits_table 				= $wpdb->prefix . 'whtp_hits';
 		self::$hitinfo_table 			= $wpdb->prefix . 'whtp_hitinfo';
 		self::$user_agents_table 		= $wpdb->prefix . 'whtp_user_agents';
-		self::$ip_hits_table 			= $wpdb->prefix . 'whtp_ip_hits';
+		self::$ip_hits_table			= $wpdb->prefix . 'whtp_ip_hits';
 		self::$visiting_countries_table = $wpdb->prefix . 'whtp_visiting_countries';
-		self::$ip2loacation_table 		= $wpdb->prefix . 'whtp_ip2location';
+		self::$ip_to_location_table	= $wpdb->prefix . 'whtp_ip2location';
 	}
 
 	public static function plugin_info(){
@@ -40,13 +46,27 @@ class WHTP_Functions{
 	*/
 	public static function all_ips(){
 		global $wpdb;
+
 		$all_ips = array();
-		$all_ips = $wpdb->get_col ( "SELECT ip_address FROM `{self::$hitinfo_table}`" );		
+		$all_ips = $wpdb->get_col ( "SELECT ip_address FROM `$hitinfo_table`" );		
 		
 		return $all_ips;
 	}
 
-	public function pagination( $number, $page, $total, $list_class ) {
+	public static function paginate( $url, $page, $total, $number ){
+		if( $page > 0 ) {
+			$last = $page - 2;
+			echo '<a href="$url?page='. $last . '&number=' . $number . '">' . __( "Last $number Records", "whtp") . '</a> |';
+			echo '<a href="$url?page=' . $page . '">' . __( "Next $number Records", "whtp") . '</a>';
+		}else if( $page == 0 ) {
+			echo '<a href="$url?page=' . $page . '">' . __( "Next $number Records", "whtp") . '</a>';
+		}else if( $left_rec < $rec_limit ) {
+			$last = $page - 2;
+			echo '<a href=$url?page=' . $last . '">' . __( "Last $number Records", "whtp") . '</a>';
+		}
+	}
+
+	public static function pagination( $number, $page, $total, $list_class ) {
 		if ( $number == 'all' ) {
 			return '';
 		}
@@ -189,9 +209,10 @@ class WHTP_Functions{
 	*/
 	public static function export_hits( $backup_date ){
 		global $wpdb;
+
 		$filename_url = WHTP_BACKUP_DIR;		
 		$filename = $filename_url . "/" . $backup_date . "/whtp-hits.csv";
-		$hits = $wpdb->get_results ( "SELECT * FROM `{self::$hits_table}`" );
+		$hits = $wpdb->get_results ( "SELECT * FROM `$hits_table`" );
 		
 		$fields = array(); // csv rows / whole document
 		if ( count ( $hits ) ){			
@@ -216,10 +237,11 @@ class WHTP_Functions{
 	*/
 	public static function export_hitinfo( $backup_date ){
 		global $wpdb;
+
 		$filename_url = WHTP_BACKUP_DIR;		
 		$filename = $filename_url . "/" . $backup_date . "/whtp-hitinfo.csv";
 		
-		$hitsinfo = $wpdb->get_results ( "SELECT * FROM `{self::$hitinfo_table}`" );
+		$hitsinfo = $wpdb->get_results ( "SELECT * FROM `$hitinfo_table`" );
 		
 		$fields = array(); // csv rows / whole document
 		if ( count( $hitsinfo ) > 0 ){			
@@ -246,10 +268,11 @@ class WHTP_Functions{
 	*/
 	public static function export_user_agents( $backup_date ){
 		global $wpdb;
+		
 		$filename_url = WHTP_BACKUP_DIR;		
 		$filename = $filename_url . "/" . $backup_date . "/whtp-user-agents.csv";
 		
-		$user_agents = $wpdb->get_results ( "SELECT * FROM `{self::$user_agents_table}`" );
+		$user_agents = $wpdb->get_results ( "SELECT * FROM `$user_agents_table`" );
 		$fields = array();
 		
 		if ( count( $user_agents ) > 0 ){			
@@ -274,10 +297,11 @@ class WHTP_Functions{
 	*/
 	public static function export_ip_hits( $backup_date ){
 		global $wpdb;
+
 		$filename_url = WHTP_BACKUP_DIR;		
 		$filename = $filename_url . "/" . $backup_date . "/whtp-ip-hits.csv";
 		
-		$ip_hits = $wpdb->get_results( "SELECT * FROM `{self::$ip_hits_table}`" );
+		$ip_hits = $wpdb->get_results( "SELECT * FROM `$ip_hits_table`" );
 		$fields = array();
 		if ( count( $ip_hits ) > 0 ){			
 			foreach ( $ip_hits as $ip_hit  ){

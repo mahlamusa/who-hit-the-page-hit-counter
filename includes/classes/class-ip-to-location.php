@@ -2,19 +2,25 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-class WHTP_IP_Location extends WHTP_Database{
+class WHTP_IP_Location{
+    private static $ip_to_location_table;
+
     public function __construct(){
-        parent::__construct();
+        global $wpdb;
+        
+        self::$ip_to_location_table	= $wpdb->prefix . 'whtp_ip2location';
     }
 
     /*
     *	Count country's visits
     */
-    function get_country_code( $visitor_ip ){
-        global $wpdb;
-        $select_country_code = "SELECT country_code 
-            FROM `" . self::$ip2loacation_table  . "`
-            WHERE INET_ATON('" . $visitor_ip . "') 
+    public static function get_country_code( $visitor_ip ){
+        global $wpdb, $ip_to_location_table;
+        
+        $select_country_code = "
+            SELECT country_code 
+            FROM `$ip_to_location_table`
+            WHERE INET_ATON('$visitor_ip') 
             BETWEEN decimal_ip_from AND decimal_ip_to LIMIT 1";
 
         $country_code = $wpdb->get_var( $select_country_code );
@@ -26,9 +32,10 @@ class WHTP_IP_Location extends WHTP_Database{
     }
 
     public static function get_country_name( $country_code ){
-		global $wpdb;
+        global $wpdb, $ip_to_location_table;
+        
 		$country_name = $wpdb->get_var(
-            "SELECT country_name FROM `{self::$ip2loacation_table}` 
+            "SELECT country_name FROM `$ip_to_location_table` 
             WHERE country_code='$country_code' LIMIT 0,1"
         );
         

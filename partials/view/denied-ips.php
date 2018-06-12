@@ -1,9 +1,19 @@
 <?php
 global $wpdb;
-$total_ips	= $wpdb->get_var("SELECT COUNT(ip_address) FROM whtp_hitinfo WHERE ip_status='denied'");
+
+$limit = isset( $_GET['limit'] ) ? esc_attr( $_GET['limit'] ) : 100;
+if( isset($_GET{'page'} ) ) {
+    $page = $_GET['page'] + 1;
+    $offset = $limit * $page ;
+ }else {
+    $page = 0;
+    $offset = 0;
+ }
+
+$total_ips	= WHTP_Hit_Info::count( 'denied' );
 
 // Display visitors
-$hit_info_result = $wpdb->get_results("SELECT * FROM whtp_hitinfo WHERE ip_status='denied' ORDER BY ip_total_visits DESC");
+$hit_info_result = WHTP_Hit_info::get_hitinfo( $offset, $limit, 'denied' );
 ?>
 <div class="wrap">	
 	<h2>Who Hit The Page Hit Counter</h2>
@@ -118,66 +128,71 @@ $hit_info_result = $wpdb->get_results("SELECT * FROM whtp_hitinfo WHERE ip_statu
                       </div>
                       <br />
                       <br />
-                 </div>
-                 <div class="postbox inside">
-					<div class="handlediv" title="Click to toggle"><br /></div>
-                    <h3 class="hndle">
-                        <?php _e("Currently denied IP Addresses", "whtp"); ?>
-                    </h3>   
-                    <div class="inside">
-                    	<p><?php _e("Here is a list of currently denied IP addresses", "whtp"); ?></p>
-						<?php
-
-                        if ( $total_ips && $total_ips > 0) :
-                            if( $hit_info_result ) : ?>
-                                <table class="denied-ip-table mdl-data-table mdl-js-data-table mdl-shadow--2dp" cellspacing="0" cellpadding="5px" width="98%">
-                                    <tr>
-                                        <td class="title-footer"><h4><?php _e("Visitor's  IP Address", "whtp"); ?></h4></td>
-                                        <td class="title-footer"><h4><?php _e("Allow Count", "whtp"); ?></h4></td>
-                                        <td class="title-footer ipv-title"><h4><?php _e("Reset", "whtp"); ?></h4></td>
-                                        <td class="title-footer"><h4><?php _e("Delete IP", "whtp"); ?></h4></td>
-                                    </tr>
-                                    <?php
-                                    # print rows from table
-                                    foreach( $hit_info_result as $row) : ?>
-                                    
-                                    <tr>
-                                        <td><?php echo $row->ip_address; ?></td>
-                                        <td>					
-                                            <form action="" method="post">
-                                            <input type="hidden" name="allow_ip" value="this_ip" />
-                                            <input type="hidden" name="ip_address" value="<?php echo $row->ip_address; ?> " />
-                                            <input type="submit" name="submit" value="<?php _e("Allow This IP", "whtp"); ?>" class="button-primary" />
-                                            </form>
-                                        </td>
-                                        <td>			
-                                            <form action="" method="post">
-                                            <input type="hidden" name="delete_ip" value="this_ip" />
-                                            <input type="hidden" name="delete_this_ip" value="<?php echo $row->ip_address; ?>" />
-                                            <input type="submit" name="submit" value="<?php _e("Delete This IP", "whtp"); ?>" class="button" />
-                                            </form>
-                                        </td>
-                                    </tr>
-
-                                    <?php endforeach; ?>
-
-                                    <tr>
-                                        <td class="title-footer" colspan="2" align="right">
-                                            <h4><?php _e("Total Denied IP´s ", "whtp"); ?></h4>
-                                        </td>
-                                        <td class="title-footer ipv-title">
-                                            <h4><?php echo $total_ips; ?></h4>
-                                        </td>
-                                    </tr>                                        
-                                </table>
-                            <?php else : ?>
-                                <h4 class="not-found">
-                                    <?php _e("There are currently no registered IP addresses, please read above to get started", "whtp"); ?>
-                                </h4>
-                            <?php endif;
-                        endif; ?>
-                    </div>
-                 </div>                      
+                 </div>                  
              </div>
+    </div>
+
+    <div class="mdl-grid whtps-content">
+        <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--12-col">
+            <h3>
+                <?php _e("Currently denied IP Addresses", "whtp"); ?>
+            </h3>   
+            <p><?php _e("Here is a list of currently denied IP addresses", "whtp"); ?></p>
+            <?php
+
+            if ( $total_ips && $total_ips > 0) :
+                if( $hit_info_result ) : ?>
+                    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" cellspacing="0" cellpadding="5px" width="98%">
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">
+                                <h4><?php _e("Visitor's  IP Address", "whtp"); ?></h4>
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric">
+                                <h4><?php _e("Allow Count", "whtp"); ?></h4></td>
+                            <td class="mdl-data-table__cell--non-numeric"><h4>
+                                <?php _e("Reset", "whtp"); ?></h4></td>
+                            <td class="mdl-data-table__cell--non-numeric">
+                                <h4><?php _e("Delete IP", "whtp"); ?></h4></td>
+                        </tr>
+                        <?php
+                        # print rows from table
+                        foreach( $hit_info_result as $row) : ?>
+                        
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric"><?php echo $row->ip_address; ?></td>
+                            <td class="mdl-data-table__cell--non-numeric">					
+                                <form action="" method="post">
+                                <input type="hidden" name="allow_ip" value="this_ip" />
+                                <input type="hidden" name="ip_address" value="<?php echo $row->ip_address; ?> " />
+                                <input type="submit" name="submit" value="<?php _e("Allow This IP", "whtp"); ?>" class="button-primary" />
+                                </form>
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric">			
+                                <form action="" method="post">
+                                <input type="hidden" name="delete_ip" value="this_ip" />
+                                <input type="hidden" name="delete_this_ip" value="<?php echo $row->ip_address; ?>" />
+                                <input type="submit" name="submit" value="<?php _e("Delete This IP", "whtp"); ?>" class="button" />
+                                </form>
+                            </td>
+                        </tr>
+
+                        <?php endforeach; ?>
+
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric" colspan="2" align="right">
+                                <h4><?php _e("Total Denied IP´s ", "whtp"); ?></h4>
+                            </td>
+                            <td class="title-footer ipv-title">
+                                <h4><?php echo $total_ips; ?></h4>
+                            </td>
+                        </tr>                                        
+                    </table>
+                <?php else : ?>
+                    <h4 class="not-found">
+                        <?php _e("There are currently no registered IP addresses, please read above to get started", "whtp"); ?>
+                    </h4>
+                <?php endif;
+            endif; ?>
+        </div>
     </div>
 </div>

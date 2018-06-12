@@ -3,13 +3,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 abstract class WHTP_Database{
-	private $hits_table;
-	private $hitinfo_table;
-	private $user_agents_table;
-	private $ip_hits_table;
-	private $visiting_countries_table;
-	private $ip_to_loacation_table;
-	private $ip_hits_table;
+	public static $hits_table;
+	public static $hitinfo_table;
+	public static $user_agents_table;
+	public static $ip_hits_table;
+	public static $visiting_countries_table;
+	public static $ip_to_location_table;
 
 	private static $_instance = null;
 
@@ -23,11 +22,11 @@ abstract class WHTP_Database{
 	public function __construct(){
 		global $wpdb;
 
-		self::$hits_table 				= $wpdb->prefix . 'whtp_hits';
-		self::$hitinfo_table 			= $wpdb->prefix . 'whtp_hitinfo';
-		self::$user_agents_table 		= $wpdb->prefix . 'whtp_user_agents';
-		self::$ip_hits_table 			= $wpdb->prefix . 'whtp_ip_hits';
-		self::$visiting_countries_table = $wpdb->prefix . 'whtp_visiting_countries';
-		self::$ip2loacation_table 		= $wpdb->prefix . 'whtp_ip2location';
+		self::$hits_table					= $wpdb->prefix . 'whtp_hits';
+		self::$hitinfo_table 				= $wpdb->prefix . 'whtp_hitinfo';
+		self::$user_agents_table 			= $wpdb->prefix . 'whtp_user_agents';
+		self::$ip_hits_table				= $wpdb->prefix . 'whtp_ip_hits';
+		self::$visiting_countries_table		= $wpdb->prefix . 'whtp_visiting_countries';
+		self::$ip_to_location_table 		= $wpdb->prefix . 'whtp_ip2location';
 	}
 }

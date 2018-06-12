@@ -5,78 +5,86 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 $total_hits = WHTP_Hits::total();
+
 if ( isset( $_GET['number'] ) ) {
     $number = esc_attr( $_GET['number'] );
 }else{
     $number = "all";
 }
 
-if ( isset( $_GET['page'] ) ) {
-    $page = es_attr( $_GET['page'] );
+if ( isset( $_GET['paging'] ) ) {
+    $paging = esc_attr( $_GET['paging'] );
 }else{
-    $page = 1;
+    $paging = 1;
 }
 
-$hits = WHTP_Hits::get_all( $number );
+$offset = $paging * $number;
+
+$hits   = WHTP_Hits::get_hits( $offset, $number );
 $total	= count( $hits );
-$pagination = WHTP_Functions::pagination( $number, $page, $total, 'whtp-pagination' );
+$pagination = WHTP_Functions::pagination( $number, $paging, $total, 'whtp-pagination' );
 
 if( $total > 0 ): ?>
     <div class="pagination">
         <?php echo $pagination; ?>
     </div>
-    <table class="hits widefat fixed" cellspacing="0" cellpadding="5px" width="98%">
+    <table  class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
         <thead>
-            <th  class="title-footer first-col-title">Page Visited</th>
-            <th  class="title-footer second-col-title">Number of Hits</th>
-            <th  class="title-footer action-col-title">Discount By</th>
-            <th  class="title-footer action-col-title">Reset</th>
-            <th  class="title-footer action-col-title">Delete</th>
+            <th class="mdl-data-table__cell--non-numeric">Page Visited</th>
+            <th>Number of Hits</th>
+            <th class="mdl-data-table__cell--non-numeric">Discount By</th>
+            <th>Actions</th>
         </thead>
         <?php  foreach($hits as  $row  ) : ?>
         <tr>
-            <td class="first-col"><?php echo $row->page; ?></td>
-            <td class="second-col"><?php echo $row->count; ?></td>	
-            <td class="action-col discount">						
+            <td class="mdl-data-table__cell--non-numeric"><?php echo $row->page; ?></td>
+            <td><?php echo $row->count; ?></td>	
+            <td class="mdl-data-table__cell--non-numeric">						
                 <form action="" method="post">
                     <input type="hidden" name="discount_page" value="<?php echo $row->page; ?>" />
                     <input type="number" name="discountby" value="1" />
-                    <input type="submit" name="submit" value="--" class="button-primary" />
+                    <!--<input type="submit" name="submit" value="--" class="button-primary" />-->
+                    <button type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+                        <i class="material-icons">mood</i>
+                    </button>
                 </form>
             </td>					
-            <td class="action-col">						
-                <form action="" method="post">
-                    <input type="hidden" name="reset_page" value="<?php echo $row->page; ?>" />
-                    <input type="submit" name="submit" value="Reset" class="button-primary" />
-                </form>
-            </td>
-            <td class="action-col">						
-                <form action="" method="post">
-                <input type="hidden" name="delete_page" value="<?php echo esc_attr( );   ?>$row->page . '" />
-                <input type="submit" name="submit" value="Delete" class="button" />
-                </form>
+            <td>						
+                <button id="demo-menu-lower-right-<?php echo $row->page; ?>"
+                    class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">more_vert</i>
+                </button>
+                <?php $nonce = wp_create_nonce( 'delete_reset_action' ); ?>
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                    for="demo-menu-lower-right-<?php echo $row->page; ?>">
+                    <li class="mdl-menu__item">
+                        <a href="<?php echo admin_url( 'admin.php?page=whtp-view-all&delete_page='.$row->page. '&nonce='. $nonce ); ?>">Delete</a></li>
+                    <li class="mdl-menu__item">
+                        <a href="<?php echo admin_url( 'admin.php?page=whtp-view-all&reset_page='. $row->page. '&nonce='. $nonce ); ?>">Reset</a>
+                    </li>
+                </ul>
             </td>
         </tr>
         <?php endforeach; ?>
         <tr>
-            <td class="title-footer first-col-title"><h4>Total Hits</h4></td>
-            <td class="title-footer second-col-title"><h4><?php echo $total_hits; ?></h4></td>
-            <td class="action-col-title title-footer" bgcolor="#FF0000" colspan="3">&nbsp;</td>
+            <td colspan="2">&nbsp;</td>
+            <td class="mdl-data-table__cell--non-numeric"><h4>Total Hits</h4></td>
+            <td><h4><?php echo $total; ?></h4></td>
         </tr>
         <tr>
-        <td class="title-footer" colspan="3"><h4>&nbsp;</h4></td>
-        <td class="action-col-title title-footer">
-            <form action="" method="post">
-            <input type="hidden" name="reset_page" value="all" />
-            <input type="submit" name="submit" value="Reset All" class="button-primary" />
-            </form>	
-        </td>
-        <td class="action-col-title title-footer">
-            <form action="" method="post">
-            <input type="hidden" name="delete_page" value="all" />
-            <input type="submit" name="submit" value="Delete All" class="button" />
-            </form>
-        </td>
+            <td colspan="2">&nbsp;</td>
+            <td>
+                <form action="" method="post">
+                <input type="hidden" name="reset_page" value="all" />
+                <input type="submit" name="submit" value="Reset All" class="button-primary" />
+                </form>	
+            </td>
+            <td>
+                <form action="" method="post">
+                <input type="hidden" name="delete_page" value="all" />
+                <input type="submit" name="submit" value="Delete All" class="button" />
+                </form>
+            </td>
         </tr>
     </table>
     <?php else: ?>
@@ -89,5 +97,5 @@ if( $total > 0 ): ?>
             </p>
         </div>          
         <?php
-    endif;
+    endif;    
 ?>

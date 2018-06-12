@@ -3,17 +3,26 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-class WHTP_Broswer extends WHTP_Database{
+class WHTP_Browser{
+    private static $user_agents_table;
+
     public function __construct(){
-        parent::_construct();
+        global $wpdb;        
+        self::$user_agents_table = $wpdb->prefix . 'whtp_user_agents';
     }
 
     /*
     *	Get agent id
     */
-    function get_agent_id( $browser){
-        global $wpdb;
-        $ua_id = $wpdb->get_var("SELECT agent_id FROM `{self::$user_agents_table}` WHERE agent_name = '$browser' LIMIT 1");
+    public static function get_agent_id( $browser){
+        global $wpdb, $user_agents_table;
+
+        $ua_id = $wpdb->get_var(
+            "SELECT agent_id 
+            FROM `$user_agents_table` 
+            WHERE agent_name = '$browser' LIMIT 1"
+        );
+
         if ( $ua_id ){
             return $ua_id;
         }
@@ -22,9 +31,15 @@ class WHTP_Broswer extends WHTP_Database{
         }
     }
 
-    function browser_exists( $browser ){
-        global $wpdb;
-        $browser = $wpdb->get_var("SELECT agent_name FROM `{self::$user_agents_table}` WHERE agent_name='$browser' LIMIT 1" );
+    public static function browser_exists( $browser ){
+        global $wpdb, $user_agents_table;
+
+        $browser = $wpdb->get_var(
+            "SELECT agent_name 
+            FROM `$user_agents_table` 
+            WHERE agent_name='$browser' LIMIT 1" 
+        );
+
         if ( $browser){
             return true;
         }
@@ -32,9 +47,10 @@ class WHTP_Broswer extends WHTP_Database{
     }
 
     public static function add_browser( $browser, $details = ""){
-        global $wpdb;
+        global $wpdb, $user_agents_table;
+
         $wpdb->insert(
-            self::$user_agents_table, 
+            $user_agents_table, 
             array(
                 "agent_name"    => $browser, 
                 "agent_details" => $details
@@ -43,7 +59,9 @@ class WHTP_Broswer extends WHTP_Database{
     }
 
     public static function get_browsers(){
-       return $wpdb->get_results ( "SELECT agent_name FROM `{self::$user_agents_table}`" );
+        global $wpdb, $user_agents_table;
+
+        return $wpdb->get_results ( "SELECT agent_name FROM `$user_agents_table`" );
     }
 
     public static function browser_info(){

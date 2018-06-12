@@ -2,33 +2,46 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-class WHTP_Hits extends WHTP_Database{
-    public function __construct(){
-        parent::__construct();
+class WHTP_Hits{
+    public static $hits_table;
+
+    public function __construct(){        
+        global $wpdb;
+        self::$hits_table = $wpdb->prefix . 'whtp_hits';
     }
 
     public static function total(){
         global $wpdb;
+        $hits_table = $wpdb->prefix . 'whtp_hits';
 
-       $total = $wpdb->get_var( "SELECT SUM(count) AS totalhits FROM {self::$hits_table}" );
-       if ( $total ) return $total;
-       else return 0;
+        $total = $wpdb->get_var( "SELECT SUM(count) AS totalhits FROM $hits_table}" );
+
+        if ( $total ) return $total;
+        else return 0;
     }
 
-    public static function get_hits( $page = 0, $number = "") {
+    public static function get_hits( $offset = 0, $number = 15, $order = 'DESC') {
         global $wpdb;
+        $hits_table = $wpdb->prefix . 'whtp_hits';
 
-        $all = $wpdb->get_results("SELECT * FROM `{self::$hits_table}` ORDER BY count DESC");
+        $sql = "SELECT * FROM `$hits_table` ORDER BY count $order";
+
+        $sql = ( $number != 'all' ) ? $sql . " LIMIT $offset, $number" : $sql;
+
+        $all = $wpdb->get_results( $sql );
+
         if ( $all ) return $all;
         else return (object) array();
     }
 
     public static function get_page_by_id( $page_id ) {
         global $wpdb;
-        return $wpdb->get_row ( "SELECT page, count FROM `{self::$hits_table}` WHERE page_id='$page_id' LIMIT 0,1" );
+        $hits_table = $wpdb->prefix . 'whtp_hits';
+
+        return $wpdb->get_row ( "SELECT page, count FROM `$hits_table` WHERE page_id='$page_id' LIMIT 0,1" );
     }
 
-    public static function count_page( $page ) {        	
+    public static function count_page( $page ) {	
         $page = $page;
         
         $ip_address	= $_SERVER["REMOTE_ADDR"];	# visitor's ip address 
@@ -41,14 +54,15 @@ class WHTP_Hits extends WHTP_Database{
         }
     }
 
-    function discount_page(){
-        global $wpdb;
+    public static function discount_page(){
+        global $wpdb, $hits_table;
+
         $page = stripslashes( $_POST['discount_page'] );
         $discountby = stripslashes( $_POST['discountby'] );
-        $old_count = $wpdb->get_var( "SELECT count FROM `{self::$hits_table}` WHERE page='$page'" );
+        $old_count = $wpdb->get_var( "SELECT count FROM `$hits_table` WHERE page='$page'" );
         
         $discount_page = $wpdb->update(
-            self::$hits_table, 
+            WHTP_HITS_TABLE, 
             array( "count" => $old_count - $discountby ), 
             array("page" => $page)
         );
@@ -63,44 +77,43 @@ class WHTP_Hits extends WHTP_Database{
     */
     public static function count_hits( $page ){
         global $wpdb;
+        $hits_table = $wpdb->prefix . 'whtp_hits';
+
         $page = $page;
         
         //$ua = getBrowser(); //Get browser info
-        $ua = WHTP_Broswer::browser_info();
+        $ua = WHTP_Browser::browser_info();
         $browser = $ua['name'];
             
-        $page_check = $wpdb->get_var("SELECT page FROM `{self::$hits_table}` WHERE page = '$page' LIMIT 1");
+        $page_check = $wpdb->get_var("SELECT page FROM `$hits_table` WHERE page = '$page' LIMIT 1");
         if ( $page_check != "" ){
-            $count = $wpdb->get_var("SELECT count FROM `{self::$hits_table}` WHERE page = '$page' LIMIT 1");
+            $count = $wpdb->get_var("SELECT count FROM `$hits_table` WHERE page = '$page' LIMIT 1");
             $ucount = $count + 1;
             $update = $wpdb->update(
-                self::$hits_table,
+                WHTP_HITS_TABLE,
                 array("count"=> $ucount), 
                 array("page"=>$page),array("%d"),array("%s"));
         }
         else {
             $insert = $wpdb->insert(
-                self::$hits_table, 
+                WHTP_HITS_TABLE, 
                 array("page"=>$page,"count"=>1), 
                 array("%s", "%d")
             );
             $page_id = $wpdb->insert_id;
             $_SESSION['insert_page'] = $page_id;
         }
-        if ( !  WHTP_Broswer::browser_exists( $browser ) ){
-            WHTP_Broswer::add_browser( $browser );
+        if ( !  WHTP_Browser::browser_exists( $browser ) ){
+            WHTP_Browser::add_browser( $browser );
         }
     }
 
-    
-
-    
-
-    function get_page_id ( $page ){
+    public static function get_page_id ( $page ){
         global $wpdb;
+        $hits_table = $wpdb->prefix . 'whtp_hits';
 
         $page_id  = $wpdb->get_var(
-            "SELECT page_id FROM {self::$hits_table} 
+            "SELECT page_id FROM `$hits_table` 
             WHERE page = '$page' LIMIT 1"
         );
         return $page_id;
@@ -108,16 +121,17 @@ class WHTP_Hits extends WHTP_Database{
 
     public static function delete_page( $delete_page = ""){
         global $wpdb;
+        $hits_table = $wpdb->prefix . 'whtp_hits';
 
         if ($delete_page == ""){
-            $delete_page = esc_attr( $_POST['delete_page'] );
+            $delete_page = isset( $_GET['delete_page'] ) ? esc_attr( $_GET['delete_page'] ) : esc_attr( $_POST['delete_page'] );
         }
         
         if ( $delete_page != "all" ){
-            $del = $wpdb->query ("DELETE FROM `{self::$hitinfo_table}` WHERE page='$delete_page'");
+            $del = $wpdb->query ("DELETE FROM `$hits_table` WHERE page='$delete_page'");
         }
         else{
-            $del = $wpdb->query("DELETE * FROM `{self::$hitinfo_table}`");
+            $del = $wpdb->query("DELETE * FROM `$hits_table`");
         }
 
         if ( $del ) return true;
@@ -126,16 +140,18 @@ class WHTP_Hits extends WHTP_Database{
 
     public static function reset_page_count( $page = ""){
         global $wpdb;
+        $hits_table = $wpdb->prefix . 'whtp_hits';
+
         if ( $page == ""){
-            $page = stripslashes( $_POST['reset_page'] );
+            $page = isset( $_GET['reset_page'] ) ? esc_attr( $_GET['reset_page'] ) : esc_attr( $_POST['reset_page'] );
         }
         if( $page != "all" ){
             #don't reset all but specific page
-            $update_page = $wpdb->query("UPDATE `{self::$hitinfo_table}` SET count = 0 WHERE page = '$page'");
+            $update_page = $wpdb->query("UPDATE `$hits_table` SET count = 0 WHERE page = '$page'");
             
         }else{
             #reset all
-            $update_all = $wpdb->query("UPDATE `{self::$hitinfo_table}` SET count = 0 ");
+            $update_all = $wpdb->query("UPDATE `$hits_table` SET count = 0 ");
             if ( $update_all ) {
                 $update_hit_info = WHTP_Hit_Info::reset_ip_info("all");
             }

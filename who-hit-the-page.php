@@ -30,9 +30,30 @@ License: GPL
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+global $wpdb;
+global $hits_table, 
+	$hitinfo_table, 
+	$user_agents_table, 
+	$ip_hits_table, 
+	$visiting_countries_table,
+	$ip_to_location_table;
+
+$hits_table 				= $wpdb->prefix . 'whtp_hits';
+$hitinfo_table 				= $wpdb->prefix . 'whtp_hitinfo';
+$user_agents_table 			= $wpdb->prefix . 'whtp_user_agents';
+$ip_hits_table 				= $wpdb->prefix . 'whtp_ip_hits';
+$visiting_countries_table	= $wpdb->prefix . 'whtp_visiting_countries';
+$ip_to_location_table 		= $wpdb->prefix . 'whtp_ip2location';
+
+define( 'WHTP_HITS_TABLE', 					$wpdb->prefix . 'whtp_hits' );
+define( 'WHTP_HITINFO_TABLE', 				$wpdb->prefix . 'whtp_hitinfo' );
+define( 'WHTP_USER_AGENTS_TABLE', 			$wpdb->prefix . 'whtp_user_agents' );
+define( 'WHTP_IP_HITS_TABLE', 				$wpdb->prefix . 'whtp_ip_hits' );
+define( 'WHTP_VISITING_COUNTRIES_TABLE', 	$wpdb->prefix . 'whtp_visiting_countries' );
+define( 'WHTP_IP2_LOCATION_TABLE', 			$wpdb->prefix . 'whtp_ip2location' );
 
 define( 'WHTP_PLUGIN_URL', 		plugins_url( '/who-hit-the-page-hit-counter/' ) );
-define( 'WHTP_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) . 'who-hit-the-page-hit-counter/');
+define( 'WHTP_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 //define( 'WHTP_PLUGIN_URL', 		WP_CONTENT_URL . '/plugins/who-hit-the-page-hit-counter/');
 define( 'WHTP_IMAGES_URL', 		WHTP_PLUGIN_URL . 'images/');
 define( 'WHTP_FLAGS_URL', 		WHTP_IMAGES_URL . 'flags/');
@@ -48,6 +69,7 @@ function whtp_text_domain(){
 }
 add_action( 'plugins_loaded', 'whtp_text_domain' );
 
+include('includes/classes/class-whtp-database.php');
 include('includes/classes/class-browser-detection.php');
 include('includes/classes/class-browser.php');
 include('includes/classes/class-hit-info.php');
@@ -56,7 +78,6 @@ include('includes/classes/class-ip-hits.php');
 include('includes/classes/class-ip-to-location.php');
 include('includes/classes/class-shortcodes.php');
 include('includes/classes/class-visiting-countries.php');
-include('includes/classes/class-whtp-database.php');
 include('includes/functions.php');
 
 register_activation_hook(__FILE__,'whtp_installer');
@@ -67,7 +88,7 @@ define( "WHTP_VERSION", $plugin['Version'] );
 
 function whtp_installer(){
 	require_once('includes/installer.php');
-	$installer = new WHTP_Intaller();
+	$installer = new WHTP_Installer();
 }
 
 function whtp_remove(){
@@ -75,11 +96,12 @@ function whtp_remove(){
 	$deactivator = new WHTP_Deactivator();
 }
 
-class Who_Hit_The_Page_Admin extends WHTP_Database{
+class Who_Hit_The_Page_Admin{
 	public function __construct(){
-		parent::__construct();
+		
 		add_action( 'admin_menu', array( $this, 'admin_menu') );
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
 	public static function admin_menu(){		
@@ -145,26 +167,26 @@ class Who_Hit_The_Page_Admin extends WHTP_Database{
 	* Submenu callback functions
 	*/
 	public function whtp_object_page_callback(){
-		include('partials/stats-summary.php');
+		include( WHTP_PLUGIN_DIR_PATH . 'partials/view/stats-summary.php');
 	}
 	public function whtp_denied_submenu_callback(){
-		include('partials/denied-ips.php'); //admin page
+		include( WHTP_PLUGIN_DIR_PATH . 'partials/view/denied-ips.php'); //admin page
 	}
 	
 	public function whtp_visitors_stats_callback(){
-		include('partials/view-visitor-info.php'); //admin page
+		include( WHTP_PLUGIN_DIR_PATH . 'partials/view/visitor-info.php'); //admin page
 	}
 	public function whtp_view_all_callback(){
-		include('partials/view-all.php');//admin page
+		include( WHTP_PLUGIN_DIR_PATH . 'partials/view-all.php');//admin page
 	}
 	public function whtp_export_import_submenu_callback(){
-		include('partials/export-import.php');//admin page
+		include( WHTP_PLUGIN_DIR_PATH . 'partials/export-import.php');//admin page
 	}
 	public function whtp_settings_submenu_callback(){
-		include('partials/settings.php');//admin page
+		include( WHTP_PLUGIN_DIR_PATH . 'partials/settings.php');//admin page
 	}
 	public function whtp_help_submenu_callback(){
-		include('partials/help.php');//admin page
+		include( WHTP_PLUGIN_DIR_PATH . 'partials/help.php');//admin page
 	}
 
 	public function enqueue_styles(){

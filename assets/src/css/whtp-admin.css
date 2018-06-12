@@ -176,19 +176,19 @@ color: #d9006e;
 }
 
 .whtp-cards {
--webkit-align-items: flex-start;
-    -ms-flex-align: start;
-        align-items: flex-start;
--webkit-align-content: flex-start;
-    -ms-flex-line-pack: start;
-        align-content: flex-start;
+	-webkit-align-items: flex-start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+	-webkit-align-content: flex-start;
+	-ms-flex-line-pack: start;
+	align-content: flex-start;
 }
 .whtp-cards .whtp-separator {
 	height: 32px;
 }
 .whtp-cards .mdl-card__title.mdl-card__title {
 color: white;
-font-size: 24px;
+font-size: 18px;
 font-weight: 400;
 }
 .whtp-cards ul {
@@ -197,12 +197,12 @@ padding: 0;
 .whtp-cards h3 {
 font-size: 1em;
 }
-.whtp-updates .mdl-card__title {
+/**.whtp-updates .mdl-card__title {
 min-height: 200px;
 background-image: url('images/dog.png');
 background-position: 90% 100%;
 background-repeat: no-repeat;
-}
+}**/
 .whtp-cards .mdl-card__actions a {
 color: #00BCD4;
 text-decoration: none;
@@ -235,153 +235,19 @@ box-sizing: border-box;
         align-items: center;
 }
 
+.mdl-data-table,{
+	width: 100% !important; 
+}
+
+.column-title {
+    font-size: 20px;
+    line-height: 18px;
+}
+
 
 /**
-* Table Hits
+* help and support links
 */
-.viewer{
-	display: block;
-	width: 100%;
-	position: relative;
-	float: left;
-	
-}
-.viwer p, .viewer div{
-	display: block;
-	float: left;
-	width: 100%;
-	position: relative;
-	padding: 8px;
-}
-
-.viewer #adddeny ul#denyip{
-	width: 50%;
-	display: block;
-	float: left;
-}
-.viewer #adddeny ul#denyip li{
-	display: inline;
-}
-.viewer #adddeny ul#denyip li input[type="submit"],
-.viewer #adddeny ul#denyip li input[type="text"]{
-	padding: 10px;
-	width: 100%;
-}
-textarea{
-	display: block;
-	float: left;
-	width: 100%;
-	padding: 10px;
-	position: relative;
-}
-.viewer h2{
-	display: block;
-	width: 98%;
-	float: left;
-	position: relative;
-	border-bottom: #CCC thin 1px dotted;
-	padding: 8px;
-	background:#CCC;
-	color: #FFF;
-	text-transform:capitalize;
-}
-.viewer h4.not-found{
-	background-color:#FF6633;
-	padding: 10px;
-	color: #FFF;
-}
-.viewer table{
-	float: left;
-	position: relative;
-	font-size: 12px;
-}
-table tr td{
-	border-bottom: 1px dotted; 
-	border-bottom-color: #FFF;
-}
-table.hits tr{
-	border-bottom: #E6E3E6 thin 1px dotted;
-}
-table.hits tr td h4{font-size: 14px; padding: 5px;}
-
-table.hits tr .first-col-title,
-table.hits tr .second-col-title,
-table.hits tr .first-col,
-table.hits tr .second-col{width: 28%;}
-table.hits tr .action-col-title{width: 13%;}
-
-/*table.hits tr .first-col{background-color:#CCC;}
-table.hits tr .second-col{background-color: #9FF;}
-table.hits tr .action-col{background-color:#666;}*/
-
-table.hits tr td ul.author{
-	width: 80%;
-	display: block;
-	float: right;
-}
-table.hits tr td form{
-	width: 80%;
-	display: block; float: right;
-}
-table.hits tr td form input{
-	display: block;
-	width: 100%;
-}
-
- /* 
- *
- * IP stats table 
- *
- */
-table.ip-table{
-	width: 99%;
-	padding: 0px;
-	font-size: 12px;
-}
-table.ip-table tr td input[type="number"],
-table.hits tr td input[type="number"]{
-	padding: 4px;
-	display: inline;
-}
-table.hits tr td.discount{
-	padding: 5px;	
-}
-table.hits tr td.discount input[type="submit"]{
-	display: inline;
-}
-table.ip-table tr td h4{font-size: 14px; padding: 5px;}
-table.ip-table thead th{font-weight:bolder 500; font-size:16px;}
-table.ip-table tr .ip-title{width: 15%;}
-table.ip-table tr .ipv-title{width: 8%;}
-table.ip-table tr .agent-title{width: 35%;}
-table.ip-table tr .ftime-title{width: 13%;}
-table.ip-table tr .ltime-title{width: 13%;}
-
-table.ip-table tr .ip{width: 11%;}
-table.ip-table tr .ipv{width: 8%;}
-table.ip-table tr .agent{width: 35%;}
-table.ip-table tr .ftime{width: 13%;}
-table.ip-table tr .ltime{width: 13%;}
-
- /* 
- *
- * Denied IP table 
- *
- */
- table.denied-ip-table{
-	padding: 0px;
-	font-size: 12px;
-}
-.denied-ip-table tr td h4{font-size: 14px; padding: 5px;}
-table.denied-ip-table tr td,
-table.ip-table tr td,
-table.hits tr td{border-bottom:1px solid #CDCDCD;}
-.title-footer{
-	background-color: #E5E5E5;
-	color:#000;
-	padding: 3px;	
-}
-/* help and support links */
 .help{width: 98%; float: left;}
 .help li{
 	display: inline;
@@ -429,3 +295,9 @@ table.hits tr td{border-bottom:1px solid #CDCDCD;}
 	font-weight: bold;
 	padding: 5px;
 }
+
+/**
+* Responsive table
+* Source: https://github.com/google/material-design-lite/issues/5113
+*/
+.table-responsive { min-height: .01%; overflow-x: auto; } @media screen and (max-width: 767px) { .table-responsive { width: 100%; margin-bottom: 15px; overflow-y: hidden; -ms-overflow-style: -ms-autohiding-scrollbar; border: 1px solid #ddd; } .table-responsive>.table { margin-bottom: 0; } .table-responsive>.table>thead>tr>th, .table-responsive>.table>tbody>tr>th, .table-responsive>.table>tfoot>tr>th, .table-responsive>.table>thead>tr>td, .table-responsive>.table>tbody>tr>td, .table-responsive>.table>tfoot>tr>td { white-space: nowrap; } .table-responsive>.table-bordered { border: 0; } .table-responsive>.table-bordered>thead>tr>th:first-child, .table-responsive>.table-bordered>tbody>tr>th:first-child, .table-responsive>.table-bordered>tfoot>tr>th:first-child, .table-responsive>.table-bordered>thead>tr>td:first-child, .table-responsive>.table-bordered>tbody>tr>td:first-child, .table-responsive>.table-bordered>tfoot>tr>td:first-child { border-left: 0; } .table-responsive>.table-bordered>thead>tr>th:last-child, .table-responsive>.table-bordered>tbody>tr>th:last-child, .table-responsive>.table-bordered>tfoot>tr>th:last-child, .table-responsive>.table-bordered>thead>tr>td:last-child, .table-responsive>.table-bordered>tbody>tr>td:last-child, .table-responsive>.table-bordered>tfoot>tr>td:last-child { border-right: 0; } .table-responsive>.table-bordered>tbody>tr:last-child>th, .table-responsive>.table-bordered>tfoot>tr:last-child>th, .table-responsive>.table-bordered>tbody>tr:last-child>td, .table-responsive>.table-bordered>tfoot>tr:last-child>td { border-bottom: 0; } }

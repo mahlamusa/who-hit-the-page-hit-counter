@@ -13,214 +13,234 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: who-hit-the-page.php:76, who-hit-the-page.php:77
+#: who-hit-the-page.php:108, who-hit-the-page.php:109
 msgid "Who Hit The Page"
 msgstr ""
 
-#: who-hit-the-page.php:94, who-hit-the-page.php:95
+#: who-hit-the-page.php:117, who-hit-the-page.php:118
 msgid "View All Details"
 msgstr ""
 
-#: who-hit-the-page.php:102, who-hit-the-page.php:103
+#: who-hit-the-page.php:125, who-hit-the-page.php:126
 msgid "Visitor Stats"
 msgstr ""
 
-#: who-hit-the-page.php:110, who-hit-the-page.php:111
+#: who-hit-the-page.php:133, who-hit-the-page.php:134
 msgid "Denied IPs"
 msgstr ""
 
-#: who-hit-the-page.php:118, who-hit-the-page.php:119
+#: who-hit-the-page.php:141, who-hit-the-page.php:142
 msgid "Export / Import"
 msgstr ""
 
-#: who-hit-the-page.php:126, who-hit-the-page.php:127
+#: who-hit-the-page.php:149, who-hit-the-page.php:150
 msgid "Settings"
 msgstr ""
 
-#: who-hit-the-page.php:134, who-hit-the-page.php:135
+#: who-hit-the-page.php:157, who-hit-the-page.php:158
 msgid "Help"
 msgstr ""
 
-#: partials/denied-ips.php:64
-msgid "Please add an IP address to your deny list. All IP addresses in this list will not be counted when visiting your website. To allow an IP to be counted again, click 'Allow This IP' then it will be visible in your IP list on the counters' page and to remove it from the list click 'Delete This IP.'"
-msgstr ""
-
-#: partials/denied-ips.php:71
-msgid "The IP Address \"%s\" has been added to your deny list. This IP address will not be counted the next time it visits your website"
-msgstr ""
-
-#: partials/denied-ips.php:78
-msgid "Failed to Add IP Address \"%s\" to deny list."
-msgstr ""
-
-#: partials/denied-ips.php:90
-msgid "The IP \"%\" has been allowed and will now be counted the next time it visits your website."
-msgstr ""
-
-#: partials/denied-ips.php:99
-msgid "Failed to Allow \"%s\""
-msgstr ""
-
-#: partials/denied-ips.php:116
-msgid "The IP address \"%s\"\" has been removed from the database."
-msgstr ""
-
-#: partials/denied-ips.php:123
-msgid "Failed to remove IP from database."
-msgstr ""
-
-#: partials/denied-ips.php:133
-msgid "Enter IP address to add to deny list"
-msgstr ""
-
-#: partials/denied-ips.php:140
-msgid "Add To Deny List"
-msgstr ""
-
-#: partials/denied-ips.php:150
-msgid "Currently denied IP Addresses"
-msgstr ""
-
-#: partials/denied-ips.php:153
-msgid "Here is a list of currently denied IP addresses"
-msgstr ""
-
-#: partials/denied-ips.php:160
-msgid "Visitor's  IP Address"
-msgstr ""
-
-#: partials/denied-ips.php:161
-msgid "Allow Count"
-msgstr ""
-
-#: partials/denied-ips.php:162
-msgid "Reset"
-msgstr ""
-
-#: partials/denied-ips.php:163
-msgid "Delete IP"
-msgstr ""
-
-#: partials/denied-ips.php:175
-msgid "Allow This IP"
-msgstr ""
-
-#: partials/denied-ips.php:182
-msgid "Delete This IP"
-msgstr ""
-
-#: partials/denied-ips.php:191
-msgid "Total Denied IP´s "
-msgstr ""
-
-#: partials/denied-ips.php:200
-msgid "There are currently no registered IP addresses, please read above to get started"
-msgstr ""
-
-#: partials/stats-summary.php:155
-msgid "Used Browsers"
-msgstr ""
-
-#: partials/stats-summary.php:167
-msgid "No Browsers used so far"
-msgstr ""
-
-#: partials/view-all.php:14
+#: partials/view-all.php:19
 msgid "The count for the page \"%s\" has been reset successfully."
 msgstr ""
 
-#: partials/view-all.php:19
+#: partials/view-all.php:24
 msgid "The count for all pages has been reset successfully."
 msgstr ""
 
-#: partials/view-all.php:24
+#: partials/view-all.php:29
 msgid "Failed to reset page counts"
 msgstr ""
 
-#: partials/view-all.php:37
+#: partials/view-all.php:42
 msgid "Failed to remove page count(s)."
 msgstr ""
 
-#: partials/view-all.php:48
+#: partials/view-all.php:53
 msgid "The Page \"%s\" has been discounted by %d"
 msgstr ""
 
-#: partials/view-all.php:55
+#: partials/view-all.php:60
 msgid "Failed to discount on the page"
 msgstr ""
 
-#: partials/view-all.php:68
+#: partials/view-all.php:73
 msgid "The count for ip address: \"%s\" has been reset successfully."
 msgstr ""
 
-#: partials/view-all.php:72
+#: partials/view-all.php:77
 msgid "Failed to reset count for IP: %s"
 msgstr ""
 
-#: partials/view-all.php:84
+#: partials/view-all.php:89
 msgid "IP addresse(s) removed from the database."
 msgstr ""
 
-#: partials/view-all.php:88
+#: partials/view-all.php:93
 msgid "Failed to remove IP addresse(s) from database"
 msgstr ""
 
-#: partials/view-all.php:97
+#: partials/view-all.php:102
 msgid "The IP Address will be ignored and will not be counted."
 msgstr ""
 
-#: partials/view-all.php:101
+#: partials/view-all.php:106
 msgid "Failed to add IP to ignore list"
 msgstr ""
 
-#: partials/view-all.php:108
+#: partials/view-all.php:113
 msgid "Visitor Data Goes Here for %s"
 msgstr ""
 
-#: partials/view-all.php:114
+#: partials/view-all.php:119
 msgid "Who Hit The Page Hit Counter"
 msgstr ""
 
-#: partials/view-all.php:116
+#: partials/view-all.php:121
 msgid "Here you will see the raw hit counter information. This page lists all your pages and their respective counts and also the visiting IP addresses with their respective counts and other information."
 msgstr ""
 
-#: partials/view-all.php:123
+#: partials/view-all.php:128
 msgid "Support"
 msgstr ""
 
-#: partials/view-all.php:141
+#: partials/view-all.php:146
 msgid "Subscribe to updates"
 msgstr ""
 
-#: partials/view-all.php:154
+#: partials/view-all.php:159
 msgid "Need More"
 msgstr ""
 
-#: partials/view-all.php:189
+#: partials/view-all.php:194
 msgid "Pages visited and number of visits per page."
 msgstr ""
 
-#: partials/view-all.php:197
+#: partials/view-all.php:202
 msgid "Visitors' IP addresses and Information"
 msgstr ""
 
-#: includes/classes/class-shortcodes.php:25
+#: includes/classes/class-shortcodes.php:28
 msgid "<a href=\"http://lindeni.co.za\" rel=\"bookmark\" title=\"%s\" target=\"_blank\">%s</a>"
 msgstr ""
 
-#: includes/classes/class-shortcodes.php:26
+#: includes/classes/class-shortcodes.php:29
 msgid "Wordpress plugins and web design resources"
 msgstr ""
 
-#: includes/classes/class-shortcodes.php:27
+#: includes/classes/class-shortcodes.php:30
 msgid "Wordpress plugins by Mahlamusa Mahlalela"
 msgstr ""
 
-#: partials/view/all-page-hits.php:80
+#: partials/view/all-page-hits.php:85
 msgid "No Data Found"
 msgstr ""
 
-#: partials/view/all-page-hits.php:83
+#: partials/view/all-page-hits.php:88
 msgid "No Page visits yet or the page counters have been reset. Read documentation to learn how to get started"
+msgstr ""
+
+#: partials/view/denied-ips.php:37
+msgid "Add Denied IP"
+msgstr ""
+
+#: partials/view/denied-ips.php:39
+msgid "Please add an IP address to your deny list. All IP addresses in this list will not be counted when visiting your website. To allow an IP to be counted again, click 'Allow This IP' then it will be visible in your IP list on the counters' page and to remove it from the list click 'Delete This IP.'"
+msgstr ""
+
+#: partials/view/denied-ips.php:46
+msgid "The IP Address \"%s\" has been added to your deny list. This IP address will not be counted the next time it visits your website"
+msgstr ""
+
+#: partials/view/denied-ips.php:53
+msgid "Failed to Add IP Address \"%s\" to deny list."
+msgstr ""
+
+#: partials/view/denied-ips.php:65
+msgid "The IP \"%\" has been allowed and will now be counted the next time it visits your website."
+msgstr ""
+
+#: partials/view/denied-ips.php:74
+msgid "Failed to Allow \"%s\""
+msgstr ""
+
+#: partials/view/denied-ips.php:91
+msgid "The IP address \"%s\"\" has been removed from the database."
+msgstr ""
+
+#: partials/view/denied-ips.php:98
+msgid "Failed to remove IP from database."
+msgstr ""
+
+#: partials/view/denied-ips.php:108
+msgid "Enter IP address to add to deny list"
+msgstr ""
+
+#: partials/view/denied-ips.php:115
+msgid "Add To Deny List"
+msgstr ""
+
+#: partials/view/denied-ips.php:125
+msgid "Currently denied IP Addresses"
+msgstr ""
+
+#: partials/view/denied-ips.php:128
+msgid "Here is a list of currently denied IP addresses"
+msgstr ""
+
+#: partials/view/denied-ips.php:135
+msgid "Visitor's  IP Address"
+msgstr ""
+
+#: partials/view/denied-ips.php:136
+msgid "Allow Count"
+msgstr ""
+
+#: partials/view/denied-ips.php:137
+msgid "Reset"
+msgstr ""
+
+#: partials/view/denied-ips.php:138
+msgid "Delete IP"
+msgstr ""
+
+#: partials/view/denied-ips.php:150
+msgid "Allow This IP"
+msgstr ""
+
+#: partials/view/denied-ips.php:157
+msgid "Delete This IP"
+msgstr ""
+
+#: partials/view/denied-ips.php:166
+msgid "Total Denied IP´s "
+msgstr ""
+
+#: partials/view/denied-ips.php:175
+msgid "There are currently no registered IP addresses, please read above to get started"
+msgstr ""
+
+#: partials/view/stats-summary.php:30
+msgid "Summary"
+msgstr ""
+
+#: partials/view/stats-summary.php:48
+msgid "Top 5 Visitors"
+msgstr ""
+
+#: partials/view/stats-summary.php:83
+msgid "Top Visiting Countries"
+msgstr ""
+
+#: partials/view/stats-summary.php:124
+msgid "Used Browsers"
+msgstr ""
+
+#: partials/view/stats-summary.php:139
+msgid "No Browsers used so far"
+msgstr ""
+
+#: partials/view/stats-summary.php:150
+msgid "Disclaimer"
 msgstr ""

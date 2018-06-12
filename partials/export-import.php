@@ -154,7 +154,7 @@
 													if ( is_file ( $file ) ){
 														$fp 	= fopen($file, 'r');
 														if ( $fp ) {
-															$sql 	= fread($fp, 100000000);										
+															$sql 	= fread($fp, filesize( $file ) );										
 															$queries = explode(";", $sql);
 															
 															foreach ( $queries as $sql ){

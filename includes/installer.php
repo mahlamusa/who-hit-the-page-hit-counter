@@ -4,13 +4,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 class WHTP_Installer{
-	private $hits_table;
-	private $hitinfo_table;
-	private $user_agents_table;
-	private $ip_hits_table;
-	private $visiting_countries_table;
-	private $ip_to_loacation_table;
-	private $ip_hits_table;
+	private static $hits_table;
+	private static $hitinfo_table;
+	private static $user_agents_table;
+	private static $ip_hits_table;
+	private static $visiting_countries_table;
+	private static $ip_to_location_table;
 
 	public function __construct(){
 		global $wpdb;
@@ -18,9 +17,9 @@ class WHTP_Installer{
 		self::$hits_table 				= $wpdb->prefix . 'whtp_hits';
 		self::$hitinfo_table 			= $wpdb->prefix . 'whtp_hitinfo';
 		self::$user_agents_table 		= $wpdb->prefix . 'whtp_user_agents';
-		self::$ip_hits_table 			= $wpdb->prefix . 'whtp_ip_hits';
+		self::$ip_hits_table			= $wpdb->prefix . 'whtp_ip_hits';
 		self::$visiting_countries_table = $wpdb->prefix . 'whtp_visiting_countries';
-		self::$ip2loacation_table 		= $wpdb->prefix . 'whtp_ip2location';
+		self::$ip_to_location_table	= $wpdb->prefix . 'whtp_ip2location';
 		
 		self::upgrade_db();
 
@@ -40,55 +39,55 @@ class WHTP_Installer{
 	}
 
 	public static function create(){
-		self::create_whtp_hits_table();
-		self::create_whtp_hitinfo_table();
-		self::create_whtp_visiting_countries();
-		self::create_whtp_user_agents();
+		self::create_hits_table();
+		self::create_hitinfo_table();
+		self::create_visiting_countries();
+		self::create_user_agents();
 		self::create_ip_2_location_country();
-		self::create_whtp_ip_hits_table();
+		self::create_ip_hits_table();
 	}
 
 	public static function upgrade_db(){
 		self::check_rename_tables();
 		self::update_old_user_agents();
-		WHTP_Functions::update_visiting_countries();
+		WHTP_Visiting_Countries::update_visiting_countries();
 	}
 
 	public static function check_rename_tables(){
-		if ( self::table_exists("hits") && ! self::table_exists( self::$hits_table ) ){
-			self::rename_table("hits", self::$hits_table);
+		if ( self::table_exists("hits") && ! self::table_exists( WHTP_HITS_TABLE ) ){
+			self::rename_table("hits", WHTP_HITS_TABLE);
 		}
 
-		if ( self::table_exists( "hitinfo" ) && ! self::table_exists( self::$hitinfo_table ) ) { 
-			self::rename_table("hitinfo", self::$hitinfo_table );
+		if ( self::table_exists( "hitinfo" ) && ! self::table_exists( WHTP_HITINFO_TABLE ) ) { 
+			self::rename_table("hitinfo", WHTP_HITINFO_TABLE );
 		}
 
-		if ( self::table_exists( 'whtp_hits' ) && ! self::table_exists( self::$hits_table  ) ) { 
-			self::rename_table( 'whtp_hits' , self::$hits_table );
+		if ( self::table_exists( 'whtp_hits' ) && ! self::table_exists( WHTP_HITS_TABLE  ) ) { 
+			self::rename_table( 'whtp_hits' , WHTP_HITS_TABLE );
 		}
 
-		if ( self::table_exists( 'whtp_hitinfo' ) && ! self::table_exists( self::$hitinfo_table  ) ) { 
-			self::rename_table( 'whtp_hitinfo', self::$hitinfo_table );
+		if ( self::table_exists( 'whtp_hitinfo' ) && ! self::table_exists( WHTP_HITINFO_TABLE  ) ) { 
+			self::rename_table( 'whtp_hitinfo', WHTP_HITINFO_TABLE );
 		}
 
-		if ( self::table_exists( 'whtp_user_agents' ) && ! self::table_exists(self::$user_agents_table  ) ) { 
-			self::rename_table( 'whtp_user_agents', self::$user_agents_table );
+		if ( self::table_exists( 'whtp_user_agents' ) && ! self::table_exists( WHTP_USER_AGENTS_TABLE  ) ) { 
+			self::rename_table( 'whtp_user_agents', WHTP_USER_AGENTS_TABLE );
 		}
 
-		if ( self::table_exists( 'whtp_ip_hits' ) && ! self::table_exists( self::$ip_hits_table ) ) { 
-			self::rename_table( 'whtp_ip_hits' , self::$ip_hits_table );
+		if ( self::table_exists( 'whtp_ip_hits' ) && ! self::table_exists( WHTP_IP_HITS_TABLE ) ) { 
+			self::rename_table( 'whtp_ip_hits' , WHTP_IP_HITS_TABLE );
 		}
 
-		if ( self::table_exists( 'whtp_visiting_countries' ) && ! self::table_exists( self::$visiting_countries_table ) ) { 
-			self::rename_table( 'whtp_visiting_countries', self::$visiting_countries_table );
+		if ( self::table_exists( 'whtp_visiting_countries' ) && ! self::table_exists( WHTP_VISITING_COUNTRIES_TABLE ) ) { 
+			self::rename_table( 'whtp_visiting_countries', WHTP_VISITING_COUNTRIES_TABLE );
 		}
 
-		if ( self::table_exists( 'whtp_ip2location' ) && ! self::table_exists( self::$ip2loacation_table  ) ) { 
-			self::rename_table( 'whtp_ip2location', self::$ip2loacation_table );
+		if ( self::table_exists( 'whtp_ip2location' ) && ! self::table_exists( WHTP_IP2_LOCATION_TABLE  ) ) { 
+			self::rename_table( 'whtp_ip2location', WHTP_IP2_LOCATION_TABLE );
 		}
 	}
 
-	public static function rename_table( $old_table_name, $new_table_name ){
+	public static function rename_table( $old_table_name, $new_table_name ){		
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		if ( dbDelta( "RENAME TABLE `" .  $old_table_name . "` TO `" . $new_table_name ."`;" ) ){
 			return true;
@@ -103,15 +102,16 @@ class WHTP_Installer{
 		set_time_limit( 0 );
 		global $wpdb;
 			
-		$user_agents = $wpdb->get_results( "SELECT ip_address, user_agent FROM ". self::$hitinfo_table );
+		$user_agents = $wpdb->get_results( "SELECT ip_address, user_agent FROM ". WHTP_HITINFO_TABLE );
 		if ( count( $user_agents ) > 0 ){
 			foreach ( $user_agents as $uagent ) {
-				$ua = WHTP_Broswer::browser_info();
+				$ua = WHTP_Browser::browser_info();
 				$browser = $ua['name'];
 				$ip = $uagent->ip_address;
 				if ( $uagent->user_agent != $browser ){
 					$update_browser = $wpdb->update(
-						self::$hitinfo_table, array( "user_agent" => $browser ),
+						WHTP_HITINFO_TABLE, 
+						array( "user_agent" => $browser ),
 						array("ip_address"=>$ip),
 						array("%s","%s")
 					);
@@ -123,20 +123,20 @@ class WHTP_Installer{
 	# create hits table
 	public static function create_hits_table(){
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		dbDelta(
-			"CREATE TABLE IF NOT EXISTS `" . self::$hits_table ."` (
+		dbDelta("
+			CREATE TABLE IF NOT EXISTS `" . WHTP_HITS_TABLE ."` (
 			`page_id` int(10) NOT NULL AUTO_INCREMENT,
 			`page` varchar(100) NOT NULL,
 			`count` int(15) DEFAULT '0',
 			PRIMARY KEY (`page_id`)
-			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5;"
+			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;"
 		);
 	}
 	# create hitinfo table
 	public static function create_hitinfo_table(){
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		dbDelta(
-			"CREATE TABLE IF NOT EXISTS `" . self::$hitinfo_table ."` (
+		dbDelta("
+			CREATE TABLE IF NOT EXISTS `" . WHTP_HITINFO_TABLE . "` (
 			`id` int(11) NOT NULL AUTO_INCREMENT,
 			`ip_address` varchar(30) DEFAULT NULL,
 			`ip_status` varchar(10) NOT NULL DEFAULT 'active',
@@ -145,13 +145,14 @@ class WHTP_Installer{
 			`datetime_first_visit` varchar(25) DEFAULT NULL,
 			`datetime_last_visit` varchar(25) DEFAULT NULL,
 			PRIMARY KEY (`id`)
-			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7;"
+			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;"
 		);
 	}
 
 	public static function create_visiting_countries(){
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		dbDelta("CREATE TABLE IF NOT EXISTS `" . self::$visiting_countries_table . "` (
+		dbDelta("
+			CREATE TABLE IF NOT EXISTS `" . WHTP_VISITING_COUNTRIES_TABLE . "` (
 			`country_code` char(2) NOT NULL,
 			`count` int(11) NOT NULL,
 			UNIQUE KEY `country_code` (`country_code`)
@@ -162,8 +163,8 @@ class WHTP_Installer{
 
 	public static function create_ip_hits_table(){
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		dbDelta(
-			"CREATE TABLE IF NOT EXISTS `" . self::$ip_hits_table ."` (
+		dbDelta("
+			CREATE TABLE IF NOT EXISTS `" . WHTP_IP_HITS_TABLE . "` (
 			`id` int(10) NOT NULL AUTO_INCREMENT,
 			`ip_id` int(11) NOT NULL,
 			`page_id` int(10) NOT NULL,
@@ -180,20 +181,20 @@ class WHTP_Installer{
 	public static function create_user_agents(){
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		dbDelta("
-			CREATE TABLE IF NOT EXISTS `" . self::$user_agents_table. "` (
+			CREATE TABLE IF NOT EXISTS `" . WHTP_USER_AGENTS_TABLE . "` (
 			`agent_id` int(11) NOT NULL AUTO_INCREMENT,
 			`agent_name` varchar(20) NOT NULL,
 			`agent_details` text NOT NULL,
 			PRIMARY KEY (`agent_id`),
 			UNIQUE KEY `agent_name` (`agent_name`)
-			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=60;"
+			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;"
 		);
 	}
 
 	public static function create_ip_2_location_country(){
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		dbDelta(
-			"CREATE TABLE IF NOT EXISTS `" . self::$ip_to_loacation_table ."` (
+		dbDelta("
+			CREATE TABLE IF NOT EXISTS `" . WHTP_IP2_LOCATION_TABLE . "`(
 			`ip_from` varchar(15) COLLATE utf8_bin DEFAULT NULL,
 			`ip_to` varchar(15) COLLATE utf8_bin DEFAULT NULL,
 			`decimal_ip_from` int(11) NOT NULL,
@@ -222,7 +223,8 @@ class WHTP_Installer{
 			$table_exists = true;
 		else
 			$table_exists = false;
-			
+		
+		$arr = array();
 			
 		/**/
 		$dbname  = DB_NAME; # wordpress database name
@@ -243,6 +245,7 @@ class WHTP_Installer{
 	# export hits data to whtp_hits
 	public static function export_hits(){
 		global $wpdb;
+
 		$wpdb->hide_errors();
 		
 		$hits = $wpdb->get_results("SELECT * FROM `hits`, ARRAY_A");
@@ -250,7 +253,12 @@ class WHTP_Installer{
 			$message = "";
 			$exported = false;
 			foreach( $hits as $hit ){
-				$insert = $wpdb->insert("whtp_hits", array("page"=>$hit['page'],"count"=>$hit['count']), array("%s", "%d"));
+				$insert = $wpdb->insert(
+					WHTP_HITS_TABLE, 
+					array(
+						"page"=>$hit['page'], "count" => $hit['count']
+					), array("%s", "%d")
+				);
 				if( !$insert ){
 					$exported = false;
 				}else{
@@ -274,7 +282,7 @@ class WHTP_Installer{
 			$exported	= false;
 			foreach( $hitsinfo as $info ){	
 				$insert = $wpdb->insert(
-					"whtp_hitinfo", 
+					WHTP_HITINFO_TABLE, 
 					array(
 						"ip_address"=>$info->ip_address,
 						"ip_status"=>'active',
