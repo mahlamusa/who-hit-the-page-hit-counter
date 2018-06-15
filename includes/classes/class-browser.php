@@ -64,6 +64,15 @@ class WHTP_Browser{
         return $wpdb->get_results ( "SELECT agent_name FROM `$user_agents_table`" );
     }
 
+    public static function get_browser_name( $agent_id ) {
+        global $wpdb, $user_agents_table;
+        return $wpdb->get_var ( 
+            "SELECT agent_name 
+            FROM $user_agents_table 
+            WHERE agent_id='$agent_id' LIMIT 1" 
+        );
+    }
+
     public static function browser_info(){
 
         $browser_info = array();

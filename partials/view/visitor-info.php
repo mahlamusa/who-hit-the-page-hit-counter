@@ -62,15 +62,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		* Select the country associated with the selected $ip_id
 		* and store the countries as an array, then display the first country
 		*/
-		$select_country = "SELECT country_name FROM whtp_ip2location WHERE INET_ATON('" . $visitor_ip . "') 
-						BETWEEN decimal_ip_from AND decimal_ip_to";                    
-		$country = $wpdb->get_col($select_country);
+		$select_country = WHTP_IP2_Location::get_country_by_ip( $ip_address );
 		
 		
-		/*
-		* Select the browsers used by the selected $ip_id
-		*
-		*/
 		$agent_ids = WHTP_Ip_Hits::agent_ids_from_ip_id( $ip_id );
 		
 		/*
@@ -79,9 +73,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		*	pass an array of browser ids,you will get browsers with those ids
 		*   pass an empty string, you get an array of all browsers ever used
 		*/
-		for ( $count = 0; $count < count($agent_ids); $count ++ ){
+		for ( $count = 0; $count < count( $agent_ids ); $count ++ ){
 			$agent_id = $agent_ids[$count];
-			$browser = $wpdb->get_var ( "SELECT agent_name FROM whtp_user_agents WHERE agent_id='$agent_id' LIMIT 0,1" );
+			$browser = WHTP_Browser::get_browser_name( $agent_id );
 			if ( $browser ){
 				$browsers[] = $browser;
 			}
@@ -90,10 +84,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 		
 	?>
 <div class="wrap">	
-	<h2>Who Hit The Page Hit Counter</h2>
-    <p>To start viewing the details of a single visitor, select the visitor's IP below and click "View Details", do the same to view another IP.</p>
+	<h2><?php _e( 'Who Hit The Page Hit Counter', 'whtp' ); ?></h2>
+    <p><?php _e( 'To start viewing the details of a single visitor, select the visitor\'s IP below and click "View Details", do the same to view another IP.', 'whtp' ); ?></p>
     <?php
-		echo display_select_visitor_ip();
+		$ip_results = WHTP_Hit_Info::get_ip_count_hits();
+		if ( $ip_results ) : ?>
+			<form name="select_ip" method="post" action="" >
+                <p>Please select an IP to see more details about that IP Address.</p>
+                <select name="ip" style="height: 50px; width: 40%; padding: 15px;display: inline;"><?php
+					foreach ( $ip_results as $ip ) : ?>
+						<option style="padding:15px; display: block; float: left;" 
+							value="<?php echo esc_attr( $ip->ip_address ); ?>">
+								<?php echo esc_attr( $ip->ip_address . ' (' . $ip->ip_total_visits . ')' 
+						); ?>
+						</option><?php
+					endforeach;	?>
+                </select>
+                <input style="display:inline;" type="submit" value="<?php _e( 'View Details', 'whtp' ); ?>" class="button button-primary button-hero" />
+			</form><?php	
+		endif; ?>
+		
+		<div id="message" class="updated">
+            <p><?php _e( 'Please select an IP above to see more details about that IP Address.', 'whtp' ); ?></p> 
+        </div><?php
 	?>
     <div id="poststuff" class="metabox-holder has-right-sidebar">
         <div id="side-info-column" class="inner-sidebar">
@@ -115,42 +128,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <span>2Checkout.com Inc. (Ohio, USA) is a payment facilitator for goods and services provided by Three Pixels Web Solutions.</span>
                     </div>  
                 </div>
-                <div class="postbox">
-                    <div class="handlediv" title="Click to toggle"><br /></div>
-                    <h3 class="hndle">Need More</h3>
-                    <div class="inside welcome-panel-column welcome-panel-last">
-                        <h4>Display a hit counter widget on any page or post. Its easy to change the colors and the font sizes for the numbers.</h4>
-                        <a href="http://shop.whohit.co.za/" target="_blank">
-                        	<img src="<?php echo WHTP_IMAGES_URL . 'widget_get.png'; ?>" alt="Get front end widget for who hit the page" />
-                        </a>
-                        <a href="http://shop.whohit.co.za/" class="button button-primary button-hero" style="width:100%; text-align:center;" target="_blank">Download Now</a>
-                    </div>  
-                </div>
-                <div class="postbox">
-                    <div class="handlediv" title="Click to toggle"><br /></div>
-                    <h3 class="hndle">Subscribe to updates</h3>
-                    <div class="inside welcome-panel-column welcome-panel-last">
-					   <?php
-                            if(isset($_POST['whtpsubscr']) && $_POST['whtpsubscr'] == "y"){
-                                WHTP_Functions::whtp_admin_message_sender();
-                            }
-                            WHTP_Functions::signup_form();
-                        ?>
-                        <p>Thank you once again!</p>
-                    </div>
-                </div>
-                
-                <div class="postbox">
-                    <div class="handlediv" title="Click to toggle"><br /></div>
-                    <h3 class="hndle">Please Rate this plugin</h3>
-                    <div class="inside welcome-panel-column welcome-panel-last">
-                        <p><b>Dear User</b></p>
-                        <p>Please 
-                        <a href="http://wordpress.org/support/view/plugin-reviews/who-hit-the-page-hit-counter">Rate this plugin now.</a> if you appreciate it.
-                        Rating this plugin will help other people like you to find this plugin because on wordpress plugins are sorted by rating, so rate it high and give it a fair review to help others find it.<br />
-                        </p>
-                    </div>
-                </div>
             </div>
         </div>
         <div id="post-body">
@@ -158,31 +135,32 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <div id="normal-sortables" class="meta-box-sortables ui-sortable">
                 	<div class="postbox inside">
                     	<div class="handlediv" title="Click to toggle"><br /></div>
-                    	<h3 class="hndle">View Visitor's Behaviour (IP: <?php echo $visitor_ip; ?>)</h3>
+                    	<h3 class="hndle"><?php _e( 'View Visitor\'s Behaviour (IP:', 'whtp' ); ?> <?php echo $visitor_ip; ?>)</h3>
                         <div class="inside">
                            <div id="welcome-panel" class="welcome-panel">
-                           		<h3>Visitor Statistics!</h3>
+                           		<h3><?php _e( 'Visitor Statistics!', 'whtp' ); ?></h3>
                                 <div class="welcome-panel-content">
                                     <p class="about-description">
-                                        This are the statistics for a single user/visitor with IP Address :<?php echo $visitor_ip; ?>
+                                        <?php echo sprintf( __( 'This are the statistics for a single user/visitor with IP Address :', 'whtp' ), $visitor_ip ); ?>
                                     </p>
                                     <!-- Top -->
                                     <div class="welcome-panel-column-container">
                                         <div class="welcome-panel-column">
-                                            <h4>Visitor's IP: <?php if (!$visitor_ip) echo "IP Address Not Set"; else echo $visitor_ip; ?></h4>
+                                            <h4><?php echo sprintf( __( 'Visitor\'s IP: %s', 'whtp' ), !$visitor_ip ? "IP Address Not Set": $visitor_ip ); ?></h4>
                                         </div>
                                         <div class="welcome-panel-column">
-                                            <h4>Total Visits: <?php if (!$info_result) echo "Not Set"; 
-                                            else echo $info_result->ip_total_visits; ?></h4>
+                                            <h4><?php echo sprintf( __( 'Total Visits: %s', 'whtp' ), !$info_result? "Not Set" : $info_result->ip_total_visits ); ?></h4>
                                         </div>
                                         <div class="welcome-panel-column welcome-panel-last">
-                                            <h4>Location: <?php if ( !$country ) echo "Unknown"; else echo $country[0]; ?></h4>
+                                            <h4>
+                                            <?php echo sprintf( __( 'Location: ', 'whtp' ), !$country?"Unknown": $country[0]); ?>
+                                            </h4>
                                         </div>
                                     </div>
                                 </div>
                            </div>
                            <div id="welcome-panel" class="welcome-panel">
-                           		<h3>Date and Time of First and Last Visit</h3>
+                           		<h3><?php _e( 'Date and Time of First and Last Visit', 'whtp' ); ?></h3>
                                 <div class="welcome-panel-content">                                	    
                                     <div class="welcome-panel-column-container">
                                         <div class="welcome-panel-column">
@@ -190,13 +168,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                                             
                                             <ul>
                                                 <li>
-                                                    First Visit : 
+                                                    <?php _e( 'First Visit :', 'whtp' ); ?> 
                                                         <span class="entry-date">
                                                             <?php echo $info_result->datetime_first_visit; ?>
                                                         </span>
                                                 </li>
                                                 <li>
-                                                    Last Visit : 
+                                                    <?php _e( 'Last Visit : ', 'whtp' ); ?>
                                                     <span class="entry-date">
                                                         <?php echo $info_result->datetime_last_visit; ?>
                                                     </span>
@@ -226,7 +204,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                             <p class="hide-if-no-customize">or, <a href="#">change your theme completely</a></p>
                                         </div>-->
                                         <div class="welcome-panel-column">
-                                            <h4>Pages Visited by this user</h4> 
+                                            <h4><?php _e( 'Pages Visited by this user', 'whtp' ); ?></h4> 
                                             <ul>
                                             <?php
                                                 if ( !$page_ids || count($page_ids) == 0 ){
@@ -241,7 +219,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                             </ul>
                                         </div>
                                         <div class="welcome-panel-column welcome-panel-last">
-                                            <h4>The User Has The following Browsers</h4>
+                                            <h4><?php _e( 'The User Has The following Browsers', 'whtp' ); ?></h4>
                                             <ul>
                                             <?php
                                                 if ( !$browsers || 0 == count( $browsers )){
@@ -278,29 +256,42 @@ if ( ! defined( 'ABSPATH' ) ) {
                 */
                 else{ 
                 
-                    if ( is_admin() ) {
-            ?>
+                    if ( is_admin() ) { ?>
                  	<div class="postbox inside">
                         <div class="handlediv" title="Click to toggle"><br /></div>
-                        <h3 class="hndle">Sorry no results found</h3>
+                        <h3 class="hndle"><?php _e( 'Sorry no results found', 'whtp' ); ?></h3>
                         <div id="welcome-panel" class="welcome-panel">
                             <div class="welcome-panel-content">
                                 <br />
                                 <div class="welcome-panel-column-container">
-                                    <p class="about-description">It seems there are no IP Addresses registered in your database at the moment. Maybe I've done something wrong or you have missed some steps during setup.</p>
+                                    <p class="about-description">
+                                        <?php _e( 'It seems there are no IP Addresses registered in your database at the moment. Maybe I\'ve done something wrong or you have missed some steps during setup.', 'whtp' ); ?>
+                                    </p>
                                     <br />
-                                    <p class="about-description">Please check if you have done the following</p>
+                                    <p class="about-description">
+                                        <?php _e( 'Please check if you have done the following', 'whtp' ); ?>
+                                    </p>
                                     <br />
                                     <ul>
                                         <li>
                                             <span class="welcome-icon welcome-learn-more">
-                                            Included the shortcode <code>[whohit]Page Name[/whohit]</code> on your pages. If not, click get started below. 
+                                                <?php _e( 'Included the shortcode <code>[whohit]Page Name[/whohit]</code> on your pages. If not, click get started below.', 'whtp' ); ?> 
                                             </span>
                                         </li>
-                                        <li><span class="welcome-icon welcome-learn-more">Imported all Geo Location data via the <a href="admin.php?page=whtp-import-export">Export/ Import</a> page.</span></li>
-                                        <li><span class="welcome-icon welcome-learn-more">If you haven't done this, click "Get Started" below.</span></li>
+                                        <li>
+                                            <span class="welcome-icon welcome-learn-more">
+                                                <?php _e( 'Imported all Geo Location data via the <a href="admin.php?page=whtp-import-export">Export/ Import</a> page.', 'whtp' ); ?>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="welcome-icon welcome-learn-more">
+                                                <?php _e( 'If you haven\'t done this, click "Get Started" below.', 'whtp' ); ?>
+                                            </span>
+                                        </li>
                                     </ul>
-                                    <a href="admin.php?page=whtp-help" class="button button-primary button-hero">Get Started</a>
+                                    <a href="admin.php?page=whtp-help" class="button button-primary button-hero">
+                                        <?php _e( 'Get Started', 'whtp' ); ?>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -314,38 +305,4 @@ if ( ! defined( 'ABSPATH' ) ) {
     <?php  
 		}// if is admin
 	}// if num_ips > 0
-	
-	/*
-	*	Display a select for the user to select an IP
-	*/
-	function display_select_visitor_ip(){
-		global $wpdb;
-		$ip_results = $wpdb->get_results( "SELECT ip_address, ip_total_visits FROM whtp_hitinfo WHERE ip_status = 'active' ORDER BY ip_total_visits DESC" );
-		if ( $ip_results ){
-			$form = '<form name="select_ip" method="post" action="" >' . "\n";
-			//$form .= "\t" . '<p>Please select an IP to see more details about that IP Address.</p>' . "\n";
-			$form .= "\t" . '<select name="ip" style="height: 50px; width: 40%; padding: 15px;display: inline;">' . "\n";;
-			foreach ( $ip_results as $ip ){
-				$form .= "\t" . "\t" . '<option style="padding:15px; display: block; float: left;" value="' 
-				. $ip->ip_address . '">' 
-				. $ip->ip_address . ' (' 
-				. $ip->ip_total_visits 
-				. ')</option>' . "\n";	
-			}	
-			$form .= "\t" . '</select>' . "\n";
-			$form .= "\t" . '<input style="display:inline;" type="submit" value="View Details" class="button button-primary button-hero" />'. "\n";
-			$form .= '</form>' . "\n";	
-		}else{
-			$form .= $wpdb->print_error();	
-		}
-		
-		$form .= '<div id="message" class="updated">
-					<p>Please select an IP above to see more details about that IP Address.</p> 
-				</div>';
-		return $form;
-	}
-	/* 
-	* End Functions
-	*/
-
 ?>

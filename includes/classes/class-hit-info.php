@@ -121,6 +121,17 @@ class WHTP_Hit_Info{
         );
     }
 
+    public static function get_ip_count_hits() {
+        global $wpdb, $hitinfo_table;
+
+        return $wpdb->get_results( 
+            "SELECT ip_address, ip_total_visits 
+            FROM $hitinfo_table 
+            WHERE ip_status = 'active' 
+            ORDER BY ip_total_visits DESC"
+        );
+    }
+
     public static function count_unique(){
         global $wpdb, $hitinfo_table;
 

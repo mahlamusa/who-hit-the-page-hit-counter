@@ -30,12 +30,12 @@ if( $total > 0 ): ?>
     </div>
     <table class="table-responsive mdl-data-table mdl-js-data-table mdl-shadow--2dp">
         <thead>
-            <th class="mdl-data-table__cell--non-numeric">Visitor's  IP</th>
-            <th class="mdl-data-table__cell--non-numeric">Visits</th>
-            <th class="mdl-data-table__cell--non-numeric">User Agent</th>
-            <th class="mdl-data-table__cell--non-numeric">1st Visit</th>
-            <th class="mdl-data-table__cell--non-numeric">Last Visit</th>
-            <th class="mdl-data-table__cell--non-numeric">Actions</th>
+            <th class="mdl-data-table__cell--non-numeric"><?php _e( 'Visitor\'s  IP', 'whtp' ); ?></th>
+            <th class="mdl-data-table__cell--non-numeric"><?php _e( 'Visits', 'whtp' ); ?></th>
+            <th class="mdl-data-table__cell--non-numeric"><?php _e( 'User Agent', 'whtp' ); ?></th>
+            <th class="mdl-data-table__cell--non-numeric"><?php _e( '1st Visit', 'whtp' ); ?></th>
+            <th class="mdl-data-table__cell--non-numeric"><?php _e( 'Last Visit', 'whtp' ); ?></th>
+            <th class="mdl-data-table__cell--non-numeric"><?php _e( 'Actions', 'whtp' ); ?></th>
         </thead>
         
         <?php foreach( $hit_info as $row ): ?>
@@ -64,13 +64,13 @@ if( $total > 0 ): ?>
                 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                     for="demo-menu-lower-right-<?php echo $row->ip_address; ?>">
                     <li class="mdl-menu__item">
-                        <a href="<?php echo admin_url( 'admin.php?page=whtp-view-all&delete_ip=this_ip&delete_this_ip='.$row->ip_address. '&nonce='. $nonce ); ?>">Delete This IP</a>
+                        <a href="<?php echo admin_url( 'admin.php?page=whtp-view-all&delete_ip=this_ip&delete_this_ip='.$row->ip_address. '&nonce='. $nonce ); ?>"><?php _e( 'Delete This IP', 'whtp' ); ?></a>
                     </li>
                     <li class="mdl-menu__item">
-                        <a href="<?php echo admin_url( 'admin.php?page=whtp-view-all&deny_ip=this_ip&ip_address='.$row->ip_address. '&nonce='. $nonce ); ?>">Delete</a>
+                        <a href="<?php echo admin_url( 'admin.php?page=whtp-view-all&deny_ip=this_ip&ip_address='.$row->ip_address. '&nonce='. $nonce ); ?>"><?php _e( 'Delete', 'whtp' ); ?></a>
                     </li>
                     <li class="mdl-menu__item">
-                        <a href="<?php echo admin_url( 'admin.php?page=whtp-view-all&reset_ip=this_ip&ip_address='. $row->ip_address . '&nonce='. $nonce ); ?>">Reset IP</a>
+                        <a href="<?php echo admin_url( 'admin.php?page=whtp-view-all&reset_ip=this_ip&ip_address='. $row->ip_address . '&nonce='. $nonce ); ?>"><?php _e( 'Reset IP', 'whtp' ); ?></a>
                     </li>
                 </ul>
             </td>
@@ -78,7 +78,7 @@ if( $total > 0 ): ?>
         <?php endforeach; ?>		 
         <tr>
             <td class="title-footer mdl-data-table__cell--non-numeric" colspan="5" align="right">
-                <h4>Total unique IP´s </h4>
+                <h4><?php _e( 'Total unique IP´s', 'whtp'); ?></h4>
             </td>
             <td class="title-footer ipv-title">
                 <h4><?php echo esc_attr( $total );   ?> </h4>
@@ -90,20 +90,22 @@ if( $total > 0 ): ?>
             <td class="title-footer ipv-title">
                 <form action="" method="post">
                     <input type="hidden" name="reset_ip" value="all" />
-                    <input type="submit" name="submit" value="Reset All" class="button-primary" />
+                    <input type="submit" name="submit" value="<?php _e( 'Reset All', 'whtp' ); ?>" class="button-primary" />
                 </form>
             </td>
             <td class="title-footer ftime-title">
                 <form action="" method="post">
                     <input type="hidden" name="delete_ip" value="all" />
-                    <input type="submit" name="submit" value="Delete All" class="button" />
+                    <input type="submit" name="submit" value="<?php _e( 'Delete All', 'whtp' ); ?>" class="button" />
                 </form>
             </td>	
         </tr>
     </table>
 <?php else: ?>
 <div id="welcome-panel" class="welcome-panel">
-    <h4 class="not-found">There are currently no registered IP addresses, please read above to get started</h4>
+    <h4 class="not-found">
+        <?php _e( 'There are currently no registered IP addresses, please read above to get started', 'whtp'); ?>
+    </h4>
 </div>
 <?php endif;
 ?>

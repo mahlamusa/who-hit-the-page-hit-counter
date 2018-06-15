@@ -30,35 +30,8 @@ License: GPL
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-global $wpdb;
-global $hits_table, 
-	$hitinfo_table, 
-	$user_agents_table, 
-	$ip_hits_table, 
-	$visiting_countries_table,
-	$ip_to_location_table;
 
-$hits_table 				= $wpdb->prefix . 'whtp_hits';
-$hitinfo_table 				= $wpdb->prefix . 'whtp_hitinfo';
-$user_agents_table 			= $wpdb->prefix . 'whtp_user_agents';
-$ip_hits_table 				= $wpdb->prefix . 'whtp_ip_hits';
-$visiting_countries_table	= $wpdb->prefix . 'whtp_visiting_countries';
-$ip_to_location_table 		= $wpdb->prefix . 'whtp_ip2location';
 
-define( 'WHTP_HITS_TABLE', 					$wpdb->prefix . 'whtp_hits' );
-define( 'WHTP_HITINFO_TABLE', 				$wpdb->prefix . 'whtp_hitinfo' );
-define( 'WHTP_USER_AGENTS_TABLE', 			$wpdb->prefix . 'whtp_user_agents' );
-define( 'WHTP_IP_HITS_TABLE', 				$wpdb->prefix . 'whtp_ip_hits' );
-define( 'WHTP_VISITING_COUNTRIES_TABLE', 	$wpdb->prefix . 'whtp_visiting_countries' );
-define( 'WHTP_IP2_LOCATION_TABLE', 			$wpdb->prefix . 'whtp_ip2location' );
-
-define( 'WHTP_PLUGIN_URL', 		plugins_url( '/who-hit-the-page-hit-counter/' ) );
-define( 'WHTP_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
-//define( 'WHTP_PLUGIN_URL', 		WP_CONTENT_URL . '/plugins/who-hit-the-page-hit-counter/');
-define( 'WHTP_IMAGES_URL', 		WHTP_PLUGIN_URL . 'images/');
-define( 'WHTP_FLAGS_URL', 		WHTP_IMAGES_URL . 'flags/');
-define( 'WHTP_BROSWERS_URL', 	WHTP_IMAGES_URL . 'browsers/');
-define( 'WHTP_GEODATA_URL', 	WHTP_PLUGIN_URL . 'geodata/');
 
 if ( ! defined( 'WP_PLUGIN_DIR' ) ){
 	define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
@@ -68,6 +41,8 @@ function whtp_text_domain(){
 	load_plugin_textdomain( 'whtp', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 }
 add_action( 'plugins_loaded', 'whtp_text_domain' );
+
+include( 'includes/config.php' );
 
 include('includes/classes/class-whtp-database.php');
 include('includes/classes/class-browser-detection.php');
@@ -104,7 +79,7 @@ class Who_Hit_The_Page_Admin{
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
-	public static function admin_menu(){		
+	public function admin_menu(){		
 		add_object_page(
 			__('Who Hit The Page', 'whtp'), 
 			__('Who Hit The Page', 'whtp'), 

@@ -15,10 +15,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	
 	//total unique visitors
 	$total_unique = WHTP_Hit_Info::count_unique();
-	
-	$top_visitors = WHTP_Hit_Info::top( 5 );
-	
-	$top_countries = WHTP_Visiting_Countries::get_top_countries( 15 );
+    
+    $number_of_visitors = 5;
+	$top_visitors = WHTP_Hit_Info::top( $number_of_visitors );
+    
+    $number_of_countries = 15;
+	$top_countries = WHTP_Visiting_Countries::get_top_countries( $number_of_countries );
 
 ?>
 <div class="mdl-grid whtps-content">
@@ -32,12 +34,12 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <tbody>                                    
                         <tr>
                             <td class="mdl-data-table__cell--non-numeric">
-                                Total Page Hits: <?php echo $total_hits; ?>
+                                 <?php echo sprintf( __( 'Total Page Hits: %d', 'whtp' ), $total_hits ); ?>
                             </td>
                         </tr>
                         <tr>
                             <td class="mdl-data-table__cell--non-numeric">
-                                Total Unique Visitors : <?php echo $total_unique; ?>
+                                <?php echo sprintf( __( 'Total Unique Visitors : %s', 'whtp' ), $total_unique ); ?>
                             </td>
                         </tr>
                     </tbody>
@@ -63,10 +65,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 <tr>
                                     <td class="mdl-data-table__cell--non-numeric">
                                         <a href="admin.php?page=whtp-visitor-stats&ip='<?php echo  $top->ip_address; ?>">
-                                            <?php echo $top->ip_address; ?>
+                                            <?php echo esc_attr( $top->ip_address ); ?>
                                         </a>
                                     </td>
-                                    <td><?php echo $top->ip_total_visits; ?></td>
+                                    <td><?php echo esc_attr( $top->ip_total_visits ); ?></td>
                                 </tr>
                             <?php endfor; ?>
                             </tbody>
@@ -98,13 +100,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <td class="mdl-data-table__cell--non-numeric">
                                 <img 
                                 src="<?php echo WHTP_FLAGS_URL . $image_prefix; ?>.png" 
-                                alt="Flag of '<?php echo $top_country['country_code']; ?>" 
-                                title="<?php echo $top_country['country_name']; ?>" />
-                                <?php echo  $top_country['country_name']; ?>, 
-                                <?php echo $top_country['country_code']; ?>
+                                alt="<?php echo sprintf( __( 'Flag of %s', 'whtp'), esc_attr( $top_country['country_code'] ) ); ?>" 
+                                title="<?php echo esc_attr( $top_country['country_name'] ); ?>" />
+                                <?php echo esc_attr( $top_country['country_name'] ); ?>, 
+                                <?php echo esc_attr( $top_country['country_code'] ); ?>
                             </td>
                             <td>
-                                <?php echo $top_country['count']; ?>
+                                <?php echo esc_attr( $top_country['count'] ); ?>
                             </td>
                         </tr>
                     <?php endfor; ?>

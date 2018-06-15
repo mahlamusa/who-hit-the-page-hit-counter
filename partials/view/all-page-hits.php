@@ -30,10 +30,10 @@ if( $total > 0 ): ?>
     </div>
     <table  class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
         <thead>
-            <th class="mdl-data-table__cell--non-numeric">Page Visited</th>
-            <th>Number of Hits</th>
-            <th class="mdl-data-table__cell--non-numeric">Discount By</th>
-            <th>Actions</th>
+            <th class="mdl-data-table__cell--non-numeric"><?php _e( 'Page Visited', 'whtp' ); ?></th>
+            <th><?php _e( 'Number of Hits', 'whtp' ); ?></th>
+            <th class="mdl-data-table__cell--non-numeric"><?php _e( 'Discount By', 'whtp' ); ?></th>
+            <th><?php _e( 'Actions', 'whtp' ); ?></th>
         </thead>
         <?php  foreach($hits as  $row  ) : ?>
         <tr>
@@ -58,9 +58,9 @@ if( $total > 0 ): ?>
                 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                     for="demo-menu-lower-right-<?php echo $row->page; ?>">
                     <li class="mdl-menu__item">
-                        <a href="<?php echo admin_url( 'admin.php?page=whtp-view-all&delete_page='.$row->page. '&nonce='. $nonce ); ?>">Delete</a></li>
+                        <a href="<?php echo admin_url( 'admin.php?page=whtp-view-all&delete_page='.$row->page. '&nonce='. $nonce ); ?>"><?php _e( 'Delete', 'whtp' ); ?></a></li>
                     <li class="mdl-menu__item">
-                        <a href="<?php echo admin_url( 'admin.php?page=whtp-view-all&reset_page='. $row->page. '&nonce='. $nonce ); ?>">Reset</a>
+                        <a href="<?php echo admin_url( 'admin.php?page=whtp-view-all&reset_page='. $row->page. '&nonce='. $nonce ); ?>"><?php _e( 'Reset', 'whtp' ); ?></a>
                     </li>
                 </ul>
             </td>
@@ -68,7 +68,7 @@ if( $total > 0 ): ?>
         <?php endforeach; ?>
         <tr>
             <td colspan="2">&nbsp;</td>
-            <td class="mdl-data-table__cell--non-numeric"><h4>Total Hits</h4></td>
+            <td class="mdl-data-table__cell--non-numeric"><h4><?php _e( 'Total Hits', 'whtp' ); ?></h4></td>
             <td><h4><?php echo $total; ?></h4></td>
         </tr>
         <tr>
@@ -76,13 +76,13 @@ if( $total > 0 ): ?>
             <td>
                 <form action="" method="post">
                 <input type="hidden" name="reset_page" value="all" />
-                <input type="submit" name="submit" value="Reset All" class="button-primary" />
+                <input type="submit" name="submit" value="<?php _e( 'Reset All', 'whtp' ); ?>" class="button-primary" />
                 </form>	
             </td>
             <td>
                 <form action="" method="post">
                 <input type="hidden" name="delete_page" value="all" />
-                <input type="submit" name="submit" value="Delete All" class="button" />
+                <input type="submit" name="submit" value="<?php _e( 'Delete All', 'whtp' ); ?>" class="button" />
                 </form>
             </td>
         </tr>
