@@ -16,7 +16,7 @@ class WHTP_Functions{
 		self::$user_agents_table 		= $wpdb->prefix . 'whtp_user_agents';
 		self::$ip_hits_table			= $wpdb->prefix . 'whtp_ip_hits';
 		self::$visiting_countries_table = $wpdb->prefix . 'whtp_visiting_countries';
-		self::$ip_to_location_table	= $wpdb->prefix . 'whtp_ip2location';
+		self::$ip_to_location_table		= $wpdb->prefix . 'whtp_ip2location';
 	}
 
 	public static function plugin_info(){

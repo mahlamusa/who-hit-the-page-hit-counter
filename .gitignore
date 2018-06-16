@@ -9,3 +9,4 @@ node_modules
 .sublime-gulp.cache
 bower_components
 package-lock.json
+/vendor/

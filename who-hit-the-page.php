@@ -31,8 +31,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-
-
 if ( ! defined( 'WP_PLUGIN_DIR' ) ){
 	define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
 }
@@ -72,8 +70,7 @@ function whtp_remove(){
 }
 
 class Who_Hit_The_Page_Admin{
-	public function __construct(){
-		
+	public function __construct(){		
 		add_action( 'admin_menu', array( $this, 'admin_menu') );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );

@@ -119,5 +119,7 @@ class WHTP_Visiting_Countries{
                 }
             }
         }
+
+        update_option( 'whtp_vc_updated', "yes");
 	}
 }

@@ -20,21 +20,20 @@ class WHTP_Installer{
 		self::$ip_hits_table			= $wpdb->prefix . 'whtp_ip_hits';
 		self::$visiting_countries_table = $wpdb->prefix . 'whtp_visiting_countries';
 		self::$ip_to_location_table	= $wpdb->prefix . 'whtp_ip2location';
-		
+
 		self::upgrade_db();
 
-		if ( ! self::is_installed() ) {	
-			update_option( 'whtp_version', WHTP_VERSION );
-			update_option( 'whtp_installed', "yes");
-			update_option( 'whtp_vc_updated', "yes");
-		}
+		if ( ! self::is_installed() ) {			
+			self::create();
+		}		
 
-		self::create();
+		if ( ! get_option( 'whtp_version' ) ) {	
+			update_option( 'whtp_version', WHTP_VERSION );						
+		}
 	}
 
 	public static function is_installed(){
-		$installed = get_option('whtp_installed');
-		if ( $installed == "yes" ) return true;
+		if ( get_option('whtp_installed') == "yes" ) return true;
 		else return false;
 	}
 
@@ -45,6 +44,8 @@ class WHTP_Installer{
 		self::create_user_agents();
 		self::create_ip_2_location_country();
 		self::create_ip_hits_table();
+
+		update_option( 'whtp_installed', "yes");
 	}
 
 	public static function upgrade_db(){
@@ -219,27 +220,13 @@ class WHTP_Installer{
 	public static function table_exists ( $tablename ){
 		global $wpdb;
 		
-		if ( $wpdb->get_var("SHOW TABLES LIKE '$tablename'") )
-			$table_exists = true;
-		else
-			$table_exists = false;
-		
-		$arr = array();
-			
-		/**/
-		$dbname  = DB_NAME; # wordpress database name
-		$tables = $wpdb->get_results("SHOW TABLES FROM $dbname, ARRAY_A");
-		foreach ( $tables as $table ){
-			$arr[] = $table[0];
+		$tables = $wpdb->get_var("SHOW TABLES LIKE '$tablename'");
+		if ( $tables ) {
+			return true;
 		}
-
-		if ( in_array( $tablename, $arr ) ){
-			$table_exists = true;
+		else {
+			return false;
 		}
-		else{
-			$table_exists = false;
-		}
-		return $table_exists;
 	}
 
 	# export hits data to whtp_hits
@@ -277,7 +264,8 @@ class WHTP_Installer{
 		$wpdb->hide_errors();
 		
 		$hitsinfo = $wpdb->get_results("SELECT * FROM hitinfo");
-		if( count($hitsinfo) > 0){
+		
+		if( count( $hitsinfo ) > 0){
 			$message 	= "";
 			$exported	= false;
 			foreach( $hitsinfo as $info ){	
@@ -292,7 +280,7 @@ class WHTP_Installer{
 					), 
 					array("%s","%s","%s","%s","%s") 
 				);
-				if ( !$insert ){
+				if ( ! $insert ){
 					$exported = false;
 				}
 				else{
@@ -301,7 +289,7 @@ class WHTP_Installer{
 			}
 		}
 		
-		if ($exported == true) {
+		if ( $exported == true) {
 			$wpdb->query("DROP TABLE IF EXISTS `hitinfo`");
 		}
 	}

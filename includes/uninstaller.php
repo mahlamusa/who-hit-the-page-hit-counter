@@ -17,14 +17,14 @@ class WHTP_Deactivator{
 		self::$user_agents_table 		= $wpdb->prefix . 'whtp_user_agents';
 		self::$ip_hits_table			= $wpdb->prefix . 'whtp_ip_hits';
 		self::$visiting_countries_table = $wpdb->prefix . 'whtp_visiting_countries';
-		self::$ip_to_location_table	= $wpdb->prefix . 'whtp_ip2location';
+		self::$ip_to_location_table		= $wpdb->prefix . 'whtp_ip2location';	
 		
-		if( ! update_option( "whtp_installed", "false" )){ 
-			add_option( "whtp_installed", "false", "", "yes" );
-		}
 
 		if ( get_option("whtp_data_action") == "delete-all"){
 			self::delete_all();
+			if( ! update_option( "whtp_installed", "no" ) ){ 
+				add_option( "whtp_installed", "no" );
+			}
 		}
 		elseif( get_option("whtp_data_action") == "clear-tables"){
 			self::empty_all();

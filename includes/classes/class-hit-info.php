@@ -165,6 +165,19 @@ class WHTP_Hit_Info{
         $ip_address			= $_SERVER["REMOTE_ADDR"];	# visitor's ip address
         $date_ftime 		= date("Y/m/d") . ' ' . date('H:i:s'); # visitor's first visit
         $date_ltime			= date("Y/m/d") . ' ' . date('H:i:s'); # visitor's last visit
+
+        //MaxMind GeoIP2
+        require_once WHTP_PLUGIN_DIR_PATH . 'vendor/autoload.php';
+
+        use MaxMind\Db\Reader;
+
+        $databaseFile = WHTP_PLUGIN_DIR_PATH . 'geodata/GeoIP2-City.mmdb';
+
+        $reader = new Reader($databaseFile);
+
+        print_r( $reader->get( $ip_ddress ) );
+
+        $reader->close();
         
         //$ua = getBrowser(); //Get browser info
         $ua = WHTP_Browser::browser_info();

@@ -1,0 +1,14 @@
+{
+    "name": "lindeni/whtp",
+    "description": "Who hit the page hit counter",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Lindeni Mahlalela",
+            "email": "mahlamusa@gmail.com"
+        }
+    ],
+    "require": {
+        "geoip2/geoip2": "~2.0"
+    }
+}
