@@ -56,13 +56,13 @@ class WHTP_Installer{
 	}
 
 	public static function rename_count_column(){
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		global $wpdb;
 		if ( self::table_exists( WHTP_HITS_TABLE ) ) {
-			dbDelta( "ALTER TABLE `" . WHTP_HITS_TABLE . "` CHANGE COLUMN `count` `count_hits`  int(15) DEFAULT '0'" );
+			$wpdb->query( "ALTER TABLE `" . WHTP_HITS_TABLE . "` CHANGE COLUMN `count` `count_hits`  int(15) DEFAULT '0'" );
 		}
 
 		if ( self::table_exists( WHTP_VISITING_COUNTRIES_TABLE ) ) {
-			dbDelta( "ALTER TABLE `" . WHTP_VISITING_COUNTRIES_TABLE . "` CHANGE COLUMN `count` `count_hits`  int(15) DEFAULT '0'" );
+			$wpdb->query( "ALTER TABLE `" . WHTP_VISITING_COUNTRIES_TABLE . "` CHANGE COLUMN `count` `count_hits`  int(15) DEFAULT '0'" );
 		}
 		
 	}
@@ -231,9 +231,9 @@ class WHTP_Installer{
 
 	# check if a table exists in the database
 	public static function table_exists ( $tablename ){
-		global $wpdb;
-		
+		global $wpdb;		
 		$tables = $wpdb->get_var("SHOW TABLES LIKE '$tablename'");
+
 		if ( $tables ) {
 			return true;
 		}
