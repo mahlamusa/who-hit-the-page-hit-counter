@@ -48,7 +48,6 @@
 	if ( isset( $_POST['discount_page'] ) || isset( $_POST['discount_page'] ) ) :
         if ( WHTP_Hits::discount_page() ) : ?>
             <div class="updated fade" id="message">
-                <p>The Page "' . $page . '" has been discounted by ' . $discountby .'</p>
                 <?php echo sprintf( 
                     __('The Page "%s" has been discounted by %d', 'whtp'), 
                     esc_attr( $page ), 

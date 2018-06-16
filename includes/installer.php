@@ -52,6 +52,19 @@ class WHTP_Installer{
 		self::check_rename_tables();
 		self::update_old_user_agents();
 		WHTP_Visiting_Countries::update_visiting_countries();
+		self::rename_count_column();
+	}
+
+	public static function rename_count_column(){
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		if ( self::table_exists( WHTP_HITS_TABLE ) ) {
+			dbDelta( "ALTER TABLE `" . WHTP_HITS_TABLE . "` CHANGE COLUMN `count` `count_hits`  int(15) DEFAULT '0'" );
+		}
+
+		if ( self::table_exists( WHTP_VISITING_COUNTRIES_TABLE ) ) {
+			dbDelta( "ALTER TABLE `" . WHTP_VISITING_COUNTRIES_TABLE . "` CHANGE COLUMN `count` `count_hits`  int(15) DEFAULT '0'" );
+		}
+		
 	}
 
 	public static function check_rename_tables(){
