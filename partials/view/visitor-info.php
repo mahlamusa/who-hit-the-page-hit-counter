@@ -212,7 +212,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                                 }
                                                 else{
                                                     foreach ( $pages_visited as $page){
-                                                        echo '<a href="#" class="welcome-icon welcome-view-site">'  . $page->page . '('.$page->count . ')</a>';	
+                                                        echo '<a href="#" class="welcome-icon welcome-view-site">'  . $page->page . '('. $page->count_hits . ')</a>';	
                                                     }
                                                 }
                                             ?>
@@ -225,9 +225,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                                                 if ( !$browsers || 0 == count( $browsers )){
                                                     echo '<li><div class="welcome-icon welcome-widgets-menus">Unknown Browser(s)</div></li>';
                                                 }else{
-                                                    for ( $count=0; $count < count($browsers); $count ++){
+                                                    for ( $i = 0; $i< count( $browsers ); $i ++){
                                                         echo '<li><div class="welcome-icon welcome-widgets-menus">';
-                                                        echo $browsers[$count];
+                                                        echo $browsers[$i];
                                                         echo '</div></li>';       
                                                     }
                                                 }
