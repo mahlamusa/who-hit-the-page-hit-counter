@@ -23,9 +23,8 @@ define( 'WHTP_VISITING_COUNTRIES_TABLE', 	$wpdb->prefix . 'whtp_visiting_countri
 define( 'WHTP_IP2_LOCATION_TABLE', 			$wpdb->prefix . 'whtp_ip2location' );
 
 define( 'WHTP_PLUGIN_URL', 		plugins_url( '/who-hit-the-page-hit-counter/' ) );
-define( 'WHTP_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 //define( 'WHTP_PLUGIN_URL', 		WP_CONTENT_URL . '/plugins/who-hit-the-page-hit-counter/');
-define( 'WHTP_IMAGES_URL', 		WHTP_PLUGIN_URL . 'images/');
+define( 'WHTP_IMAGES_URL', 		WHTP_PLUGIN_URL . 'assets/images/');
 define( 'WHTP_FLAGS_URL', 		WHTP_IMAGES_URL . 'flags/');
 define( 'WHTP_BROSWERS_URL', 	WHTP_IMAGES_URL . 'browsers/');
 define( 'WHTP_GEODATA_URL', 	WHTP_PLUGIN_URL . 'geodata/');

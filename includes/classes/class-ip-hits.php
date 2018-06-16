@@ -35,9 +35,9 @@ class WHTP_Ip_Hits{
 		$agent_ids = array();
 		$ids = $wpdb->get_col( "SELECT browser_id FROM `$ip_hits_table` WHERE ip_id = '$ip_id'" );
 		if ( count ( $ids ) ){			
-			for( $count=0; $count < count ($ids); $count ++){
-				if  ( !in_array( $ids[$count], $agent_ids )	){
-					$agent_ids[] = $ids[$count];
+			for( $i=0; $i < count ($ids); $i ++){
+				if  ( !in_array( $ids[$i], $agent_ids )	){
+					$agent_ids[] = $ids[$i];
 				}
 			}
 		}
@@ -53,9 +53,9 @@ class WHTP_Ip_Hits{
 		$results = $wpdb->get_col( "SELECT page_id FROM `$ip_hits_table` WHERE ip_id = '$ip_id'" );
 		if ($results){
 			$page_ids = array();
-			for( $count = 0; $count < count($results); $count ++ ){
-				if  ( !in_array( $results[$count], $page_ids )	){
-					$page_ids[] = $results[$count];
+			for( $i = 0; $i < count($results); $i ++ ){
+				if  ( !in_array( $results[$i], $page_ids )	){
+					$page_ids[] = $results[$i];
 				}
 			}
 			return $page_ids;

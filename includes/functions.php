@@ -217,7 +217,10 @@ class WHTP_Functions{
 		$fields = array(); // csv rows / whole document
 		if ( count ( $hits ) ){			
 			foreach ( $hits as $hit  ){				
-				$csv_row  = array($hit->page,$hit->count);	 // new row				
+				$csv_row  = array(
+					$hit->page, 
+					$hit->count_hits
+				);	 // new row				
 				$fields[] = $csv_row; // append row to others
 			}
 			//whtp_write_csv( $filename, $fields);
@@ -247,8 +250,10 @@ class WHTP_Functions{
 		if ( count( $hitsinfo ) > 0 ){			
 			foreach ( $hitsinfo as $hitinfo  ){
 				$csv_row  = array(
-					$hitinfo->ip_address,$hitinfo->ip_total_visits,
-					$hitinfo->user_agent,$hitinfo->datetime_first_visit,
+					$hitinfo->ip_address,
+					$hitinfo->ip_total_visits,
+					$hitinfo->user_agent,
+					$hitinfo->datetime_first_visit,
 					$hitinfo->datetime_last_visit
 				);	 // new row				
 				$fields[] = $csv_row;	 // new row;				
@@ -277,7 +282,11 @@ class WHTP_Functions{
 		
 		if ( count( $user_agents ) > 0 ){			
 			foreach ( $user_agents as $user_agent  ){
-				$csv_row  = array($user_agent->agent_id,$user_agent->agent_name,$user_agent->agent_details);				
+				$csv_row  = array(
+					$user_agent->agent_id,
+					$user_agent->agent_name,
+					$user_agent->agent_details
+				);				
 				$fields[] = $csv_row;
 			}	
 			// write to csv

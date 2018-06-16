@@ -66,7 +66,7 @@
                                                 
                                                     if ( isset( $_POST["export-all"] ) ) {
                                                         echo '<div class="success"><p>';
-                                                        // export hits table (page, count)
+                                                        // export hits table (page, count_hits)
                                                         $recent_backups[] = WHTP_Functions::export_hits ( $backup_date );
                                                         
                                                         // export hitinfo table (ip_address, ip_total_count, user_agent, datetime_first_visit, atetime_last_visit)
@@ -105,13 +105,13 @@
                                                 <?php
                                                 $num_backups = count( $recent_backups );
                                                 if (  $num_backups > 0 ){
-                                                    for ($count = 0; $count < $num_backups ; $count ++){
+                                                    for ($i = 0; $i < $num_backups ; $i ++){
                                                         echo '<li>
                                                                     <div class="welcome-icon icon-download">
                                                                         <a href="' 
-                                                                            . $recent_backups[$count]['link'] . '">
+                                                                            . $recent_backups[$i]['link'] . '">
                                                                                 [download] ' 
-                                                                            . $recent_backups[$count]['filename'] 
+                                                                            . $recent_backups[$i]['filename'] 
                                                                         . '</a>
                                                                     </div>
                                                             </li>';	

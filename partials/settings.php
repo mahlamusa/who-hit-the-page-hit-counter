@@ -5,16 +5,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( isset ( $_POST['update-backup-options'] ) ){
-    $update_backup = stripslashes( $_POST['backup-action'] );
-    $update_export_action = update_option ( "whtp_data_export_action",  $update_backup);
+    $update_export_action = update_option ( 'whtp_data_export_action',  esc_attr( $_POST['backup-action'] ) );
 }
-$export_option = get_option("whtp_data_export_action");
+$export_option = get_option( 'whtp_data_export_action' );
 
 if ( isset ( $_POST['update-uninstall-option'] ) ){
-    $update_uninstall = stripslashes( $_POST['uninstall-action'] );
-    $update_uninstall_action = update_option ( "whtp_data_action",  $update_uninstall);
+    $update_uninstall_action = update_option ( 'whtp_data_action',  esc_attr( $_POST['uninstall-action'] ) );
 }
-$option = get_option('whtp_data_action');
+$option = get_option( 'whtp_data_action' );
 
 if ( $update_uninstall_action || $update_export_action ) : ?>
     <div id="message" class="updated">

@@ -59,8 +59,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                     if ($limit > 0) : ?>
                         <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                             <tbody>                                    
-                            <?php for ($count = 0; $count < $limit; $count ++): 
-                                $top = $top_visitors[$count] ;
+                            <?php for ($i = 0; $i < $limit; $i ++): 
+                                $top = $top_visitors[$i] ;
                                 ?>
                                 <tr>
                                     <td class="mdl-data-table__cell--non-numeric">
@@ -88,8 +88,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <tbody>
                     <?php
                     
-                    for ( $count = 0; $count < count ( $top_countries ); $count ++ ) :
-                        $top_country = $top_countries[$count];
+                    for ( $i = 0; $i < count ( $top_countries ); $i ++ ) :
+                        $top_country = $top_countries[$i];
                         $image_prefix =  $top_country['country_name'] ;
                         if ( $image_prefix == 'Unknown Country')
                             $image_prefix = '0';
@@ -106,7 +106,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 <?php echo esc_attr( $top_country['country_code'] ); ?>
                             </td>
                             <td>
-                                <?php echo esc_attr( $top_country['count'] ); ?>
+                                <?php echo esc_attr( $top_country['count_hits'] ); ?>
                             </td>
                         </tr>
                     <?php endfor; ?>

@@ -11,10 +11,6 @@ class WHTP_IP_Location{
         self::$ip_to_location_table	= $wpdb->prefix . 'whtp_ip2location';
     }
 
-    public static function load(){
-        
-    }
-
     /*
     *	Count country's visits
     */

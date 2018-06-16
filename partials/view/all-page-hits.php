@@ -38,7 +38,7 @@ if( $total > 0 ): ?>
         <?php  foreach($hits as  $row  ) : ?>
         <tr>
             <td class="mdl-data-table__cell--non-numeric"><?php echo $row->page; ?></td>
-            <td><?php echo $row->count; ?></td>	
+            <td><?php echo $row->count_hits; ?></td>	
             <td class="mdl-data-table__cell--non-numeric">						
                 <form action="" method="post">
                     <input type="hidden" name="discount_page" value="<?php echo $row->page; ?>" />

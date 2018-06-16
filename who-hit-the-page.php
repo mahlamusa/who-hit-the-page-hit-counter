@@ -31,6 +31,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+define( 'WHTP_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
+
 if ( ! defined( 'WP_PLUGIN_DIR' ) ){
 	define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
 }

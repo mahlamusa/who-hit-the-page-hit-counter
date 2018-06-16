@@ -48,10 +48,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		*/
 		$page_ids = WHTP_Ip_Hits::page_ids_from_ip_id($ip_id);
 		
-		for ( $count = 0; $count < count($page_ids); $count ++ ){
-			$page_id = $page_ids[$count];		
+		for ( $i = 0; $i < count($page_ids); $i ++ ){
+			$page_id = $page_ids[$i];		
 			$page = WHTP_Hits::get_page_by_id( $page_id );
-			$pages_visited[] = $page; // $row = ({"page","count"})
+			$pages_visited[] = $page; // $row = ({"page","count_hits"})
 		}
 		/*
 		* Get hitinfo
@@ -73,8 +73,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		*	pass an array of browser ids,you will get browsers with those ids
 		*   pass an empty string, you get an array of all browsers ever used
 		*/
-		for ( $count = 0; $count < count( $agent_ids ); $count ++ ){
-			$agent_id = $agent_ids[$count];
+		for ( $i = 0; $i < count( $agent_ids ); $i ++ ){
+			$agent_id = $agent_ids[$i];
 			$browser = WHTP_Browser::get_browser_name( $agent_id );
 			if ( $browser ){
 				$browsers[] = $browser;

@@ -1,4 +1,5 @@
 <?php
+use MaxMind\Db\Reader;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -169,9 +170,7 @@ class WHTP_Hit_Info{
         //MaxMind GeoIP2
         require_once WHTP_PLUGIN_DIR_PATH . 'vendor/autoload.php';
 
-        use MaxMind\Db\Reader;
-
-        $databaseFile = WHTP_PLUGIN_DIR_PATH . 'geodata/GeoIP2-City.mmdb';
+        $databaseFile = WHTP_PLUGIN_DIR_PATH . 'geodata/GeoLite2-City.mmdb';
 
         $reader = new Reader($databaseFile);
 

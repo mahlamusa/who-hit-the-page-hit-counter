@@ -11,20 +11,18 @@ class WHTP_Hits{
     }
 
     public static function total(){
-        global $wpdb;
-        $hits_table = $wpdb->prefix . 'whtp_hits';
+        global $wpdb, $hits_table;
 
-        $total = $wpdb->get_var( "SELECT SUM(count) AS totalhits FROM $hits_table}" );
+        $total = $wpdb->get_var( "SELECT SUM(count_hits) AS totalhits FROM $hits_table" );
 
         if ( $total ) return $total;
         else return 0;
     }
 
     public static function get_hits( $offset = 0, $number = 15, $order = 'DESC') {
-        global $wpdb;
-        $hits_table = $wpdb->prefix . 'whtp_hits';
+        global $wpdb, $hits_table;
 
-        $sql = "SELECT * FROM `$hits_table` ORDER BY count $order";
+        $sql = "SELECT * FROM `$hits_table` ORDER BY count_hits $order";
 
         $sql = ( $number != 'all' ) ? $sql . " LIMIT $offset, $number" : $sql;
 
@@ -35,10 +33,9 @@ class WHTP_Hits{
     }
 
     public static function get_page_by_id( $page_id ) {
-        global $wpdb;
-        $hits_table = $wpdb->prefix . 'whtp_hits';
+        global $wpdb, $hits_table;
 
-        return $wpdb->get_row ( "SELECT page, count FROM `$hits_table` WHERE page_id='$page_id' LIMIT 0,1" );
+        return $wpdb->get_row ( "SELECT page, count_hits FROM `$hits_table` WHERE page_id='$page_id' LIMIT 0,1" );
     }
 
     public static function count_page( $page ) {	
@@ -59,11 +56,11 @@ class WHTP_Hits{
 
         $page = stripslashes( $_POST['discount_page'] );
         $discountby = stripslashes( $_POST['discountby'] );
-        $old_count = $wpdb->get_var( "SELECT count FROM `$hits_table` WHERE page='$page'" );
+        $old_count = $wpdb->get_var( "SELECT count_hits FROM `$hits_table` WHERE page='$page'" );
         
         $discount_page = $wpdb->update(
             WHTP_HITS_TABLE, 
-            array( "count" => $old_count - $discountby ), 
+            array( "count_hits" => $old_count - $discountby ), 
             array("page" => $page)
         );
         
@@ -76,8 +73,7 @@ class WHTP_Hits{
     * update or create new counter
     */
     public static function count_hits( $page ){
-        global $wpdb;
-        $hits_table = $wpdb->prefix . 'whtp_hits';
+        global $wpdb, $hits_table;
 
         $page = $page;
         
@@ -87,17 +83,17 @@ class WHTP_Hits{
             
         $page_check = $wpdb->get_var("SELECT page FROM `$hits_table` WHERE page = '$page' LIMIT 1");
         if ( $page_check != "" ){
-            $count = $wpdb->get_var("SELECT count FROM `$hits_table` WHERE page = '$page' LIMIT 1");
+            $count = $wpdb->get_var("SELECT count_hits FROM `$hits_table` WHERE page = '$page' LIMIT 1");
             $ucount = $count + 1;
             $update = $wpdb->update(
                 WHTP_HITS_TABLE,
-                array("count"=> $ucount), 
+                array("count_hits"=> $ucount), 
                 array("page"=>$page),array("%d"),array("%s"));
         }
         else {
             $insert = $wpdb->insert(
                 WHTP_HITS_TABLE, 
-                array("page"=>$page,"count"=>1), 
+                array("page"=>$page,"count_hits"=>1), 
                 array("%s", "%d")
             );
             $page_id = $wpdb->insert_id;
@@ -109,8 +105,7 @@ class WHTP_Hits{
     }
 
     public static function get_page_id ( $page ){
-        global $wpdb;
-        $hits_table = $wpdb->prefix . 'whtp_hits';
+        global $wpdb, $hits_table;
 
         $page_id  = $wpdb->get_var(
             "SELECT page_id FROM `$hits_table` 
@@ -120,8 +115,7 @@ class WHTP_Hits{
     }
 
     public static function delete_page( $delete_page = ""){
-        global $wpdb;
-        $hits_table = $wpdb->prefix . 'whtp_hits';
+        global $wpdb, $hits_table;
 
         if ($delete_page == ""){
             $delete_page = isset( $_GET['delete_page'] ) ? esc_attr( $_GET['delete_page'] ) : esc_attr( $_POST['delete_page'] );
@@ -139,19 +133,18 @@ class WHTP_Hits{
     }
 
     public static function reset_page_count( $page = ""){
-        global $wpdb;
-        $hits_table = $wpdb->prefix . 'whtp_hits';
+        global $wpdb, $hits_table;
 
         if ( $page == ""){
             $page = isset( $_GET['reset_page'] ) ? esc_attr( $_GET['reset_page'] ) : esc_attr( $_POST['reset_page'] );
         }
         if( $page != "all" ){
             #don't reset all but specific page
-            $update_page = $wpdb->query("UPDATE `$hits_table` SET count = 0 WHERE page = '$page'");
+            $update_page = $wpdb->query("UPDATE `$hits_table` SET count_hits = 0 WHERE page = '$page'");
             
         }else{
             #reset all
-            $update_all = $wpdb->query("UPDATE `$hits_table` SET count = 0 ");
+            $update_all = $wpdb->query("UPDATE `$hits_table` SET count_hits = 0 ");
             if ( $update_all ) {
                 $update_hit_info = WHTP_Hit_Info::reset_ip_info("all");
             }

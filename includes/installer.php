@@ -128,7 +128,7 @@ class WHTP_Installer{
 			CREATE TABLE IF NOT EXISTS `" . WHTP_HITS_TABLE ."` (
 			`page_id` int(10) NOT NULL AUTO_INCREMENT,
 			`page` varchar(100) NOT NULL,
-			`count` int(15) DEFAULT '0',
+			`count_hits` int(15) DEFAULT '0',
 			PRIMARY KEY (`page_id`)
 			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;"
 		);
@@ -155,7 +155,7 @@ class WHTP_Installer{
 		dbDelta("
 			CREATE TABLE IF NOT EXISTS `" . WHTP_VISITING_COUNTRIES_TABLE . "` (
 			`country_code` char(2) NOT NULL,
-			`count` int(11) NOT NULL,
+			`count_hits` int(11) NOT NULL,
 			UNIQUE KEY `country_code` (`country_code`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
 		);
@@ -236,14 +236,14 @@ class WHTP_Installer{
 		$wpdb->hide_errors();
 		
 		$hits = $wpdb->get_results("SELECT * FROM `hits`, ARRAY_A");
-		if ( count($hits ) > 0){
+		if ( count( $hits ) > 0){
 			$message = "";
 			$exported = false;
 			foreach( $hits as $hit ){
 				$insert = $wpdb->insert(
 					WHTP_HITS_TABLE, 
 					array(
-						"page"=>$hit['page'], "count" => $hit['count']
+						"page"=>$hit['page'], "count_hits" => $hit['count_hits']
 					), array("%s", "%d")
 				);
 				if( !$insert ){
@@ -264,7 +264,7 @@ class WHTP_Installer{
 		$wpdb->hide_errors();
 		
 		$hitsinfo = $wpdb->get_results("SELECT * FROM hitinfo");
-		
+
 		if( count( $hitsinfo ) > 0){
 			$message 	= "";
 			$exported	= false;
