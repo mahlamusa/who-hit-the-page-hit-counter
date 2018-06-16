@@ -330,4 +330,15 @@ class WHTP_Functions{
 		}
 		return $recent_backup = array( 'link'=>$export_url, 'filename'=>'whtp-ip-hits' );
 	}
+
+	public static function log( $message ) {
+		if ( defined('WHTP_LOG') && WHTP_LOG ) {
+			$date = current_time( 'mysql' );
+			if ( ! is_string( $message ) ) {
+				$message = print_r( $message, true );
+			}
+			$message = '[' . $date . '] - ' . $message . "\n";
+			file_put_contents( trailingslashit( WP_CONTENT_DIR ) . 'whtp-debug.log', $message, FILE_APPEND );
+		}
+	}
 }

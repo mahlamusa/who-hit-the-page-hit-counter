@@ -59,10 +59,13 @@ class WHTP_Installer{
 		global $wpdb;
 		if ( self::table_exists( WHTP_HITS_TABLE ) ) {
 			$wpdb->query( "ALTER TABLE `" . WHTP_HITS_TABLE . "` CHANGE COLUMN `count` `count_hits`  int(15) DEFAULT '0'" );
+
+			WHTP_Functions::log();
 		}
 
 		if ( self::table_exists( WHTP_VISITING_COUNTRIES_TABLE ) ) {
 			$wpdb->query( "ALTER TABLE `" . WHTP_VISITING_COUNTRIES_TABLE . "` CHANGE COLUMN `count` `count_hits`  int(15) DEFAULT '0'" );
+			WHTP_Functions::log("ALTER TABLE `" . WHTP_HITS_TABLE . "` CHANGE COLUMN `count` `count_hits`  int(15) DEFAULT '0'");
 		}
 		
 	}
