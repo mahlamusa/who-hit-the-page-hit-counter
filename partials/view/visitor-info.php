@@ -62,7 +62,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		* Select the country associated with the selected $ip_id
 		* and store the countries as an array, then display the first country
 		*/
-		$select_country = WHTP_IP2_Location::get_country_by_ip( $ip_address );
+		$select_country = WHTP_IP2_Location::get_country_name( $visitor_ip );
 		
 		
 		$agent_ids = WHTP_Ip_Hits::agent_ids_from_ip_id( $ip_id );

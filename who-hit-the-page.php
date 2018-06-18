@@ -208,7 +208,7 @@ class Who_Hit_The_Page_Admin{
 		
 		$installed_version = get_option( 'whtp_version', 0 );
 
-		if( ! $installed_version ){
+		if( $installed_version ){
 			add_option( 'whtp_version', WHTP_VERSION);		
 		}
 		elseif( $installed_version != WHTP_VERSION ){
@@ -221,7 +221,7 @@ class Who_Hit_The_Page_Admin{
 			//Database is now up to date: update installed version to latest version
 			update_option('whtp_version', WHTP_VERSION);
 		}
-		WHTP_Installer::create();
+		//WHTP_Installer::create();
 	}
 }
 add_action("plugins_loaded", function(){
