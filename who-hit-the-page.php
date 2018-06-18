@@ -58,8 +58,8 @@ include('includes/functions.php');
 register_activation_hook(__FILE__,'whtp_installer');
 register_deactivation_hook(__FILE__,'whtp_remove');
 
-$plugin = WHTP_Functions::plugin_info();
-define( "WHTP_VERSION", $plugin['Version'] );
+/**$plugin = WHTP_Functions::plugin_info();
+define( "WHTP_VERSION", $plugin['Version'] );**/
 
 function whtp_installer(){
 	require_once('includes/installer.php');

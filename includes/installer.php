@@ -58,14 +58,11 @@ class WHTP_Installer{
 	public static function rename_count_column(){
 		global $wpdb;
 		if ( self::table_exists( WHTP_HITS_TABLE ) ) {
-			$wpdb->query( "ALTER TABLE `" . WHTP_HITS_TABLE . "` CHANGE COLUMN `count` `count_hits`  int(15) DEFAULT '0'" );
-
-			WHTP_Functions::log();
+			$wpdb->query( "ALTER TABLE `" . WHTP_HITS_TABLE . "` CHANGE COLUMN `count` `count_hits`" );
 		}
 
 		if ( self::table_exists( WHTP_VISITING_COUNTRIES_TABLE ) ) {
-			$wpdb->query( "ALTER TABLE `" . WHTP_VISITING_COUNTRIES_TABLE . "` CHANGE COLUMN `count` `count_hits`  int(15) DEFAULT '0'" );
-			WHTP_Functions::log("ALTER TABLE `" . WHTP_HITS_TABLE . "` CHANGE COLUMN `count` `count_hits`  int(15) DEFAULT '0'");
+			$wpdb->query( "ALTER TABLE `" . WHTP_VISITING_COUNTRIES_TABLE . "` CHANGE COLUMN `count` `count_hits`" );
 		}
 		
 	}
@@ -140,20 +137,18 @@ class WHTP_Installer{
 	# create hits table
 	public static function create_hits_table(){
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		dbDelta("
-			CREATE TABLE IF NOT EXISTS `" . WHTP_HITS_TABLE ."` (
+		dbDelta("CREATE TABLE `" . WHTP_HITS_TABLE ."` (
 			`page_id` int(10) NOT NULL AUTO_INCREMENT,
 			`page` varchar(100) NOT NULL,
 			`count_hits` int(15) DEFAULT '0',
 			PRIMARY KEY (`page_id`)
-			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;"
+			) $charset_collate;"
 		);
 	}
 	# create hitinfo table
 	public static function create_hitinfo_table(){
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		dbDelta("
-			CREATE TABLE IF NOT EXISTS `" . WHTP_HITINFO_TABLE . "` (
+		dbDelta("CREATE TABLE `" . WHTP_HITINFO_TABLE . "` (
 			`id` int(11) NOT NULL AUTO_INCREMENT,
 			`ip_address` varchar(30) DEFAULT NULL,
 			`ip_status` varchar(10) NOT NULL DEFAULT 'active',
@@ -162,26 +157,24 @@ class WHTP_Installer{
 			`datetime_first_visit` varchar(25) DEFAULT NULL,
 			`datetime_last_visit` varchar(25) DEFAULT NULL,
 			PRIMARY KEY (`id`)
-			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;"
+			) $charset_collate;"
 		);
 	}
 
 	public static function create_visiting_countries(){
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		dbDelta("
-			CREATE TABLE IF NOT EXISTS `" . WHTP_VISITING_COUNTRIES_TABLE . "` (
+		dbDelta("CREATE TABLE `" . WHTP_VISITING_COUNTRIES_TABLE . "` (
 			`country_code` char(2) NOT NULL,
 			`count_hits` int(11) NOT NULL,
 			UNIQUE KEY `country_code` (`country_code`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
+			) $charset_collate;"
 		);
 	}
 
 
 	public static function create_ip_hits_table(){
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		dbDelta("
-			CREATE TABLE IF NOT EXISTS `" . WHTP_IP_HITS_TABLE . "` (
+		dbDelta("CREATE TABLE `" . WHTP_IP_HITS_TABLE . "` (
 			`id` int(10) NOT NULL AUTO_INCREMENT,
 			`ip_id` int(11) NOT NULL,
 			`page_id` int(10) NOT NULL,
@@ -189,7 +182,7 @@ class WHTP_Installer{
 			`datetime_last_visit` datetime NOT NULL,
 			`browser_id` int(11) NOT NULL,
 			PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;"
+			) $charset_collate;"
 		);
 	}
 	/*
@@ -197,21 +190,20 @@ class WHTP_Installer{
 	*/
 	public static function create_user_agents(){
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		dbDelta("
-			CREATE TABLE IF NOT EXISTS `" . WHTP_USER_AGENTS_TABLE . "` (
+		dbDelta("CREATE TABLE `" . WHTP_USER_AGENTS_TABLE . "` (
 			`agent_id` int(11) NOT NULL AUTO_INCREMENT,
 			`agent_name` varchar(20) NOT NULL,
 			`agent_details` text NOT NULL,
 			PRIMARY KEY (`agent_id`),
 			UNIQUE KEY `agent_name` (`agent_name`)
-			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;"
+			) $charset_collate;"
 		);
 	}
 
 	public static function create_ip_2_location_country(){
+		global $wpdb, $charset_collate;
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		dbDelta("
-			CREATE TABLE IF NOT EXISTS `" . WHTP_IP2_LOCATION_TABLE . "`(
+		dbDelta("CREATE TABLE `" . WHTP_IP2_LOCATION_TABLE . "`(
 			`ip_from` varchar(15) COLLATE utf8_bin DEFAULT NULL,
 			`ip_to` varchar(15) COLLATE utf8_bin DEFAULT NULL,
 			`decimal_ip_from` int(11) NOT NULL,
@@ -221,7 +213,7 @@ class WHTP_Installer{
 			KEY `idx_ip_from` (`ip_from`),
 			KEY `idx_ip_to` (`ip_to`),
 			KEY `idx_ip_from_to` (`ip_from`,`ip_to`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;"
+			) $charset_collate;"
 		);
 	}
 
@@ -235,14 +227,10 @@ class WHTP_Installer{
 	# check if a table exists in the database
 	public static function table_exists ( $tablename ){
 		global $wpdb;		
-		$tables = $wpdb->get_var("SHOW TABLES LIKE '$tablename'");
+		$table = $wpdb->get_results("DESCRIBE {$table};");
 
-		if ( $tables ) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		if ( ! empty( $table ) && is_array( $table ) ) return true;
+		else return false; 
 	}
 
 	# export hits data to whtp_hits
