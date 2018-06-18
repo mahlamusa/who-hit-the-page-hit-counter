@@ -3,7 +3,7 @@
 Plugin Name: Who Hit The Page - Hit Counter
 Plugin URI: http://whohit.co.za/who-hit-the-page-hit-counter
 Description: Lets you know who visted your pages by adding an invisible page hit counter on your website, so you know how many times a page has been visited in total and how many times each user identified by IP address has visited each page. You will also know the IP addresses of your visitors and relate the IP addresses to the country of the visitor and all browsers used by that IP/user.
-Version: 1.4.5
+Version: 1.4.6
 Author: mahlamusa
 Author URI: http://lindeni.co.za
 Plugin URI: http://whohit.co.za
@@ -31,6 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+define( 'WHTP_VERSION', '1.4.6');
 define( 'WHTP_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 
 if ( ! defined( 'WP_PLUGIN_DIR' ) ){
@@ -62,12 +63,14 @@ register_deactivation_hook(__FILE__,'whtp_remove');
 define( "WHTP_VERSION", $plugin['Version'] );**/
 
 function whtp_installer(){
-	require_once('includes/installer.php');
+	require_once( 'includes/config.php' );
+	require_once( 'includes/installer.php' );
 	$installer = new WHTP_Installer();
 }
 
 function whtp_remove(){
-	require_once('includes/uninstaller.php');
+	require_once( 'includes/config.php' );
+	require_once( 'includes/uninstaller.php' );
 	$deactivator = new WHTP_Deactivator();
 }
 
@@ -76,6 +79,7 @@ class Who_Hit_The_Page_Admin{
 		add_action( 'admin_menu', array( $this, 'admin_menu') );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'admin_init', array( $this, 'upgrade_check' ) );
 	}
 
 	public function admin_menu(){		
@@ -190,7 +194,7 @@ class Who_Hit_The_Page_Admin{
 		);
 		wp_register_script( 
 			'whtp-main-js', 
-			WP_HOST_PANEL_PLUGIN_URL . 'assets/js/whtp-admin.min.js', 
+			WHTP_PLUGIN_URL . 'assets/js/whtp-admin.min.js', 
 			array( 'jquery' ), 
 			null
 		);
@@ -198,9 +202,29 @@ class Who_Hit_The_Page_Admin{
 		wp_enqueue_script( 'mdl-admin-js' );
 		wp_enqueue_script( 'whtp-admin-js' );
 	}
+	
+	public static function upgrade_check(){		
+		require_once('includes/installer.php');
+		
+		$installed_version = get_option( 'whtp_version', 0 );
+
+		if( ! $installed_version ){
+			add_option( 'whtp_version', WHTP_VERSION);		
+		}
+		elseif( $installed_version != WHTP_VERSION ){
+			//Upgrade to 1.4.6
+			if( version_compare('1.4.6', $installed_version) ){ ///
+				WHTP_Installer::check_rename_tables();
+				WHTP_Installer::rename_count_column();				
+			}
+			
+			//Database is now up to date: update installed version to latest version
+			update_option('whtp_version', WHTP_VERSION);
+		}
+		WHTP_Installer::create();
+	}
 }
 add_action("plugins_loaded", function(){
 	global $whtp;
 	$whtpa = new Who_Hit_The_Page_Admin();
 });
-?>

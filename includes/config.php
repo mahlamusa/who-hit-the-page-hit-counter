@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 global $wpdb;
 global $hits_table, 

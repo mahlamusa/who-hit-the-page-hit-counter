@@ -160,14 +160,13 @@ class WHTP_Functions{
 		else return false;
 	}
 
-	public static function signup_form(){?>
-		<form action="" method="post" id="signup">
+	public static function signup_form() {
+		echo '<form action="" method="post" id="signup">
 			<input type="hidden" name="whtpsubscr" value="y" />
 			<label for="asubscribe_email">Enter your email address to subscribe to updates</label>
-			<input type="email" placeholder="e.g. <?php echo get_option('admin_email'); ?>" name="asubscribe_email" value="" class="90" /><br />
+			<input type="email" placeholder="e.g. ' . get_option('admin_email') .'" name="asubscribe_email" value="" class="90" /><br />
 			<input type="submit" value="Subscribe to updates" class="button button-primary button-hero" />
-		</form>
-		<?php 
+		</form>';
 	}
 
 	public static function deny_wordpress_host_ip(){

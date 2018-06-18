@@ -61,7 +61,7 @@ class WHTP_Visiting_Countries{
             );            
         }
 
-        if ( $updated || $inserted )  return true;
+        if ( isset( $updated ) && $updated || isset( $inserted ) && $inserted )  return true;
         else return false;
     }
 

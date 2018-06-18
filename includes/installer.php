@@ -14,12 +14,16 @@ class WHTP_Installer{
 	public function __construct(){
 		global $wpdb;
 
-		self::$hits_table 				= $wpdb->prefix . 'whtp_hits';
+		/**self::$hits_table 				= $wpdb->prefix . 'whtp_hits';
 		self::$hitinfo_table 			= $wpdb->prefix . 'whtp_hitinfo';
 		self::$user_agents_table 		= $wpdb->prefix . 'whtp_user_agents';
 		self::$ip_hits_table			= $wpdb->prefix . 'whtp_ip_hits';
 		self::$visiting_countries_table = $wpdb->prefix . 'whtp_visiting_countries';
-		self::$ip_to_location_table	= $wpdb->prefix . 'whtp_ip2location';
+		self::$ip_to_location_table	= $wpdb->prefix . 'whtp_ip2location';**/
+
+		require_once( 'config.php' );
+
+		if ( ! defined( 'WHTP_VERSION') ) define( 'WHTP_VERSION', '1.4.6');
 
 		self::upgrade_db();
 
@@ -101,9 +105,10 @@ class WHTP_Installer{
 		}
 	}
 
-	public static function rename_table( $old_table_name, $new_table_name ){		
+	public static function rename_table( $old_table_name, $new_table_name ){
+		global $wpdb;		
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		if ( dbDelta( "RENAME TABLE `" .  $old_table_name . "` TO `" . $new_table_name ."`;" ) ){
+		if ( $wpdb->query( "RENAME TABLE `" .  $old_table_name . "` TO `" . $new_table_name ."`;" ) ){
 			return true;
 		}
 		else return false;
@@ -137,6 +142,8 @@ class WHTP_Installer{
 	# create hits table
 	public static function create_hits_table(){
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+		global $charset_collate;
 		dbDelta("CREATE TABLE `" . WHTP_HITS_TABLE ."` (
 			`page_id` int(10) NOT NULL AUTO_INCREMENT,
 			`page` varchar(100) NOT NULL,
@@ -148,6 +155,8 @@ class WHTP_Installer{
 	# create hitinfo table
 	public static function create_hitinfo_table(){
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+		global $charset_collate;
 		dbDelta("CREATE TABLE `" . WHTP_HITINFO_TABLE . "` (
 			`id` int(11) NOT NULL AUTO_INCREMENT,
 			`ip_address` varchar(30) DEFAULT NULL,
@@ -161,8 +170,10 @@ class WHTP_Installer{
 		);
 	}
 
-	public static function create_visiting_countries(){
+	public static function create_visiting_countries(){		
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+		global $charset_collate;
 		dbDelta("CREATE TABLE `" . WHTP_VISITING_COUNTRIES_TABLE . "` (
 			`country_code` char(2) NOT NULL,
 			`count_hits` int(11) NOT NULL,
@@ -174,6 +185,8 @@ class WHTP_Installer{
 
 	public static function create_ip_hits_table(){
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+		global $charset_collate;
 		dbDelta("CREATE TABLE `" . WHTP_IP_HITS_TABLE . "` (
 			`id` int(10) NOT NULL AUTO_INCREMENT,
 			`ip_id` int(11) NOT NULL,
@@ -190,6 +203,8 @@ class WHTP_Installer{
 	*/
 	public static function create_user_agents(){
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+		global $charset_collate;
 		dbDelta("CREATE TABLE `" . WHTP_USER_AGENTS_TABLE . "` (
 			`agent_id` int(11) NOT NULL AUTO_INCREMENT,
 			`agent_name` varchar(20) NOT NULL,
@@ -200,16 +215,17 @@ class WHTP_Installer{
 		);
 	}
 
-	public static function create_ip_2_location_country(){
-		global $wpdb, $charset_collate;
+	public static function create_ip_2_location_country(){		
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+		global $charset_collate;
 		dbDelta("CREATE TABLE `" . WHTP_IP2_LOCATION_TABLE . "`(
-			`ip_from` varchar(15) COLLATE utf8_bin DEFAULT NULL,
-			`ip_to` varchar(15) COLLATE utf8_bin DEFAULT NULL,
+			`ip_from` varchar(15) DEFAULT NULL,
+			`ip_to` varchar(15) DEFAULT NULL,
 			`decimal_ip_from` int(11) NOT NULL,
 			`decimal_ip_to` int(11) NOT NULL,
-			`country_code` char(2) COLLATE utf8_bin DEFAULT NULL,
-			`country_name` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+			`country_code` char(2) DEFAULT NULL,
+			`country_name` varchar(64) DEFAULT NULL,
 			KEY `idx_ip_from` (`ip_from`),
 			KEY `idx_ip_to` (`ip_to`),
 			KEY `idx_ip_from_to` (`ip_from`,`ip_to`)
@@ -227,7 +243,7 @@ class WHTP_Installer{
 	# check if a table exists in the database
 	public static function table_exists ( $tablename ){
 		global $wpdb;		
-		$table = $wpdb->get_results("DESCRIBE {$table};");
+		$table = $wpdb->get_results("DESCRIBE {$tablename};");
 
 		if ( ! empty( $table ) && is_array( $table ) ) return true;
 		else return false; 

@@ -172,10 +172,12 @@ class WHTP_Hit_Info{
 
         $databaseFile = WHTP_PLUGIN_DIR_PATH . 'geodata/GeoLite2-City.mmdb';
 
-        $reader = new Reader($databaseFile);
-
-        print_r( $reader->get( $ip_ddress ) );
-
+        $reader         = new Reader($databaseFile);        
+        $record         = $reader->get( $ip_address );
+        $country_code   = $record['country']['iso_code'];
+        $country_name   = $record['country']['names']['en'];
+        $continent_code = $record['continent']['iso_code'];
+        $continent_name = $record['continent']['names']['en'];
         $reader->close();
         
         //$ua = getBrowser(); //Get browser info
@@ -234,7 +236,7 @@ class WHTP_Hit_Info{
         WHTP_Ip_Hits::ip_hit( $ip_id, $page_id, $date_ftime, $ua_id ); //insert new hit
 
         // get the country code corresponding to the visitor's IP
-        $country_code   = WHTP_IP_Location::get_country_code( $ip_address );
+        // $country_code   = WHTP_IP_Location::get_country_code( $ip_address );
         $counted        = WHTP_Visiting_Countries::country_count( $country_code );
     }
 
