@@ -86,7 +86,7 @@ class WHTP_Visiting_Countries{
 				$row = $select_countries[ $i ];
 				$countries[] = array(
                     'country_code' => $row->country_code, 
-                    'country_name' => WHTP_IP_Location::get_country_name( $row->country_code ),
+                    'country_name' => WHTP_IP2_Location::get_country_name( $row->country_code ),
                     'count_hits'=> $row->count_hits
                 );
             }
@@ -108,7 +108,7 @@ class WHTP_Visiting_Countries{
         $ips = WHTP_Functions::all_ips();
         
         for ( $i = 0; $i < count ( $ips ); $i ++ ){				
-            $country_code = WHTP_IP_Location::get_country_code( $ips[$i] );
+            $country_code = WHTP_IP2_Location::get_country_code( $ips[$i] );
             
             $exists = self::country_exists( $country_code );
             

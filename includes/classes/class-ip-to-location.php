@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-class WHTP_IP_Location{
+class WHTP_IP2_Location{
     private static $ip_to_location_table;
 
     public function __construct(){
@@ -15,31 +15,42 @@ class WHTP_IP_Location{
     *	Count country's visits
     */
     public static function get_country_code( $visitor_ip ){
-        global $wpdb, $ip_to_location_table;
+        $results = self::get();
+		$country_code = $result['country_code'];
         
-        $select_country_code = "
-            SELECT country_code 
-            FROM `$ip_to_location_table`
-            WHERE INET_ATON('$visitor_ip') 
-            BETWEEN decimal_ip_from AND decimal_ip_to LIMIT 1";
-
-        $country_code = $wpdb->get_var( $select_country_code );
-        
-        if ( $country_code ){		
-            return $country_code;
-        }	
+        if ( $country_code ) return $country_code;
         else return "AA";
     }
 
     public static function get_country_name( $country_code ){
         global $wpdb, $ip_to_location_table;
         
-		$country_name = $wpdb->get_var(
-            "SELECT country_name FROM `$ip_to_location_table` 
-            WHERE country_code='$country_code' LIMIT 0,1"
-        );
+        $results = self::get();
+        $country_name = $result['country_name'];
         
-		if ( $country_name == "") return "Unknown Country";
-		else return $country_name;
+        if ( $country_name ) return $country_name;
+        else return __( 'Unknown Country', 'whtp' );
+    }
+
+    public static function get( $ip_address ){
+        //MaxMind GeoIP2
+        require_once WHTP_PLUGIN_DIR_PATH . 'vendor/autoload.php';
+
+        $databaseFile = WHTP_PLUGIN_DIR_PATH . 'geodata/GeoLite2-City.mmdb';
+
+        $reader         = new Reader($databaseFile);        
+        $record         = $reader->get( $ip_address );
+        $country_code   = 
+        $country_name   = ;
+        $continent_code = $record['continent']['iso_code'];
+        $continent_name = $record['continent']['names']['en'];
+        $reader->close();
+
+        return apply_filters( 'whtp_locate_ip', array(
+            'country_code'  => $record['country']['iso_code'],
+            'country_name'  => $record['country']['names']['en'],
+            'continent_code' => $record['continent']['iso_code'],
+            'continent_name' => $record['continent']['names']['en']
+        ));
     }
 }

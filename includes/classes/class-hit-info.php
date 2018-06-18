@@ -46,7 +46,7 @@ class WHTP_Hit_Info{
         $ips  = $wpdb->get_results("SELECT ip_address FROM `$hitinfo_table` WHERE ip_status = 'active'");
         if ( $ips ){
             foreach ($ips as $ip ){
-                $country_code = WHTP_IP_Location::get_country_code( $ip->ip_address );
+                $country_code = WHTP_IP2_Location::get_country_code( $ip->ip_address );
                 if ( WHTP_Visiting_Countries::country_count( $country_code ) )
                     return true;
                 else return false;				
@@ -236,7 +236,7 @@ class WHTP_Hit_Info{
         WHTP_Ip_Hits::ip_hit( $ip_id, $page_id, $date_ftime, $ua_id ); //insert new hit
 
         // get the country code corresponding to the visitor's IP
-        // $country_code   = WHTP_IP_Location::get_country_code( $ip_address );
+        // $country_code   = WHTP_IP2_Location::get_country_code( $ip_address );
         $counted        = WHTP_Visiting_Countries::country_count( $country_code );
     }
 
