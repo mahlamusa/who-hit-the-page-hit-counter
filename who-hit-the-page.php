@@ -88,7 +88,8 @@ class Who_Hit_The_Page_Admin{
 			__('Who Hit The Page', 'whtp'), 
 			'administrator', 
 			'whtp-admin-menu',
-			array( $this, 'whtp_object_page_callback' )
+			array( $this, 'whtp_object_page_callback' ),
+			WHTP_PLUGIN_URL . 'assets/images/whtp-icon.png'
 		);
 		
 		add_submenu_page(
