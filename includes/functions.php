@@ -25,15 +25,10 @@ class WHTP_Functions{
 		return $plugin_data;
 	}
 
-	public static function make_backup_dir (){
+	public static function make_backup_dir(){
 		$whtp_backup_dir =  WP_CONTENT_DIR . "/uploads/whtp_backups"; //always use wp_content_dir instead of _url
-		if ( wp_mkdir_p ( $whtp_backup_dir ) ) {
-			define( 'WHTP_BACKUP_DIR', $whtp_backup_dir );
-			return true;
-		}
-		else{
+		if ( ! wp_mkdir_p ( $whtp_backup_dir ) ) {			
 			if ( mkdir ( $whtp_backup_dir ) ) {
-				define( 'WHTP_BACKUP_DIR', $whtp_backup_dir );	
 				return true;
 			}
 		}

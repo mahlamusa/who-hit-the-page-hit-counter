@@ -28,3 +28,5 @@ define( 'WHTP_IMAGES_URL', 		WHTP_PLUGIN_URL . 'assets/images/');
 define( 'WHTP_FLAGS_URL', 		WHTP_IMAGES_URL . 'flags/');
 define( 'WHTP_BROSWERS_URL', 	WHTP_IMAGES_URL . 'browsers/');
 define( 'WHTP_GEODATA_URL', 	WHTP_PLUGIN_URL . 'geodata/');
+
+define( 'WHTP_BACKUP_DIR', WP_CONTENT_DIR . "/uploads/whtp_backups" );

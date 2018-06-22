@@ -36,20 +36,22 @@ if ( isset( $_GET['action'] ) && $_GET['action'] == 'update_whtp_database' && wp
     endif;
 endif;
 ?>
-<form action="" name="" method="post">
-    <div class="whtp-card-container mdl-grid">
-        <div class="mdl-cell mdl-cell--5-col mdl-cell--5-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
-            <div class="mdl-card__title">
-                <h4 class="mdl-card__title-text">Uninstall Settings!</h4>
+<div class="wrap">
+    <h2 class="mdl-card__title-text">
+        <?php _e( 'Settings', 'whtp'); ?>
+    </h2>
+</div>
+
+<form action="" name="" method="post">    
+    <div class="whtp-card-container mdl-grid">        
+        <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
+            <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+                <?php _e( 'Uninstall Settings!', 'whtp' ); ?>
             </div>
             <div class="mdl-card__supporting-text">
-                <span class="mdl-typography--font-light mdl-typography--subhead">
                 What should happen when you un-install the plugin?
-                </span>
-                
-                <p>
-                    <label for="uninstall-action">Select One Option</label>
-                </p>
+            </div>
+            <div class="mdl-card__supporting-text">
                 <p>
                     <input type="radio" name="uninstall-action" value="delete-all" 
                     <?php if ($option == "delete-all") echo "checked"; ?>  />
@@ -72,17 +74,14 @@ endif;
             </div>
         </div>
 
-        <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-            <div class="mdl-card__title">
-                <h4 class="mdl-card__title-text">Backup Settings</h4>
+        <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
+            <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+                <?php _e( 'Backup Settings', 'whtp' ); ?>
             </div>
             <div class="mdl-card__supporting-text">
-                <span class="mdl-typography--font-light mdl-typography--subhead">
                 What should happen when you restore a backup?
-                </span>
-                <p>
-                    <label for="uninstall-action">Select One Option</label>
-                </p>
+            </div>
+            <div class="mdl-card__supporting-text">
                 <p>
                     <input type="radio" name="backup-action" value="delete-all"
                     <?php if ($export_option == "delete-all") echo "checked"; ?>  />

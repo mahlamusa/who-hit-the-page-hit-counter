@@ -4,27 +4,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 	global $wpdb;
 	
-	$user_stats = array();
-	$browsers = array();
-	$top_countries = array();
+	$user_stats     = array();
+	$browsers       = array();
+	$top_countries  = array();
 	
-    $hit_results = WHTP_Hits::get_hits();
-    $total_hits = count( $hit_results );
+    $hit_results    = WHTP_Hits::get_hits();
+    $total_hits     = count( $hit_results );
 	
-	$browsers = WHTP_Browser::get_browsers();
+	$browsers       = WHTP_Browser::get_browsers();
 	
 	//total unique visitors
-	$total_unique = WHTP_Hit_Info::count_unique();
+	$total_unique   = WHTP_Hit_Info::count_unique();
     
     $number_of_visitors = 5;
-	$top_visitors = WHTP_Hit_Info::top( $number_of_visitors );
+	$top_visitors   = WHTP_Hit_Info::top( $number_of_visitors );
     
     $number_of_countries = 15;
-	$top_countries = WHTP_Visiting_Countries::get_top_countries( $number_of_countries );
+	$top_countries  = WHTP_Visiting_Countries::get_top_countries( $number_of_countries );
 
 ?>
 <div class="mdl-grid whtps-content">
-    <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--12-col">
+    <div class="mdl-color--white mdl-cell mdl-cell--12-col">
         <div class="mdl-grid mdl-cell mdl-cell--12-col">
             <div class="mdl-cell mdl-cell--3-col">
                 <h3 class="column-title">
@@ -138,7 +138,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
     </div>
         
-    <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--12-col">
+    <div class="mdl-color--white mdl-cell mdl-cell--12-col">
         <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
             <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
                 <h2 class="mdl-card__title-text">

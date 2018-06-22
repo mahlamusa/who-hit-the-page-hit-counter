@@ -35,7 +35,7 @@ class WHTP_Hits{
     public static function get_page_by_id( $page_id ) {
         global $wpdb, $hits_table;
 
-        return $wpdb->get_row ( "SELECT page, count_hits FROM `$hits_table` WHERE page_id='$page_id' LIMIT 0,1" );
+        return $wpdb->get_row ( "SELECT * FROM `$hits_table` WHERE page_id='$page_id' LIMIT 0,1" );
     }
 
     public static function count_page( $page ) {	

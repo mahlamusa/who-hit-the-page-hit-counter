@@ -23,6 +23,13 @@ class WHTP_Installer{
 
 		require_once( 'config.php' );
 
+		/*
+		* define backup directory
+		*/
+		if ( ! defined ( 'WHTP_BACKUP_DIR' ) ){
+			WHTP_Functions::make_backup_dir ();
+		}
+
 		if ( ! defined( 'WHTP_VERSION') ) define( 'WHTP_VERSION', '1.4.6');
 
 		self::upgrade_db();
