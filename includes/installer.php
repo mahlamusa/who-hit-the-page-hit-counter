@@ -34,6 +34,10 @@ class WHTP_Installer{
 		if ( ! get_option( 'whtp_version' ) ) {	
 			update_option( 'whtp_version', WHTP_VERSION );						
 		}
+
+		if ( get_option( 'whtp_count_renamed', 'no' ) != 'yes' && version_compare( get_option( 'whtp_version' ), '1.4.6', '<' ) ) {
+			self::update_count();
+		}		
 	}
 
 	public static function is_installed(){
@@ -53,22 +57,31 @@ class WHTP_Installer{
 	}
 
 	public static function upgrade_db(){
-		self::check_rename_tables();
 		self::update_old_user_agents();
 		WHTP_Visiting_Countries::update_visiting_countries();
-		self::rename_count_column();
+		self::check_rename_tables();
 	}
 
-	public static function rename_count_column(){
-		global $wpdb;
-		if ( self::table_exists( WHTP_HITS_TABLE ) ) {
-			$wpdb->query( "ALTER TABLE `" . WHTP_HITS_TABLE . "` CHANGE COLUMN `count` `count_hits`" );
-		}
+	public static function update_count(){
+		if ( get_option( 'whtp_hits_count_renamed', 'no' ) == 'yes' && get_option( 'whtp_countries_count_renamed', 'no' ) == 'yes') return;
 
-		if ( self::table_exists( WHTP_VISITING_COUNTRIES_TABLE ) ) {
-			$wpdb->query( "ALTER TABLE `" . WHTP_VISITING_COUNTRIES_TABLE . "` CHANGE COLUMN `count` `count_hits`" );
+		global $wpdb;
+		if ( get_option('whtp_hits_count_renamed', 'no') == 'no') {
+			$updated_hits = $wpdb->query("UPDATE `{$wpdb->prefix}whtp_hits` SET `count_hits`=`count`");
+			if ( $updated_hits ) {
+				$updated_hits = $wpdb->query("ALTER TABLE `{$wpdb->prefix}whtp_hits` DROP COLUMN count");
+			}
 		}
 		
+		if ( get_option('whtp_countries_count_renamed', 'no') == 'no') {
+			$updated_countries = $wpdb->query("UPDATE `{$wpdb->prefix}whtp_visiting_countries` SET `count_hits`=`count`");
+			if ( $updated_countries ) {
+				$updated_countries = $wpdb->query("ALTER TABLE `{$wpdb->prefix}whtp_visiting_countries` DROP COLUMN count");
+			}
+		}
+
+		if ( $updated_hits ) 	update_option('whtp_hits_count_renamed', 'yes');
+		if ( $updated_countries ) update_option('whtp_countries_count_renamed', 'yes');
 	}
 
 	public static function check_rename_tables(){
@@ -147,7 +160,7 @@ class WHTP_Installer{
 		dbDelta("CREATE TABLE `" . WHTP_HITS_TABLE ."` (
 			`page_id` int(10) NOT NULL AUTO_INCREMENT,
 			`page` varchar(100) NOT NULL,
-			`count_hits` int(15) DEFAULT '0',
+			`count_hits` int(15) DEFAULT 0,
 			PRIMARY KEY (`page_id`)
 			) $charset_collate;"
 		);
@@ -243,7 +256,7 @@ class WHTP_Installer{
 	# check if a table exists in the database
 	public static function table_exists ( $tablename ){
 		global $wpdb;		
-		$table = $wpdb->get_results("DESCRIBE {$tablename};");
+		$table = $wpdb->get_results("DESCRIBE `{$tablename}`;");
 
 		if ( ! empty( $table ) && is_array( $table ) ) return true;
 		else return false; 

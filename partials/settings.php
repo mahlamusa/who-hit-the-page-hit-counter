@@ -14,7 +14,7 @@ if ( isset ( $_POST['update-uninstall-option'] ) ){
 }
 $option = get_option( 'whtp_data_action' );
 
-if ( $update_uninstall_action || $update_export_action ) : ?>
+if ( isset( $update_uninstall_action ) && $update_uninstall_action || isset( $update_export_action ) && $update_export_action ) : ?>
     <div id="message" class="updated">
         <p>Settings updated.</p> 
     </div><?php
@@ -22,6 +22,16 @@ else: ?>
     <div id="message" class="updated">
         <p>Failed to update settings.</p> 
     </div><?php
+endif;
+
+if ( isset( $_GET['action'] ) && $_GET['action'] == 'update_whtp_database' && wp_verify_nonce( $_GET['whtp_nonce'],  'whtp_update_db' ) ) : 
+    WHTP_Installer::update_count();
+
+    if ( get_option( 'whtp_count_renamed' ) == 'yes') : ?>
+    <div id="message" class="updated">
+        <p>Database updated. Enjoy!</p> 
+    </div><?php
+    endif;
 endif;
 ?>
 <form action="" name="" method="post">

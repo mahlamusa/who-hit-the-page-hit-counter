@@ -79,7 +79,7 @@ class Who_Hit_The_Page_Admin{
 		add_action( 'admin_menu', array( $this, 'admin_menu') );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-		add_action( 'admin_init', array( $this, 'upgrade_check' ) );
+		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 	}
 
 	public function admin_menu(){		
@@ -202,26 +202,19 @@ class Who_Hit_The_Page_Admin{
 		wp_enqueue_script( 'mdl-admin-js' );
 		wp_enqueue_script( 'whtp-admin-js' );
 	}
-	
-	public static function upgrade_check(){		
-		require_once('includes/installer.php');
-		
-		$installed_version = get_option( 'whtp_version', 0 );
 
-		if( $installed_version ){
-			add_option( 'whtp_version', WHTP_VERSION);		
-		}
-		elseif( $installed_version != WHTP_VERSION ){
-			//Upgrade to 1.4.6
-			if( version_compare('1.4.6', $installed_version) ){ ///
-				WHTP_Installer::check_rename_tables();
-				WHTP_Installer::rename_count_column();				
-			}
-			
-			//Database is now up to date: update installed version to latest version
-			update_option('whtp_version', WHTP_VERSION);
-		}
-		//WHTP_Installer::create();
+	public static function admin_notices() {
+		if ( get_option( 'whtp_hits_count_renamed', 'no' ) == 'yes' && get_option('whtp_countries_count_renamed', 'no') == 'yes'):
+			return;
+		else:
+		?>
+		<div class="notice notice-update update-nag is-dismissible">
+			<p><?php printf( 
+				__( 'We notice that you have updated the plugin! We need to update the database to make sure the plugin works as it should. <a href="%s" class="button">Click here to update database</a>', 'whtp' ),
+				admin_url( 'admin.php?page=whtp-settings&action=update_whtp_database&whtp_nonce=' . wp_create_nonce( 'whtp_update_db' ) ) ); ?></p>
+		</div>
+		<?php
+		endif;
 	}
 }
 add_action("plugins_loaded", function(){
