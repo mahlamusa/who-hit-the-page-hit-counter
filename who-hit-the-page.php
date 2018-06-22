@@ -80,6 +80,7 @@ class Who_Hit_The_Page_Admin{
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array( $this, 'add_action_links' ) );
 	}
 
 	public function admin_menu(){		
@@ -166,6 +167,13 @@ class Who_Hit_The_Page_Admin{
 	}
 	public function whtp_help_submenu_callback(){
 		include( WHTP_PLUGIN_DIR_PATH . 'partials/help.php');//admin page
+	}
+
+	function add_action_links ( $links ) {
+		$links[] = '<a href="' . admin_url( 'admin.php?page=whtp-settings' ) . '">' .__('Settings','whtp') . '</a>';
+		$links[] = '<a href="' . admin_url( 'admin.php?page=whtp-help' ) . '">'. __('Help', 'whtp') . '</a>';
+		$links[] = '<a href="http://whohit.co.za/who-hit-the-page-hit-counter" target="_blank">'. __('Documentation', 'whtp') .'</a>';
+		return $links;
 	}
 
 	public function enqueue_styles(){
