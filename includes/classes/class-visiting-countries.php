@@ -23,11 +23,22 @@ class WHTP_Visiting_Countries{
         else return false;
     }
 
+    public static function count_exists(){
+        global $wpdb, $visiting_countries_table;
+
+        $code = $wpdb->get_var(
+            "SELECT count_hits FROM `$visiting_countries_table` 
+            WHERE 1=1 LIMIT 1" 
+        );
+        if ( $code ) return true;
+        else return false;
+    }
+
     /*
     * Count a visiting country
     * update country's count
     */
-    public static function country_count( $country_code ){	
+    public static function country_count( $country_code, $country_name = "" ){	
         global $wpdb, $visiting_countries_table;
 
         $res = false;
@@ -38,25 +49,28 @@ class WHTP_Visiting_Countries{
         );
         
         if ( $code ) {	
-            /**$count = $wpdb->get_var(
+            $count = $wpdb->get_var(
                 "SELECT count_hits FROM `$visiting_countries_table` 
                 WHERE country_code='$country_code'"
             );
-            $count +=1;**/
+            $count +=1;/****/
 
             $updated = $wpdb->update(
                 $visiting_countries_table, 
-                array( "count_hits" => "count_hits + 1" ), 
-                array( "country_code" => $country_code ), 
-                array("%d"), array("%s")
+                array(
+                    "count_hits" => $count,
+                    "country_name" => $country_name
+                ), 
+                array( "country_code" => $country_code )
             );
         }
         else {	
             $inserted = $wpdb->insert( 
                 $visiting_countries_table, 
                 array(
-                    "country_code" => $country_code, 
-                    "count_hits" => 1
+                    "country_code" => $country_code,
+                    "country_name" => $country_name, 
+                    "count_hits"    => 1
                 )
             );            
         }
@@ -68,31 +82,23 @@ class WHTP_Visiting_Countries{
     public static function get_top_countries( $number = 15 ){
         global $wpdb, $visiting_countries_table;
         
-		$select_countries = $wpdb->get_results(
+		return $wpdb->get_results(
             "SELECT * FROM `$visiting_countries_table` 
             ORDER BY count_hits DESC 
             LIMIT $number"
         );
+    }
 
-		if ( $select_countries ){
-			$countries = array();
-			$num_rows = count( $select_countries );
-			if ( $num_rows > $number ) $max_count = $number;
-            else $max_count = $num_rows;
-            
-            $number = count( $select_countries ) <= $number ? count( $select_countries ) : $number;
-			
-			for ( $i = 0; $i < $number; $i ++ ) {
-				$row = $select_countries[ $i ];
-				$countries[] = array(
-                    'country_code' => $row->country_code, 
-                    'country_name' => WHTP_IP2_Location::get_country_name( $row->country_code ),
-                    'count_hits'=> $row->count_hits
-                );
-            }
-            
-			return $countries;
-		}		
+    public static function get_country_name( $country_code ) {
+        global $wpdb, $visiting_countries_table;
+        $name = $wpdb->get_var(
+            "SELECT country_name 
+            FROM `$visiting_countries_table` 
+            WHERE country_code = '$country_code'"
+        );
+
+        if ( $name ) return $name;
+        else return __( 'Unknown Country', 'whtp' );
     }
     
     

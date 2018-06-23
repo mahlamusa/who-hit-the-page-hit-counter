@@ -26,10 +26,13 @@ if ( isset( $_POST['update-uninstall-option'] ) || isset( $_POST['update-backup-
     endif;
 endif;
 
-if ( isset( $_GET['action'] ) && $_GET['action'] == 'update_whtp_database' && wp_verify_nonce( $_GET['whtp_nonce'],  'whtp_update_db' ) ) : 
+if ( isset( $_GET['action'] ) && $_GET['action'] == 'update_whtp_database' && wp_verify_nonce( $_GET['whtp_nonce'],  'whtp_update_db' ) ) :
+    require_once( WHTP_PLUGIN_DIR_PATH . 'includes/config.php' );
+	require_once( WHTP_PLUGIN_DIR_PATH . 'includes/installer.php' );
     WHTP_Installer::update_count();
+    WHTP_Installer::create();
 
-    if ( get_option( 'whtp_count_renamed' ) == 'yes') : ?>
+    if ( get_option( 'whtp_hits_count_renamed' ) == 'yes' && get_option( 'whtp_countries_count_renamed' ) == 'yes') : ?>
     <div id="message" class="updated">
         <p>Database updated. Enjoy!</p> 
     </div><?php

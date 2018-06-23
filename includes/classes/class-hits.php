@@ -10,6 +10,17 @@ class WHTP_Hits{
         self::$hits_table = $wpdb->prefix . 'whtp_hits';
     }
 
+    public static function count_exists(){
+        global $wpdb, $hits_table;
+
+        $code = $wpdb->get_var(
+            "SELECT count_hits FROM `$hits_table` 
+            WHERE 1=1 LIMIT 1" 
+        );
+        if ( $code ) return true;
+        else return false;
+    }
+
     public static function total(){
         global $wpdb, $hits_table;
 

@@ -174,10 +174,18 @@ class WHTP_Hit_Info{
 
         $reader         = new Reader($databaseFile);        
         $record         = $reader->get( $ip_address );
-        $country_code   = $record['country']['iso_code'];
-        $country_name   = $record['country']['names']['en'];
-        $continent_code = $record['continent']['iso_code'];
-        $continent_name = $record['continent']['names']['en'];
+        if ( $record ) {
+            $country_code   = $record['country']['iso_code'];
+            $country_name   = $record['country']['names']['en'];
+            $continent_code = $record['continent']['iso_code'];
+            $continent_name = $record['continent']['names']['en'];
+        }else{
+            $country_code   = __( 'AA', 'whtp' );
+            $country_name   = __( 'Unknown Country', 'whtp' );
+            $continent_code = __( 'AA', 'whtp' );
+            $continent_name = __( 'Unknown Continent'. 'whtp' );
+        }
+        
         $reader->close();
         
         //$ua = getBrowser(); //Get browser info
@@ -237,7 +245,7 @@ class WHTP_Hit_Info{
 
         // get the country code corresponding to the visitor's IP
         // $country_code   = WHTP_IP2_Location::get_country_code( $ip_address );
-        $counted        = WHTP_Visiting_Countries::country_count( $country_code );
+        $counted        = WHTP_Visiting_Countries::country_count( $country_code, $country_name );
     }
 
     public static function ip_is_denied ( $ip_address ){

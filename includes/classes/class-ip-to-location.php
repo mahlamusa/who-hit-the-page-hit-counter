@@ -26,7 +26,7 @@ class WHTP_IP2_Location{
         } 
     }
 
-    public static function get_country_name( $ip_address ){        
+    public static function get_country_name( $ip_address ){ 
         $results = self::get( $ip_address );
 
         if ( isset( $results[ 'country_name'] ) ) {
@@ -35,6 +35,11 @@ class WHTP_IP2_Location{
         else {
             return __( 'Unknown Country', 'whtp' );
         } 
+    }
+
+    public static function country_code_to_ip( $country_code ) {
+        global $wpdb, $ip_to_location_table;
+
     }
 
     public static function get( $ip_address ){
@@ -53,6 +58,6 @@ class WHTP_IP2_Location{
             'country_name'  => $record['country']['names']['en'],
             'continent_code' => $record['continent']['iso_code'],
             'continent_name' => $record['continent']['names']['en']
-        ));
+        ), $record);
     }
 }

@@ -88,28 +88,27 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <tbody>
                     <?php
                     
-                    for ( $i = 0; $i < count ( $top_countries ); $i ++ ) :
-                        $top_country = $top_countries[$i];
-                        $image_prefix =  $top_country['country_name'] ;
-                        if ( $image_prefix == 'Unknown Country')
+                    foreach ( $top_countries as $top_country ) :
+                        $image_prefix =  $top_country->country_code ;
+                        if ( $image_prefix == 'AA')
                             $image_prefix = '0';
                         else
-                            $image_prefix = strtolower( $top_country['country_code'] );
+                            $image_prefix = strtolower( $top_country->country_code );
                         ?>
                         <tr>
                             <td class="mdl-data-table__cell--non-numeric">
                                 <img 
                                 src="<?php echo WHTP_FLAGS_URL . $image_prefix; ?>.png" 
-                                alt="<?php echo sprintf( __( 'Flag of %s', 'whtp'), esc_attr( $top_country['country_code'] ) ); ?>" 
-                                title="<?php echo esc_attr( $top_country['country_name'] ); ?>" />
-                                <?php echo esc_attr( $top_country['country_name'] ); ?>, 
-                                <?php echo esc_attr( $top_country['country_code'] ); ?>
+                                alt="<?php echo sprintf( __( 'Flag of %s', 'whtp'), esc_attr( $top_country->country_name ) ); ?>" 
+                                title="<?php echo esc_attr( $top_country->country_name ); ?>" />
+                                <?php echo esc_attr( $top_country->country_name ); ?>, 
+                                <?php echo esc_attr( $top_country->country_code ); ?>
                             </td>
                             <td>
-                                <?php echo esc_attr( $top_country['count_hits'] ); ?>
+                                <?php echo esc_attr( $top_country->count_hits ); ?>
                             </td>
                         </tr>
-                    <?php endfor; ?>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>                
                 <?php endif;?>

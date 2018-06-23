@@ -70,25 +70,22 @@ class WHTP_Installer{
 	}
 
 	public static function update_count(){
-		if ( get_option( 'whtp_hits_count_renamed', 'no' ) == 'yes' && get_option( 'whtp_countries_count_renamed', 'no' ) == 'yes') return;
+		if ( WHTP_Hits::count_exists() && WHTP_Visiting_Countries::count_exists() ) return;
 
 		global $wpdb;
-		if ( get_option('whtp_hits_count_renamed', 'no') == 'no') {
+		if ( ! WHTP_Hits::count_exists() ) {
 			$updated_hits = $wpdb->query("UPDATE `{$wpdb->prefix}whtp_hits` SET `count_hits`=`count`");
 			if ( $updated_hits ) {
 				$updated_hits = $wpdb->query("ALTER TABLE `{$wpdb->prefix}whtp_hits` DROP COLUMN count");
 			}
 		}
 		
-		if ( get_option('whtp_countries_count_renamed', 'no') == 'no') {
+		if ( ! WHTP_Visiting_Countries::count_exists() ) {
 			$updated_countries = $wpdb->query("UPDATE `{$wpdb->prefix}whtp_visiting_countries` SET `count_hits`=`count`");
 			if ( $updated_countries ) {
 				$updated_countries = $wpdb->query("ALTER TABLE `{$wpdb->prefix}whtp_visiting_countries` DROP COLUMN count");
 			}
 		}
-
-		if ( $updated_hits ) 	update_option('whtp_hits_count_renamed', 'yes');
-		if ( $updated_countries ) update_option('whtp_countries_count_renamed', 'yes');
 	}
 
 	public static function check_rename_tables(){
@@ -196,6 +193,7 @@ class WHTP_Installer{
 		global $charset_collate;
 		dbDelta("CREATE TABLE `" . WHTP_VISITING_COUNTRIES_TABLE . "` (
 			`country_code` char(2) NOT NULL,
+			`country_name` varchar(125) DEFAULT NULL,
 			`count_hits` int(11) NOT NULL,
 			UNIQUE KEY `country_code` (`country_code`)
 			) $charset_collate;"

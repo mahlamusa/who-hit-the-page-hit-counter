@@ -213,7 +213,7 @@ class Who_Hit_The_Page_Admin{
 	}
 
 	public static function admin_notices() {
-		if ( get_option( 'whtp_hits_count_renamed', 'no' ) == 'yes' && get_option('whtp_countries_count_renamed', 'no') == 'yes'):
+		if ( WHTP_Hits::count_exists() &&  WHTP_Visiting_Countries::count_exists() ):
 			return;
 		else:
 		?>
