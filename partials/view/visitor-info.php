@@ -12,34 +12,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	$visitor_ip = '';
 	if ( $num_ips > 0 ) {
 		if ( isset ( $_GET['ip'] ) && $_GET['ip'] != "" ){
-			$visitor_ip = stripslashes( $_GET['ip'] );//"192.10.10.253";//;france = "80.248.208.145", za = 41.61.255.255;, za = 41.77.63.255;
-			$ip_id = WHTP_Hit_Info::get_ip_id ($visitor_ip );
-			//echo display_select_visitor_ip();
-			//wp_reset_postdata();
+			$visitor_ip = stripslashes( $_GET['ip'] );
 		}
-		if( isset ( $_POST['ip'] ) ){
-			$visitor_ip = esc_attr( $_POST['ip'] );
-			$ip_id = WHTP_Hit_Info::get_ip_id($visitor_ip);
-		}
-		
-		if ( $visitor_ip == ''){
-			$ip_id = 0;
-			$visitor_ip = '127.0.0.1';
-		}
-		//show the select ip address form
-		//echo display_select_visitor_ip();
-		
-		/*
-		*	 Results are stored in arrays
-		*/
+		elseif( isset ( $_POST['ip'] ) ){
+			$visitor_ip = esc_attr( $_POST['ip'] );			
+		}		
+		else {
+            $visitor_ip = $_SERVER['REMOTE_ADDR'];
+        }
+        
+        $ip_id = WHTP_Hit_Info::get_ip_id($visitor_ip);
 			
-		$user_stats = array();
 		$info_result = array();
-		$user_agents = array();
 		$page_ids = array();
-		$hit_result = array();
 		$pages_visited = array();
-		$countries = array();
 		$agent_ids = array();
 		$browsers = array();
 		/*
@@ -79,7 +65,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$browsers[] = $browser;
 			}
 		}
-		
 		
 	?>
 <div class="mdl-grid whtps-content">
