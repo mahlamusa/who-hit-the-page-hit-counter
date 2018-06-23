@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	$top_countries  = array();
 	
     $hit_results    = WHTP_Hits::get_hits();
-    $total_hits     = count( $hit_results );
+    $total_hits     = WHTP_Hits::total();
 	
 	$browsers       = WHTP_Browser::get_browsers();
 	

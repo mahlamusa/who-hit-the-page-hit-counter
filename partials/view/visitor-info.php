@@ -61,7 +61,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		* Select the country associated with the selected $ip_id
 		* and store the countries as an array, then display the first country
 		*/
-		$select_country = WHTP_IP2_Location::get_country_name( $visitor_ip );
+		$country_name = WHTP_IP2_Location::get_country_name( $visitor_ip );
 		
 		
 		$agent_ids = WHTP_Ip_Hits::agent_ids_from_ip_id( $ip_id );
@@ -128,7 +128,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <?php echo sprintf( __( 'Total Visits: %s', 'whtp' ), !$info_result? "Not Set" : $info_result->ip_total_visits ); ?>
             </div>
             <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <?php echo sprintf( __( 'Location: ', 'whtp' ), !$country?"Unknown": $country[0]); ?>
+                <?php echo sprintf( __( 'Location: %s', 'whtp' ), $country_name ); ?>
             </div>
             <div class="mdl-card__supporting-text mdl-color-text--grey-600">
                 <?php _e( 'First Visit :', 'whtp' ); ?> <?php echo $info_result->datetime_first_visit; ?>
