@@ -185,30 +185,42 @@ class Who_Hit_The_Page_Admin{
             'mdl-admin-icons', 
             'https://fonts.googleapis.com/icon?family=Material+Icons'
 		);
+		wp_register_style(
+			'select2',
+			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css'
+		);
 		wp_register_style( 
 			'whtp-admin-css', 
 			WHTP_PLUGIN_URL . 'assets/css/whtp-admin.min.css'
 		);
 
 		wp_enqueue_style( 'mdl-admin-css' );
+		wp_enqueue_style( 'select2' );
         wp_enqueue_style( 'mdl-admin-icons' );
         wp_enqueue_style( 'whtp-admin-css' );
 	}
 
 	public function enqueue_scripts() {
 		wp_register_script( 
-            'mdl-admin-js', 
+            'mdl-js', 
             'https://code.getmdl.io/1.3.0/material.min.js',
             null, null, true
 		);
 		wp_register_script( 
-			'whtp-main-js', 
+			'whtp-admin-js', 
 			WHTP_PLUGIN_URL . 'assets/js/whtp-admin.min.js', 
 			array( 'jquery' ), 
-			null
+			null, true
+		);
+		wp_register_script(
+			'select2',
+			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js',
+			array( 'jquery' ),
+			null, true
 		);
 
-		wp_enqueue_script( 'mdl-admin-js' );
+		wp_enqueue_script( 'mdl-js' );
+		wp_enqueue_script( 'select2' );
 		wp_enqueue_script( 'whtp-admin-js' );
 	}
 

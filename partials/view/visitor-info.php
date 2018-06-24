@@ -78,7 +78,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     if ( $ip_results ) : ?>
                         <form name="select_ip" method="post" action="" >
                             <p>Please select an IP to see more details about that IP Address.</p>
-                            <select name="ip" style="height: 50px; width: 40%; padding: 15px;display: inline;"><?php
+                            <select name="ip" class="whtp-select-single" style="width: 40%; padding: 5px;display: inline;"><?php
                                 foreach ( $ip_results as $ip ) : ?>
                                     <option style="padding:15px; display: block; float: left;" 
                                         value="<?php echo esc_attr( $ip->ip_address ); ?>">
@@ -130,7 +130,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <?php _e( 'Browsers & Pages!', 'whtp' ); ?>
             </div>            
             <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <?php _e( 'Pages Visited by this user', 'whtp' ); ?>
+                <strong><?php _e( 'Pages Visited by this user', 'whtp' ); ?></strong>
             </div>
             <?php
                 if ( ! $pages_visited || count( $pages_visited ) <= 0 ): ?>
@@ -148,7 +148,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 endif;
             ?>
             <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <?php _e( 'The User Has The following Browsers', 'whtp' ); ?>
+                <strong><?php _e( 'The User Has The following Browsers', 'whtp' ); ?></strong>
             </div>
             <?php
                 if ( !$browsers || 0 == count( $browsers )): ?>
