@@ -20,7 +20,9 @@ class WHTP_Hit_Info{
         WHERE ip_status='$status' 
         ORDER BY ip_total_visits DESC";
 
-        $sql = $number != 'all' ? $sql . " LIMIT $offset, $number" : $sql;
+        if ( self::count() > $number ) {
+            $sql = ( $number != 'all' ) ? $sql . " LIMIT $offset, $number" : $sql;
+        }
         
         $hits = $wpdb->get_results( $sql );
 

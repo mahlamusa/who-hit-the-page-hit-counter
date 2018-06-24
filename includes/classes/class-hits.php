@@ -35,7 +35,9 @@ class WHTP_Hits{
 
         $sql = "SELECT * FROM `$hits_table` ORDER BY count_hits $order";
 
-        $sql = ( $number != 'all' ) ? $sql . " LIMIT $offset, $number" : $sql;
+        if ( self::count_exists() > $number ) {
+            $sql = ( $number != 'all' ) ? $sql . " LIMIT $offset, $number" : $sql;
+        }
 
         $all = $wpdb->get_results( $sql );
 

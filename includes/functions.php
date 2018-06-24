@@ -48,40 +48,43 @@ class WHTP_Functions{
 		return $all_ips;
 	}
 
-	public static function pagination( $number, $page, $total, $list_class ) {
+	public static function pagination( $number, $page, $total, $list_class = '', $page_name = '' ) {
 		if ( $number == 'all' ) {
 			return '';
 		}
+
+		if ( $page_name == '' ) $page_name = 'whtp-view-all';
+		$url = admin_url( 'admin.php?page=' . $page_name );
 	 
 		$last       = ceil( $total / $number );
 	 
 		$start      = ( ( $page - $number ) > 0 ) ? $page - $number : 1;
 		$end        = ( ( $page + $number ) < $last ) ? $page + $number : $last;
 	 
-		$html       = '<ul class="' . $list_class . '">';
+		$html       = '<div class="' . $list_class . '">';
 	 
 		$class      = ( $page == 1 ) ? "disabled" : "";
-		$html       .= '<li class="' . $class . '"><a href="?number=' . $number . '&page=' . ( $page - 1 ) . '">&laquo;</a></li>';
+		$html       .= '<a class="mdl-button mdl-js-button mdl-button--icon ' . $class . '" href="' . $url . '&number=' . $number . '&paging=' . ( $page - 1 ) . '"><i class="material-icons">arrow_left</i></a>';
 	 
 		if ( $start > 1 ) {
-			$html   .= '<li><a href="?number=' . $number . '&page=1">1</a></li>';
-			$html   .= '<li class="disabled"><span>...</span></li>';
+			$html   .= '<a  class="mdl-button mdl-js-button mdl-button--icon" href="' . $url . '&number=' . $number . '&paging=1">1</a>';
+			$html   .= '<div class="disabled"><span>...</span>';
 		}
 	 
 		for ( $i = $start ; $i <= $end; $i++ ) {
 			$class  = ( $page == $i ) ? "active" : "";
-			$html   .= '<li class="' . $class . '"><a href="?number=' . $number . '&page=' . $i . '">' . $i . '</a></li>';
+			$html   .= '<a class="mdl-button mdl-js-button mdl-button--icon ' . $class . '" href="' . $url . '&number=' . $number . '&paging=' . $i . '">' . $i . '</a>';
 		}
 	 
 		if ( $end < $last ) {
-			$html   .= '<li class="disabled"><span>...</span></li>';
-			$html   .= '<li><a href="?number=' . $number . '&page=' . $last . '">' . $last . '</a></li>';
+			$html   .= '<div class="disabled"><span>...</span></div>';
+			$html   .= '<a href="mdl-button mdl-js-button mdl-button--icon ' . $url . '&number=' . $number . '&paging=' . $last . '">' . $last . '</a>';
 		}
 	 
 		$class      = ( $page == $last ) ? "disabled" : "";
-		$html       .= '<li class="' . $class . '"><a href="?number=' . $number . '&page=' . ( $page + 1 ) . '">&raquo;</a></li>';
+		$html       .= '<a class="mdl-button mdl-js-button mdl-button--icon ' . $class . '" href="' . $url . '&number=' . $number . '&paging=' . ( $page + 1 ) . '"><i class="material-icons">arrow_right</i></a>';
 	 
-		$html       .= '</ul>';
+		$html       .= '</div>';
 	 
 		return $html;
 	}

@@ -9,7 +9,7 @@ $total_hits = WHTP_Hits::total();
 if ( isset( $_GET['number'] ) ) {
     $number = esc_attr( $_GET['number'] );
 }else{
-    $number = 15;
+    $number = 25;
 }
 
 if ( isset( $_GET['paging'] ) ) {
@@ -24,10 +24,15 @@ $hits   = WHTP_Hits::get_hits( $offset, $number );
 $total	= count( $hits );
 
 if( $total > 0 ): ?>
-    <div class="pagination mdl-button-group">
-        <?php echo WHTP_Functions::pagination( $number, $paging, $total, 'whtp-pagination' ); ?>
+    <div class="mdl-grid mdl-shadow--3dp">
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--12-col-phone">
+            <input type="text" name="hits-filter-text" id="hits-filter-text">
+        </div>
+        <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet mdl-cell--12-col-phone">
+            <?php echo WHTP_Functions::pagination( $number, $paging, $total, '' ); ?>
+        </div>
     </div>
-    <table  class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <table id="hits-table" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
         <thead>
             <th class="mdl-data-table__cell--non-numeric"><?php _e( 'Page Visited', 'whtp' ); ?></th>
             <th><?php _e( 'Number of Hits', 'whtp' ); ?></th>
@@ -68,7 +73,7 @@ if( $total > 0 ): ?>
         <tr>
             <td colspan="2">&nbsp;</td>
             <td class="mdl-data-table__cell--non-numeric"><h4><?php _e( 'Total Hits', 'whtp' ); ?></h4></td>
-            <td><h4><?php echo $total; ?></h4></td>
+            <td><h4><?php echo $total_hits; ?></h4></td>
         </tr>
         <tr>
             <td colspan="2">&nbsp;</td>
