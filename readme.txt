@@ -76,6 +76,7 @@ If you know the IP address of your own devices like Home/Work Computer, you can 
 
 * Complete code rewrite to comply with standards
 * Added: Pagination for long pages
+* Added: Filter for displayed results
 * Added: Support for multisite subsites, now can activate per blog in multisite
 * Added: Translation ready
 * Added: File based database to improve lookup results
