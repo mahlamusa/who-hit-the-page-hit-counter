@@ -22,6 +22,34 @@
     background: url('../assets/demos/dog.png') bottom right 15% no-repeat #46B6AC;
 }
 
+.pagination{
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+
+.mdl-button-group{
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;     
+}
+
+.mdl-button-group .button{
+    background-color: #eeeeee;
+    display: inline-block;
+    margin: 0px;
+    box-shadow: none;
+    border-radius: 0px;
+}
+  
+.mdl-button-group a:hover {
+  color: green;
+}   
+
+.mdl-button-group a:active{
+    background-color: green;
+    color: white;
+  }
+
 
 /**
  * Copyright 2015 Google Inc. All Rights Reserved.

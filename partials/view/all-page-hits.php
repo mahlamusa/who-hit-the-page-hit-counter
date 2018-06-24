@@ -9,7 +9,7 @@ $total_hits = WHTP_Hits::total();
 if ( isset( $_GET['number'] ) ) {
     $number = esc_attr( $_GET['number'] );
 }else{
-    $number = "all";
+    $number = 15;
 }
 
 if ( isset( $_GET['paging'] ) ) {
@@ -22,11 +22,10 @@ $offset = $number != 'all' ? $paging * $number: 0;
 
 $hits   = WHTP_Hits::get_hits( $offset, $number );
 $total	= count( $hits );
-$pagination = WHTP_Functions::pagination( $number, $paging, $total, 'whtp-pagination' );
 
 if( $total > 0 ): ?>
-    <div class="pagination">
-        <?php echo $pagination; ?>
+    <div class="pagination mdl-button-group">
+        <?php echo WHTP_Functions::pagination( $number, $paging, $total, 'whtp-pagination' ); ?>
     </div>
     <table  class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
         <thead>
@@ -45,7 +44,7 @@ if( $total > 0 ): ?>
                     <input type="number" name="discountby" value="1" />
                     <!--<input type="submit" name="submit" value="--" class="button-primary" />-->
                     <button type="submit" class="mdl-button mdl-js-button mdl-button--icon">
-                        <i class="material-icons">mood</i>
+                        <i class="material-icons">remove_circle</i>
                     </button>
                 </form>
             </td>					

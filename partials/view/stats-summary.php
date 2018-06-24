@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="mdl-color--white mdl-cell mdl-cell--12-col">
         <div class="mdl-grid mdl-cell mdl-cell--12-col">
             <div class="mdl-cell mdl-cell--3-col">
-                <h3 class="column-title">
+                <h3 class="mdl-card__title-text">
                     <?php _e( 'Summary', 'whtp' ); ?>
                 </h3>
                 <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
@@ -47,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             </div>
 
             <div class="mdl-cell mdl-cell--3-col">
-                <h3 class="column-title">
+                <h3 class="mdl-card__title-text">
                     <?php _e( 'Top Visitors', 'whtp' ); ?>
                 </h3>
                 <?php 
@@ -79,9 +79,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
             <div class="mdl-cell mdl-cell--3-col">
-                <h3 class="column-title">
+                <h2 class="mdl-card__title-text">
                     <?php _e( 'Top Countries', 'whtp' ); ?>
-                </h3>
+                </h2>
                 <?php                        
                 if ( count ( $top_countries ) ) : ?>
                 <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
@@ -115,9 +115,9 @@ if ( ! defined( 'ABSPATH' ) ) {
             </div>
 
             <div class="mdl-cell mdl-cell--3-col">
-                <h3 class="column-title">
+                <h2 class="mdl-card__title-text">
                     <?php _e( 'Used Browsers', 'whtp' ); ?>
-                </h3>
+                </h2>
                 <?php if ( count ( $browsers ) > 0 ): ?>
                     <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                         <tbody>

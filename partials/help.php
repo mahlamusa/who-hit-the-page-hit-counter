@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <div class="wrap">	
-	<h2><?php _e('Help and Support', 'whtp'); ?></h2>
+	<h2 class="mdl-card__title-text"><?php _e('Help and Support', 'whtp'); ?></h2>
     <p></p>
     <div class="mdl-color--white mdl-cell mdl-cell--12-col">
         <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">

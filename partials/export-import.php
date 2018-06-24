@@ -8,7 +8,7 @@
 ?>
 
 <div class="wrap">	
-	<h2><?php _e('Export / Imports', 'whtp' ); ?></h2>
+	<h2 class="mdl-card__title-text"><?php _e('Export / Imports', 'whtp' ); ?></h2>
     <p></p>
 
     <div class="whtp-card-container mdl-grid">

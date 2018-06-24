@@ -16,7 +16,7 @@ $total_ips	= WHTP_Hit_Info::count( 'denied' );
 $hit_info_result = WHTP_Hit_info::get_hitinfo( $offset, $limit, 'denied' );
 ?>
 <div class="mdl-grid whtps-content">
-	<h2 class="mdl-card__title-text">Who Hit The Page Hit Counter</h2>
+	<h2 class="mdl-card__title-text"><?php _e('Who Hit The Page Hit Counter', 'whtp'); ?></h2>
     <p></p>
     <div class="mdl-grid whtps-content">
         <div class="mdl-color--white mdl-cell mdl-cell--12-col">

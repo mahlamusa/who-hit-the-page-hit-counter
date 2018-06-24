@@ -115,7 +115,7 @@ endif;
 ?>
 </div>
 <div class="wrap">	
-	<h2><?php _e( 'Who Hit The Page Hit Counter', 'whtp' ); ?></h2>
+	<h2 class="mdl-card__title-text"><?php _e( 'Who Hit The Page Hit Counter', 'whtp' ); ?></h2>
     <p>
         <?php _e( 'Here you will see the raw hit counter information. This page lists all your pages and their respective counts and also the visiting IP addresses with their respective counts and other information.', 'whtp' ); ?>
     </p>
@@ -123,20 +123,20 @@ endif;
 
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet">
-            <h2>
+            <h2 class="mdl-card__title-text">
                 <?php _e( 'Pages visited and number of visits per page.', 'whtp' ); ?>
             </h2>
             <?php include( WHTP_PLUGIN_DIR_PATH . 'partials/view/all-page-hits.php'); ?>
             <p class="clear"><br /></p>
 
             <!-- View -->
-            <h2 class="handle">
+            <h2 class="mdl-card__title-text">
                 <?php _e( 'Visitors\' IP addresses and Information', 'whtp' ); ?>    
             </h2>
             <?php include( WHTP_PLUGIN_DIR_PATH . 'partials/view/visiting-ip-addresses.php'); ?>
         </div>
         <div class="mdl-cell mdl-cell--3-col mdl-cell-3-col-tablet">
-            <h2><?php _e( 'Support', 'whtp' ); ?></h2>
+            <h2 class="mdl-card__title-text"><?php _e( 'Support', 'whtp' ); ?></h2>
             <form action='https://www.2checkout.com/checkout/purchase' method='post'>
 
                 <div class="demo-card-square mdl-card mdl-shadow--2dp">

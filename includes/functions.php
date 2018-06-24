@@ -48,19 +48,6 @@ class WHTP_Functions{
 		return $all_ips;
 	}
 
-	public static function paginate( $url, $page, $total, $number ){
-		if( $page > 0 ) {
-			$last = $page - 2;
-			echo '<a href="$url?page='. $last . '&number=' . $number . '">' . __( "Last $number Records", "whtp") . '</a> |';
-			echo '<a href="$url?page=' . $page . '">' . __( "Next $number Records", "whtp") . '</a>';
-		}else if( $page == 0 ) {
-			echo '<a href="$url?page=' . $page . '">' . __( "Next $number Records", "whtp") . '</a>';
-		}else if( $left_rec < $rec_limit ) {
-			$last = $page - 2;
-			echo '<a href=$url?page=' . $last . '">' . __( "Last $number Records", "whtp") . '</a>';
-		}
-	}
-
 	public static function pagination( $number, $page, $total, $list_class ) {
 		if ( $number == 'all' ) {
 			return '';
