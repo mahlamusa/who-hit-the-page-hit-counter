@@ -135,7 +135,7 @@ endif;
             </h2>
             <?php include( WHTP_PLUGIN_DIR_PATH . 'partials/view/visiting-ip-addresses.php'); ?>
         </div>
-        <div class="mdl-cell mdl-cell--2-col mdl-cell-2-col-tablet mdl-cell-12-col-phone">
+        <!--<div class="mdl-cell mdl-cell--2-col mdl-cell-2-col-tablet mdl-cell-12-col-phone">
             <h2 class="mdl-card__title-text"><?php _e( 'Support', 'whtp' ); ?></h2>
             <form action='https://www.2checkout.com/checkout/purchase' method='post'>
 
@@ -159,6 +159,6 @@ endif;
                     </div>
                 </div>
             </form>
-        </div>
+        </div>-->
     </div>
 </div><!-- Wrap -->
