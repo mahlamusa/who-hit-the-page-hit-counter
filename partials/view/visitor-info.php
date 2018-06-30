@@ -67,113 +67,127 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 		
 	?>
-<div class="mdl-grid whtps-content">
+<div class="mdl-layout whtps-content">
     <h2 class="mdl-card__title-text">
         <?php _e( 'Who Hit The Page Hit Counter', 'whtp' ); ?>
     </h2>
-    <div class="mdl-color--white mdl-cell mdl-cell--12-col">
-        <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <p><?php _e( 'To start viewing the details of a single visitor, select the visitor\'s IP below and click "View Details", do the same to view another IP. Please select an IP to see more details about that IP Address.', 'whtp' ); ?></p>
-                <?php
-                    $ip_results = WHTP_Hit_Info::get_ip_count_hits();
-                    if ( $ip_results ) : ?>
-                        <form name="select_ip" method="post" action="" >
-                            <select name="ip" class="whtp-select-single" style="width: 40%; padding: 5px;display: inline;"><?php
-                                foreach ( $ip_results as $ip ) : ?>
-                                    <option style="padding:15px; display: block; float: left;" 
-                                        value="<?php echo esc_attr( $ip->ip_address ); ?>">
-                                            <?php echo esc_attr( $ip->ip_address . ' (' . $ip->ip_total_visits . ')' 
-                                    ); ?>
-                                    </option><?php
-                                endforeach;	?>
-                            </select>
-                            <input style="display:inline;" type="submit" value="<?php _e( 'View Details', 'whtp' ); ?>" class="button button-primary mdl-button mdl-js-button mdl-js-ripple-effect" />
-                        </form><?php	
-                    endif; ?>
+    <div class="mdl-row">
+        <div class="mdl-grid">
+            <div class="mdl-color--white mdl-cell mdl-cell--12-col">
+                <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+                    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                        <p><?php _e( 'To start viewing the details of a single visitor, select the visitor\'s IP below and click "View Details", do the same to view another IP. Please select an IP to see more details about that IP Address.', 'whtp' ); ?></p>
+                        <?php
+                            $ip_results = WHTP_Hit_Info::get_ip_count_hits();
+                            if ( $ip_results ) : ?>
+                                <form name="select_ip" method="post" action="" >
+                                    <select name="ip" class="whtp-select-single" style="width: 40%; padding: 5px;display: inline;"><?php
+                                        foreach ( $ip_results as $ip ) : ?>
+                                            <option style="padding:15px; display: block; float: left;" 
+                                                value="<?php echo esc_attr( $ip->ip_address ); ?>">
+                                                    <?php echo esc_attr( $ip->ip_address . ' (' . $ip->ip_total_visits . ')' 
+                                            ); ?>
+                                            </option><?php
+                                        endforeach;	?>
+                                    </select>
+                                    <input style="display:inline;" type="submit" value="<?php _e( 'View Details', 'whtp' ); ?>" class="button button-primary mdl-button mdl-js-button mdl-js-ripple-effect" />
+                                </form><?php	
+                            endif; ?>
+                    </div>
+                </div>  
             </div>
-        </div>  
+        </div>
     </div>
+    
 	<h3><?php _e( 'View Visitor\'s Behaviour (IP:', 'whtp' ); ?> <?php echo $visitor_ip; ?>)</h3>
     
-    <div class="mdl-color--white mdl-cell mdl-cell--6-col">
-        <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-            <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
-                <?php _e( 'Visitor Statistics!', 'whtp' ); ?>
-            </div>
-            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <?php echo sprintf( __( 'This are the statistics for a single user/visitor with IP Address :', 'whtp' ), $visitor_ip ); ?>
-            </div>
-            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <?php echo sprintf( __( 'Visitor\'s IP: %s', 'whtp' ), !$visitor_ip ? "IP Address Not Set": $visitor_ip ); ?>
-            </div>
-            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <?php echo sprintf( __( 'Total Visits: %s', 'whtp' ), !$info_result? "Not Set" : $info_result->ip_total_visits ); ?>
-            </div>
-            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <?php echo sprintf( __( 'Location: %s', 'whtp' ), $country_name ); ?>
-            </div>
-            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <?php _e( 'First Visit :', 'whtp' ); ?> <?php echo $info_result->datetime_first_visit; ?>
-            </div>
-            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <?php _e( 'Last Visit : ', 'whtp' ); ?><?php echo $info_result->datetime_last_visit; ?>
-            </div>            
-        </div>  
-    </div>
-
-    <div class="mdl-color--white mdl-cell mdl-cell--6-col">
-        <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-            <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
-                <?php _e( 'Browsers & Pages!', 'whtp' ); ?>
-            </div>            
-            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <strong><?php _e( 'Pages Visited by this user', 'whtp' ); ?></strong>
-            </div>
-            <?php
-                if ( ! $pages_visited || count( $pages_visited ) <= 0 ): ?>
+    <div class="mdl-row">
+        <div class="mdl-grid">
+            <div class="mdl-color--white mdl-cell mdl-cell--6-col">
+                <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+                    <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+                        <?php _e( 'Visitor Statistics!', 'whtp' ); ?>
+                    </div>
                     <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                        <?php _e( 'No Pages Visited', 'whtp' ); ?>
-                    </div><?php
-                else:
-                    foreach ( $pages_visited as $page): ?>
-                        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                            <?php echo $page->page . ' ('. $page->count_hits . ')'; ?>
-                        </div><?php	
-                    endforeach;
-                endif;
-            ?>
-            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <strong><?php _e( 'The User Has The following Browsers', 'whtp' ); ?></strong>
-            </div>
-            <?php
-                if ( !$browsers || 0 == count( $browsers )): ?>
+                        <?php echo sprintf( __( 'This are the statistics for a single user/visitor with IP Address :', 'whtp' ), $visitor_ip ); ?>
+                    </div>
                     <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                        <?php _e('No Browser(s)', 'whtp'); ?>
-                    </div><?php
-                else:
-                    for ( $i = 0; $i< count( $browsers ); $i ++): ?>
-                        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                            <?php echo $browsers[$i]; ?>
-                        </div><?php       
-                    endfor;
-                endif;
-            ?>
-        </div>  
-    </div>
+                        <?php echo sprintf( __( 'Visitor\'s IP: %s', 'whtp' ), !$visitor_ip ? "IP Address Not Set": $visitor_ip ); ?>
+                    </div>
+                    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                        <?php echo sprintf( __( 'Total Visits: %s', 'whtp' ), !$info_result? "Not Set" : $info_result->ip_total_visits ); ?>
+                    </div>
+                    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                        <?php echo sprintf( __( 'Location: %s', 'whtp' ), $country_name ); ?>
+                    </div>
+                    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                        <?php _e( 'First Visit :', 'whtp' ); ?> <?php echo $info_result->datetime_first_visit; ?>
+                    </div>
+                    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                        <?php _e( 'Last Visit : ', 'whtp' ); ?><?php echo $info_result->datetime_last_visit; ?>
+                    </div>            
+                </div>  
+            </div>
 
-    <div class="mdl-color--white mdl-cell mdl-cell--12-col">
-        <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-            <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
-                <?php _e( 'Disclaimer', 'whtp' ); ?>
+            <div class="mdl-color--white mdl-cell mdl-cell--6-col">
+                <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+                    <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+                        <?php _e( 'Browsers & Pages!', 'whtp' ); ?>
+                    </div>            
+                    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                        <strong><?php _e( 'Pages Visited by this user', 'whtp' ); ?></strong>
+                    </div>
+                    <?php
+                        if ( ! $pages_visited || count( $pages_visited ) <= 0 ): ?>
+                            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                                <?php _e( 'No Pages Visited', 'whtp' ); ?>
+                            </div><?php
+                        else:
+                            foreach ( $pages_visited as $page): ?>
+                                <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                                    <?php echo $page->page . ' ('. $page->count_hits . ')'; ?>
+                                </div><?php	
+                            endforeach;
+                        endif;
+                    ?>
+                    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                        <strong><?php _e( 'The User Has The following Browsers', 'whtp' ); ?></strong>
+                    </div>
+                    <?php
+                        if ( !$browsers || 0 == count( $browsers )): ?>
+                            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                                <?php _e('No Browser(s)', 'whtp'); ?>
+                            </div><?php
+                        else:
+                            for ( $i = 0; $i< count( $browsers ); $i ++): ?>
+                                <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                                    <?php echo $browsers[$i]; ?>
+                                </div><?php       
+                            endfor;
+                        endif;
+                    ?>
+                </div>  
             </div>
-            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <?php require_once( WHTP_PLUGIN_DIR_PATH . 'partials/disclaimer.php' ); ?>
+        </div>
+    </div>
+    
+
+    <div class="mdl-row">
+        <div class="mdl-grid">
+            <div class="mdl-color--white mdl-cell mdl-cell--12-col">
+                <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+                    <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+                        <?php _e( 'Disclaimer', 'whtp' ); ?>
+                    </div>
+                    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                        <?php require_once( WHTP_PLUGIN_DIR_PATH . 'partials/disclaimer.php' ); ?>
+                    </div>
+                    <!--<div class="mdl-card__actions mdl-card--border">
+                        <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
+                    </div>-->
+                </div>  
             </div>
-            <!--<div class="mdl-card__actions mdl-card--border">
-                <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
-            </div>-->
-        </div>  
+        </div>
     </div>
 </div>
 
