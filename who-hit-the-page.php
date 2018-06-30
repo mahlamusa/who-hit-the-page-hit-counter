@@ -92,14 +92,22 @@ class Who_Hit_The_Page_Admin{
 			array( $this, 'whtp_object_page_callback' ),
 			WHTP_PLUGIN_URL . 'assets/images/whtp-icon.png'
 		);
+		add_submenu_page(
+			'whtp-admin-menu',
+			__('View Page Hits', 'whtp'),
+			__('View Page Hits', 'whtp'),
+			'administrator',
+			'whtp-view-page-hits',
+			array( $this, 'whtp_view_page_hits' )
+		);
 		
 		add_submenu_page(
 			'whtp-admin-menu',
-			__('View All Details', 'whtp'),
-			__('View All Details', 'whtp'),
+			__('View IP Hits', 'whtp'),
+			__('View IP Hits', 'whtp'),
 			'administrator',
-			'whtp-view-all',
-			array( $this, 'whtp_view_all_callback' )
+			'whtp-view-ip-hits',
+			array( $this, 'whtp_view_ip_hits' )
 		);
 		add_submenu_page(
 			'whtp-admin-menu',
@@ -156,8 +164,11 @@ class Who_Hit_The_Page_Admin{
 	public function whtp_visitors_stats_callback(){
 		include( WHTP_PLUGIN_DIR_PATH . 'partials/view/visitor-info.php'); //admin page
 	}
-	public function whtp_view_all_callback(){
-		include( WHTP_PLUGIN_DIR_PATH . 'partials/view-all.php');//admin page
+	public function whtp_view_ip_hits(){
+		include( WHTP_PLUGIN_DIR_PATH . 'partials/view-ip-hits.php');//admin page
+	}
+	public function whtp_view_page_hits(){
+		include( WHTP_PLUGIN_DIR_PATH . 'partials/view-page-hits.php');//admin page
 	}
 	public function whtp_export_import_submenu_callback(){
 		include( WHTP_PLUGIN_DIR_PATH . 'partials/export-import.php');//admin page
