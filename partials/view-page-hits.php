@@ -117,7 +117,7 @@ endif;
 <div class="wrap">	
 	<h2 class="mdl-card__title-text"><?php _e( 'Who Hit The Page Hit Counter', 'whtp' ); ?></h2>
     <p>
-        <?php _e( 'Here you will see the raw hit counter information. This page lists all your pages and their respective counts and also the visiting IP addresses with their respective counts and other information.', 'whtp' ); ?>
+        <?php _e( 'Here you will see the raw page hit counter information. See all the visited pages along with the number of visits.', 'whtp' ); ?>
     </p>
 
 

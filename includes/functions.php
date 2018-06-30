@@ -53,7 +53,7 @@ class WHTP_Functions{
 			return '';
 		}
 
-		if ( $page_name == '' ) $page_name = 'whtp-view-all';
+		if ( $page_name == '' ) $page_name = 'whtp-view-page-hits';
 		$url = admin_url( 'admin.php?page=' . $page_name );
 	 
 		$last       = ceil( $total / $number );
