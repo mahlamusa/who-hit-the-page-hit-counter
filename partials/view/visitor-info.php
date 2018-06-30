@@ -99,7 +99,11 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
     </div>
     
-	<h3><?php _e( 'View Visitor\'s Behaviour (IP:', 'whtp' ); ?> <?php echo $visitor_ip; ?>)</h3>
+    <div class="mdl-row">
+        <h2 class="mdl-card__title-text">
+            <?php _e( 'View Visitor\'s Behaviour (IP:', 'whtp' ); ?> <?php echo $visitor_ip; ?>)
+        </h2>    
+    </div>
     
     <div class="mdl-row">
         <div class="mdl-grid">
