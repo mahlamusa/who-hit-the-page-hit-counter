@@ -68,8 +68,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		
 	?>
 <div class="mdl-grid whtps-content">
-    <h2 class="mdl-card__title-text"><?php _e( 'Who Hit The Page Hit Counter', 'whtp' ); ?></h2>
-    <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--12-col">
+    <h2 class="mdl-card__title-text">
+        <?php _e( 'Who Hit The Page Hit Counter', 'whtp' ); ?>
+    </h2>
+    <div class="mdl-color--white mdl-cell mdl-cell--12-col">
         <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
             <div class="mdl-card__supporting-text mdl-color-text--grey-600">
                 <p><?php _e( 'To start viewing the details of a single visitor, select the visitor\'s IP below and click "View Details", do the same to view another IP. Please select an IP to see more details about that IP Address.', 'whtp' ); ?></p>
