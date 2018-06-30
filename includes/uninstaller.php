@@ -12,6 +12,7 @@ class WHTP_Deactivator{
 	private static $ip_to_location_table;
 
 	public function __construct(){
+		global $wpdb;
 		self::$hits_table 				= $wpdb->prefix . 'whtp_hits';
 		self::$hitinfo_table 			= $wpdb->prefix . 'whtp_hitinfo';
 		self::$user_agents_table 		= $wpdb->prefix . 'whtp_user_agents';

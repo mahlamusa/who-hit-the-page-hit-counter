@@ -64,9 +64,9 @@ class WHTP_Installer{
 	}
 
 	public static function upgrade_db(){
-		self::update_old_user_agents();
-		WHTP_Visiting_Countries::update_visiting_countries();
 		self::check_rename_tables();
+		self::update_old_user_agents();
+		WHTP_Visiting_Countries::update_visiting_countries();		
 	}
 
 	public static function update_count(){
