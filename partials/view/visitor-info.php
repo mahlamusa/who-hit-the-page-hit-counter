@@ -72,12 +72,11 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--12-col">
         <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
             <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <p><?php _e( 'To start viewing the details of a single visitor, select the visitor\'s IP below and click "View Details", do the same to view another IP.', 'whtp' ); ?></p>
+                <p><?php _e( 'To start viewing the details of a single visitor, select the visitor\'s IP below and click "View Details", do the same to view another IP. Please select an IP to see more details about that IP Address.', 'whtp' ); ?></p>
                 <?php
                     $ip_results = WHTP_Hit_Info::get_ip_count_hits();
                     if ( $ip_results ) : ?>
                         <form name="select_ip" method="post" action="" >
-                            <p><?php _( 'Please select an IP to see more details about that IP Address.', 'whtp' ); ?></p>
                             <select name="ip" class="whtp-select-single" style="width: 40%; padding: 5px;display: inline;"><?php
                                 foreach ( $ip_results as $ip ) : ?>
                                     <option style="padding:15px; display: block; float: left;" 
@@ -90,9 +89,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <input style="display:inline;" type="submit" value="<?php _e( 'View Details', 'whtp' ); ?>" class="button button-primary mdl-button mdl-js-button mdl-js-ripple-effect" />
                         </form><?php	
                     endif; ?>
-                    
-                    <p><?php _e( 'Please select an IP above to see more details about that IP Address.', 'whtp' ); 
-                ?>
             </div>
         </div>  
     </div>
@@ -140,9 +136,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 else:
                     foreach ( $pages_visited as $page): ?>
                         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                            <a href="#" class="welcome-icon welcome-view-site">
-                                <?php echo $page->page . '('. $page->count_hits . ')'; ?>
-                            </a>
+                            <?php echo $page->page . ' ('. $page->count_hits . ')'; ?>
                         </div><?php	
                     endforeach;
                 endif;
@@ -174,9 +168,9 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="mdl-card__supporting-text mdl-color-text--grey-600">
                 <?php require_once( WHTP_PLUGIN_DIR_PATH . 'partials/disclaimer.php' ); ?>
             </div>
-            <div class="mdl-card__actions mdl-card--border">
+            <!--<div class="mdl-card__actions mdl-card--border">
                 <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
-            </div>
+            </div>-->
         </div>  
     </div>
 </div>
