@@ -94,7 +94,11 @@ var sourceFiles =[
     '!./release', 
     '!./gulpfile.js', 
     '!./package.json', 
-    '!./package-lock.json'
+    '!./package-lock.json',
+    '!./composer.json',
+    '!./composer.lock',
+    '!./deploy.sh',
+    '!./README.md'
 ]
 
 var destination = '../_release/who-hit-the-page-hit-counter';
