@@ -17,35 +17,39 @@ msgstr ""
 msgid "Who Hit The Page"
 msgstr ""
 
-#: who-hit-the-page.php:98, who-hit-the-page.php:99
-msgid "View All Details"
+#: who-hit-the-page.php:97, who-hit-the-page.php:98
+msgid "View Page Hits"
 msgstr ""
 
 #: who-hit-the-page.php:106, who-hit-the-page.php:107
-msgid "Visitor Stats"
+msgid "View IP Hits"
 msgstr ""
 
 #: who-hit-the-page.php:114, who-hit-the-page.php:115
-msgid "Denied IPs"
+msgid "Visitor Stats"
 msgstr ""
 
 #: who-hit-the-page.php:122, who-hit-the-page.php:123
+msgid "Denied IPs"
+msgstr ""
+
+#: who-hit-the-page.php:130, who-hit-the-page.php:131
 msgid "Export / Import"
 msgstr ""
 
-#: who-hit-the-page.php:130, who-hit-the-page.php:131, who-hit-the-page.php:173, partials/settings.php:44
+#: who-hit-the-page.php:138, who-hit-the-page.php:139, who-hit-the-page.php:184, partials/settings.php:44
 msgid "Settings"
 msgstr ""
 
-#: who-hit-the-page.php:138, who-hit-the-page.php:139, who-hit-the-page.php:174
+#: who-hit-the-page.php:146, who-hit-the-page.php:147, who-hit-the-page.php:185
 msgid "Help"
 msgstr ""
 
-#: who-hit-the-page.php:175
+#: who-hit-the-page.php:186
 msgid "Documentation"
 msgstr ""
 
-#: who-hit-the-page.php:234
+#: who-hit-the-page.php:245
 msgid "We notice that you have updated the plugin! We need to update the database to make sure the plugin works as it should. <a href=\"%s\" class=\"button\">Click here to update database</a>"
 msgstr ""
 
@@ -97,76 +101,84 @@ msgstr ""
 msgid "Backup Settings"
 msgstr ""
 
-#: partials/view-all.php:19
+#: partials/view-ip-hits.php:19, partials/view-page-hits.php:19
 msgid "The count for the page \"%s\" has been reset successfully."
 msgstr ""
 
-#: partials/view-all.php:24
+#: partials/view-ip-hits.php:24, partials/view-page-hits.php:24
 msgid "The count for all pages has been reset successfully."
 msgstr ""
 
-#: partials/view-all.php:29
+#: partials/view-ip-hits.php:29, partials/view-page-hits.php:29
 msgid "Failed to reset page counts"
 msgstr ""
 
-#: partials/view-all.php:42
+#: partials/view-ip-hits.php:42, partials/view-page-hits.php:42
 msgid "Failed to remove page count(s)."
 msgstr ""
 
-#: partials/view-all.php:52
+#: partials/view-ip-hits.php:52, partials/view-page-hits.php:52
 msgid "The Page \"%s\" has been discounted by %d"
 msgstr ""
 
-#: partials/view-all.php:59
+#: partials/view-ip-hits.php:59, partials/view-page-hits.php:59
 msgid "Failed to discount on the page"
 msgstr ""
 
-#: partials/view-all.php:72
+#: partials/view-ip-hits.php:72, partials/view-page-hits.php:72
 msgid "The count for ip address: \"%s\" has been reset successfully."
 msgstr ""
 
-#: partials/view-all.php:76
+#: partials/view-ip-hits.php:76, partials/view-page-hits.php:76
 msgid "Failed to reset count for IP: %s"
 msgstr ""
 
-#: partials/view-all.php:88
+#: partials/view-ip-hits.php:88, partials/view-page-hits.php:88
 msgid "IP addresse(s) removed from the database."
 msgstr ""
 
-#: partials/view-all.php:92
+#: partials/view-ip-hits.php:92, partials/view-page-hits.php:92
 msgid "Failed to remove IP addresse(s) from database"
 msgstr ""
 
-#: partials/view-all.php:101
+#: partials/view-ip-hits.php:101, partials/view-page-hits.php:101
 msgid "The IP Address will be ignored and will not be counted."
 msgstr ""
 
-#: partials/view-all.php:105
+#: partials/view-ip-hits.php:105, partials/view-page-hits.php:105
 msgid "Failed to add IP to ignore list"
 msgstr ""
 
-#: partials/view-all.php:112
+#: partials/view-ip-hits.php:112, partials/view-page-hits.php:112
 msgid "Visitor Data Goes Here for %s"
 msgstr ""
 
-#: partials/view-all.php:118, partials/view/denied-ips.php:19, partials/view/visitor-info.php:72
-msgid "Who Hit The Page Hit Counter"
+#: partials/view-ip-hits.php:118
+msgid "Who Hit The Page Hit Counter - Visiting IP Addresses"
 msgstr ""
 
-#: partials/view-all.php:120
-msgid "Here you will see the raw hit counter information. This page lists all your pages and their respective counts and also the visiting IP addresses with their respective counts and other information."
+#: partials/view-ip-hits.php:120
+msgid "View the raw hit counter information. This page lists all the IP addresses that have visited your pages."
 msgstr ""
 
-#: partials/view-all.php:127
-msgid "Pages visited and number of visits per page."
-msgstr ""
-
-#: partials/view-all.php:134
+#: partials/view-ip-hits.php:127
 msgid "Visitors' IP addresses and Information"
 msgstr ""
 
-#: partials/view-all.php:139
+#: partials/view-ip-hits.php:132
 msgid "Support"
+msgstr ""
+
+#: partials/view-page-hits.php:118, partials/view/denied-ips.php:19, partials/view/visitor-info.php:72
+msgid "Who Hit The Page Hit Counter"
+msgstr ""
+
+#: partials/view-page-hits.php:120
+msgid "Here you will see the raw page hit counter information. See all the visited pages along with the number of visits."
+msgstr ""
+
+#: partials/view-page-hits.php:127
+msgid "Pages visited and number of visits per page."
 msgstr ""
 
 #: includes/classes/class-hit-info.php:185, includes/classes/class-hit-info.php:187
