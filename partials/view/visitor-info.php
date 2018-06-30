@@ -77,7 +77,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     $ip_results = WHTP_Hit_Info::get_ip_count_hits();
                     if ( $ip_results ) : ?>
                         <form name="select_ip" method="post" action="" >
-                            <p>Please select an IP to see more details about that IP Address.</p>
+                            <p><?php _( 'Please select an IP to see more details about that IP Address.', 'whtp' ); ?></p>
                             <select name="ip" class="whtp-select-single" style="width: 40%; padding: 5px;display: inline;"><?php
                                 foreach ( $ip_results as $ip ) : ?>
                                     <option style="padding:15px; display: block; float: left;" 

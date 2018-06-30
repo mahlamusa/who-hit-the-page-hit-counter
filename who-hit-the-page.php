@@ -214,9 +214,9 @@ class Who_Hit_The_Page_Admin{
 		);
 		wp_register_script(
 			'select2',
-			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js',
+			'//cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js',
 			array( 'jquery' ),
-			null, true
+			null, 'all'
 		);
 
 		wp_enqueue_script( 'mdl-js' );
