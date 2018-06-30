@@ -49,6 +49,14 @@ msgstr ""
 msgid "We notice that you have updated the plugin! We need to update the database to make sure the plugin works as it should. <a href=\"%s\" class=\"button\">Click here to update database</a>"
 msgstr ""
 
+#: partials/disclaimer.php:7
+msgid "This product includes GeoLite2-City data created by MaxMind, available from <a href=\"http://www.maxmind.com\">http://www.maxmind.com</a>"
+msgstr ""
+
+#: partials/disclaimer.php:10
+msgid "The accuracy of the Geolocation data used in this plugin is not guaranteed and providing accurate data is beyond the capacity of the developer. When this version of the plugin was released, the data was 80% accurate."
+msgstr ""
+
 #: partials/export-import.php:11
 msgid "Export / Imports"
 msgstr ""
@@ -77,7 +85,7 @@ msgstr ""
 msgid "How to?"
 msgstr ""
 
-#: partials/help.php:54, partials/view/stats-summary.php:144, partials/view/visitor-info.php:172
+#: partials/help.php:54, partials/view/stats-summary.php:144, partials/view/visitor-info.php:184
 msgid "Disclaimer"
 msgstr ""
 
@@ -141,7 +149,7 @@ msgstr ""
 msgid "Visitor Data Goes Here for %s"
 msgstr ""
 
-#: partials/view-all.php:118, partials/view/denied-ips.php:19, partials/view/visitor-info.php:71
+#: partials/view-all.php:118, partials/view/denied-ips.php:19, partials/view/visitor-info.php:72
 msgid "Who Hit The Page Hit Counter"
 msgstr ""
 
@@ -364,94 +372,90 @@ msgstr ""
 msgid "Total unique IP´s"
 msgstr ""
 
-#: partials/view/visitor-info.php:75
-msgid "To start viewing the details of a single visitor, select the visitor's IP below and click \"View Details\", do the same to view another IP."
+#: partials/view/visitor-info.php:79
+msgid "To start viewing the details of a single visitor, select the visitor's IP below and click \"View Details\", do the same to view another IP. Please select an IP to see more details about that IP Address."
 msgstr ""
 
-#: partials/view/visitor-info.php:90
+#: partials/view/visitor-info.php:93
 msgid "View Details"
 msgstr ""
 
-#: partials/view/visitor-info.php:94
-msgid "Please select an IP above to see more details about that IP Address."
-msgstr ""
-
-#: partials/view/visitor-info.php:99
+#: partials/view/visitor-info.php:104
 msgid "View Visitor's Behaviour (IP:"
 msgstr ""
 
-#: partials/view/visitor-info.php:104
+#: partials/view/visitor-info.php:113
 msgid "Visitor Statistics!"
 msgstr ""
 
-#: partials/view/visitor-info.php:107
+#: partials/view/visitor-info.php:116
 msgid "This are the statistics for a single user/visitor with IP Address :"
 msgstr ""
 
-#: partials/view/visitor-info.php:110
+#: partials/view/visitor-info.php:119
 msgid "Visitor's IP: %s"
 msgstr ""
 
-#: partials/view/visitor-info.php:113
+#: partials/view/visitor-info.php:122
 msgid "Total Visits: %s"
 msgstr ""
 
-#: partials/view/visitor-info.php:116
+#: partials/view/visitor-info.php:125
 msgid "Location: %s"
 msgstr ""
 
-#: partials/view/visitor-info.php:119
+#: partials/view/visitor-info.php:128
 msgid "First Visit :"
 msgstr ""
 
-#: partials/view/visitor-info.php:122
+#: partials/view/visitor-info.php:131
 msgid "Last Visit : "
 msgstr ""
 
-#: partials/view/visitor-info.php:130
+#: partials/view/visitor-info.php:139
 msgid "Browsers & Pages!"
 msgstr ""
 
-#: partials/view/visitor-info.php:133
+#: partials/view/visitor-info.php:142
 msgid "Pages Visited by this user"
 msgstr ""
 
-#: partials/view/visitor-info.php:138
+#: partials/view/visitor-info.php:147
 msgid "No Pages Visited"
 msgstr ""
 
-#: partials/view/visitor-info.php:151
+#: partials/view/visitor-info.php:158
 msgid "The User Has The following Browsers"
 msgstr ""
 
-#: partials/view/visitor-info.php:156
+#: partials/view/visitor-info.php:163
 msgid "No Browser(s)"
 msgstr ""
 
-#: partials/view/visitor-info.php:198
+#: partials/view/visitor-info.php:212
 msgid "Sorry no results found"
 msgstr ""
 
-#: partials/view/visitor-info.php:203
+#: partials/view/visitor-info.php:217
 msgid "It seems there are no IP Addresses registered in your database at the moment. Maybe I've done something wrong or you have missed some steps during setup."
 msgstr ""
 
-#: partials/view/visitor-info.php:207
+#: partials/view/visitor-info.php:221
 msgid "Please check if you have done the following"
 msgstr ""
 
-#: partials/view/visitor-info.php:213
+#: partials/view/visitor-info.php:227
 msgid "Included the shortcode <code>[whohit]Page Name[/whohit]</code> on your pages. If not, click get started below."
 msgstr ""
 
-#: partials/view/visitor-info.php:218
+#: partials/view/visitor-info.php:232
 msgid "Imported all Geo Location data via the <a href=\"admin.php?page=whtp-import-export\">Export/ Import</a> page."
 msgstr ""
 
-#: partials/view/visitor-info.php:223
+#: partials/view/visitor-info.php:237
 msgid "If you haven't done this, click \"Get Started\" below."
 msgstr ""
 
-#: partials/view/visitor-info.php:228
+#: partials/view/visitor-info.php:242
 msgid "Get Started"
 msgstr ""
