@@ -27,6 +27,16 @@
     margin-bottom: 10px;
 }
 
+.mdl-button--icon.page-number{
+    border-radius: 50%;
+    font-size: 15px;
+}
+
+.active{
+    color: #FFF;
+    background-color: #00b9d8;
+}
+
 .mdl-button-group{
     position: relative;
     display: inline-block;

@@ -26,10 +26,10 @@ $pagination = WHTP_Functions::pagination( $number, $paging, $total, 'whtp-pagina
 
 if( $total > 0 ): ?>
     <div class="mdl-grid mdl-shadow--3dp">
-        <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--12-col-phone">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
             <input type="text" name="ip-filter-text" id="ip-filter-text">
         </div>
-        <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet mdl-cell--12-col-phone">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
             <?php echo WHTP_Functions::pagination( $number, $paging, $total, 'whtp-view-ip-hits' ); ?>
         </div>
     </div>
