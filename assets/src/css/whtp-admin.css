@@ -30,6 +30,7 @@
 .mdl-button--icon.page-number{
     border-radius: 50%;
     font-size: 15px;
+    padding: 3px;
 }
 
 .active{

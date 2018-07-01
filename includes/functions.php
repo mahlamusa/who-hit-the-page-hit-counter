@@ -73,7 +73,7 @@ class WHTP_Functions{
 	 
 		for ( $i = $start ; $i <= $end; $i++ ) {
 			$class  = ( $page == $i ) ? " active" : "";
-			$html   .= '<a class="mdl-button mdl-js-button mdl-button--icon' . $class . '" href="' . $url . '&number=' . $number . '&paging=' . $i . '">' . $i . '</a>';
+			$html   .= '<a class="mdl-button mdl-js-button mdl-button--icon page-number' . $class . '" href="' . $url . '&number=' . $number . '&paging=' . $i . '">' . $i . '</a>';
 		}
 	 
 		if ( $end < $last ) {
