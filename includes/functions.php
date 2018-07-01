@@ -48,7 +48,7 @@ class WHTP_Functions{
 		return $all_ips;
 	}
 
-	public static function pagination( $number, $page, $total, $page_name = '', $list_class = '' ) {
+	public static function pagination( $number, $page, $total, $page_name = '', $links = 5, $list_class = '' ) {
 		if ( $number == 'all' ) {
 			return '';
 		}
@@ -58,8 +58,8 @@ class WHTP_Functions{
 	 
 		$last       = ceil( $total / $number );
 	 
-		$start      = ( ( $page - $number ) > 0 ) ? $page - $number : 1;
-		$end        = ( ( $page + $number ) < $last ) ? $page + $number : $last;
+		$start      = ( ( $links - $number ) > 0 ) ? $links - $number : 1;
+		$end        = ( ( $links + $number ) < $last ) ? $links + $number : $last;
 	 
 		$html       = '<div class="' . $list_class . '">';
 	 
@@ -77,7 +77,7 @@ class WHTP_Functions{
 		}
 	 
 		if ( $end < $last ) {
-			$html   .= '<div class="disabled"><span>...</span></div>';
+			$html   .= '<a href="#" class="mdl-button mdl-js-button mdl-button--icon page-number disabled"><span>...</span></div>';
 			$html   .= '<a class="mdl-button mdl-js-button mdl-button--icon page-number" href="' . $url . '&number=' . $number . '&paging=' . $last . '">' . $last . '</a>';
 		}
 	 
