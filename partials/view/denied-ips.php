@@ -55,7 +55,8 @@ $hit_info_result = WHTP_Hit_info::get_hitinfo( $offset, $limit, 'denied' );
                                     <p>
                                         <?php echo sprintf( 
                                             __( 'The IP "%" has been allowed and will now be counted the next time it visits your website.', 'whtp'),
-                                            esc_attr( $ip_address ) ); ?>
+                                            esc_attr( $ip_address ) );
+                                        ?>
                                     </p>
                                 </div>
                                 <?php else: ?>
