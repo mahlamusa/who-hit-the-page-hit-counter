@@ -49,7 +49,7 @@ if( $total > 0 ): ?>
                         <input type="hidden" name="discount_page" value="<?php echo $row->page; ?>" />
                         <input type="number" name="discountby" value="1" />
                         <!--<input type="submit" name="submit" value="--" class="button-primary" />-->
-                        <button type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+                        <button type="submit" class="mdl-button mdl-js-button mdl-button--icon confirm-discount">
                             <i class="material-icons">remove_circle</i>
                         </button>
                     </form>
@@ -63,9 +63,10 @@ if( $total > 0 ): ?>
                     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         for="demo-menu-lower-right-<?php echo $row->page; ?>">
                         <li class="mdl-menu__item">
-                            <a href="<?php echo admin_url( 'admin.php?page=whtp-view-page-hits&delete_page='.$row->page. '&nonce='. $nonce ); ?>"><?php _e( 'Delete', 'whtp' ); ?></a></li>
-                        <li class="mdl-menu__item">
-                            <a href="<?php echo admin_url( 'admin.php?page=whtp-view-page-hits&reset_page='. $row->page. '&nonce='. $nonce ); ?>"><?php _e( 'Reset', 'whtp' ); ?></a>
+                            <a class="confirm-delete" href="<?php echo admin_url( 'admin.php?page=whtp-view-page-hits&delete_page='.$row->page. '&nonce='. $nonce ); ?>"><?php _e( 'Delete', 'whtp' ); ?></a></li>
+                        <li class="confirm-reset" class="mdl-menu__item">
+                            <a href="<?php echo admin_url( 'admin.php?page=whtp-view-page-hits&reset_page='. $row->page. '&nonce='. $nonce ); ?>"><?php _e( 'Reset', 'whtp' ); ?>
+                            </a>
                         </li>
                     </ul>
                 </td>
@@ -83,13 +84,13 @@ if( $total > 0 ): ?>
                 <td>
                     <form action="" method="post">
                     <input type="hidden" name="reset_page" value="all" />
-                    <input type="submit" name="submit" value="<?php _e( 'Reset All', 'whtp' ); ?>" class="button-primary" />
+                    <input type="submit" name="submit" value="<?php _e( 'Reset All', 'whtp' ); ?>" class="button-primary confirm-reset" />
                     </form>	
                 </td>
                 <td>
                     <form action="" method="post">
                     <input type="hidden" name="delete_page" value="all" />
-                    <input type="submit" name="submit" value="<?php _e( 'Delete All', 'whtp' ); ?>" class="button" />
+                    <input type="submit" name="submit" value="<?php _e( 'Delete All', 'whtp' ); ?>" class="button confirm-delete" />
                     </form>
                 </td>
             </tr>

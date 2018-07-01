@@ -30,9 +30,10 @@ $hit_info_result = WHTP_Hit_info::get_hitinfo( $offset, $limit, 'denied' );
                 <div class="mdl-card__supporting-text mdl-color-text--grey-600">
                     <?php
                         if ( isset ( $_POST['add_deny_ip'] ) ):
-                            if ( WHTP_Hit_Info::add_denied_ip() ) : ?>
+                            $ip_address = esc_attr( $_POST[ 'ip_address' ] );
+                            if ( WHTP_Hit_Info::add_denied_ip( $ip_address ) ) : ?>
                             <div class="wrap">
-                                <div class="updated">
+                                <div class="update-message notice notice-success">
                                     <p>
                                         <?php echo sprintf( __( 'The IP Address "%s" has been added to your deny list. This IP address will not be counted the next time it visits your website', 'whtp'), esc_attr( $ip_address ) ); ?>
                                     </p>
@@ -40,7 +41,7 @@ $hit_info_result = WHTP_Hit_info::get_hitinfo( $offset, $limit, 'denied' );
                             </div>
                             <?php else: ?>
                             <div class="wrap">
-                                <div class="warning error-msg error">
+                                <div class="update-message notice notice-warning">
                                     <p><?php echo sprintf( __( 'Failed to Add IP Address "%s" to deny list.', 'whtp' ), esc_attr( $ip_address ) ); ?></p>
                                 </div>
                             </div>			
@@ -48,18 +49,17 @@ $hit_info_result = WHTP_Hit_info::get_hitinfo( $offset, $limit, 'denied' );
                         endif;
 
                         if ( isset ( $_POST['allow_ip'] ) ) :
-                            if ( WHTP_Hit_Info::allow_ip() ): ?>
-                                <div class="wrap">
-                                    <div class="updated">
-                                        <p>
-                                            <?php echo sprintf( 
-                                                __( 'The IP "%" has been allowed and will now be counted the next time it visits your website.', 'whtp'),
-                                                esc_attr( $ip_address ) ); ?>
-                                        </p>
-                                    </div>
+                            $ip_address = esc_attr( $_POST[ 'ip_address' ] );
+                            if ( WHTP_Hit_Info::allow_ip( $ip_address ) ): ?>
+                                <div class="update-message notice notice-success">
+                                    <p>
+                                        <?php echo sprintf( 
+                                            __( 'The IP "%" has been allowed and will now be counted the next time it visits your website.', 'whtp'),
+                                            esc_attr( $ip_address ) ); ?>
+                                    </p>
                                 </div>
                                 <?php else: ?>
-                                <div class="error-msg warning error not-updated">
+                                <div class="update-message notice notice-warning">
                                     <p>
                                         <?php echo sprintf( 
                                             __( 'Failed to Allow "%s"', 'whtp' ),
@@ -72,11 +72,11 @@ $hit_info_result = WHTP_Hit_info::get_hitinfo( $offset, $limit, 'denied' );
 
 
                         if ( isset ( $_POST['delete_ip'] ) ) :
-                            $ip_address = esc_attr($_POST['delete_this_ip']);	
-                            $delete_ip  = esc_attr ( $_POST['delete_ip'] );
+                            $ip_address = esc_attr( $_POST['ip_address']);	
+                            $delete_ip  = esc_attr( $_POST['delete_ip'] );
 
                             if ( WHTP_Hit_Info::delete_ip( $ip_address, $delete_ip ) ) : ?>
-                                <div class="updated">
+                                <div class="update-message notice notice-success">
                                     <p>
                                         <?php echo sprintf( 
                                             __( 'The IP address "%s"" has been removed from the database.', 'whtp'),
@@ -122,6 +122,7 @@ $hit_info_result = WHTP_Hit_info::get_hitinfo( $offset, $limit, 'denied' );
                                     <td class="mdl-data-table__cell--non-numeric">
                                         <?php _e("Delete IP", "whtp"); ?></td>
                                 </tr>
+                                <tbody class="ips-table">
                                 <?php
                                 # print rows from table
                                 foreach( $hit_info_result as $row) : ?>
@@ -138,14 +139,14 @@ $hit_info_result = WHTP_Hit_info::get_hitinfo( $offset, $limit, 'denied' );
                                     <td class="mdl-data-table__cell--non-numeric">			
                                         <form action="" method="post">
                                         <input type="hidden" name="delete_ip" value="this_ip" />
-                                        <input type="hidden" name="delete_this_ip" value="<?php echo $row->ip_address; ?>" />
+                                        <input type="hidden" name="ip_address" value="<?php echo $row->ip_address; ?>" />
                                         <input type="submit" name="submit" value="<?php _e("Delete This IP", "whtp"); ?>" class="button" />
                                         </form>
                                     </td>
                                 </tr>
 
                                 <?php endforeach; ?>
-
+                                </tbody>
                                 <tr>
                                     <td class="mdl-data-table__cell--non-numeric" colspan="2" align="right">
                                         <h4><?php _e("Total Denied IP´s ", "whtp"); ?></h4>

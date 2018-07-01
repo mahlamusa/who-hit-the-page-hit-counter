@@ -48,7 +48,7 @@ class WHTP_Functions{
 		return $all_ips;
 	}
 
-	public static function pagination( $number, $page, $total, $list_class = '', $page_name = '' ) {
+	public static function pagination( $number, $page, $total, $page_name = '', $list_class = '' ) {
 		if ( $number == 'all' ) {
 			return '';
 		}

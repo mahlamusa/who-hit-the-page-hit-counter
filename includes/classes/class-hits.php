@@ -131,11 +131,11 @@ class WHTP_Hits{
         global $wpdb, $hits_table;
 
         if ($delete_page == ""){
-            $delete_page = isset( $_GET['delete_page'] ) ? esc_attr( $_GET['delete_page'] ) : esc_attr( $_POST['delete_page'] );
+            $delete_page = esc_attr( $_GET['delete_page'] );
         }
         
         if ( $delete_page != "all" ){
-            $del = $wpdb->query ("DELETE FROM `$hits_table` WHERE page='$delete_page'");
+            $del = $wpdb->query ("DELETE * FROM `$hits_table` WHERE page='$delete_page'");
         }
         else{
             $del = $wpdb->query("DELETE * FROM `$hits_table`");

@@ -67,20 +67,10 @@ class WHTP_Hit_Info{
         }
     }
 
-    public static function reset_ip_info( $resetips = ""){	
+    public static function reset_ip_info( $ip_address, $which = "this"){	
         global $wpdb, $hitinfo_table;
 
-        if ( isset ( $_POST['ip_address'] ) )
-            $ip_address = $_POST['ip_address'];
-            
-        if ($resetips == ""){
-            $reset_ip = $resetips;
-        }else{
-            $reset_ip = stripslashes( $_POST['reset_ip'] );
-        }
-
-        if ($reset_ip != "all" && isset( $ip_address )){
-            # reset specific
+       if ($which != "all" && isset( $ip_address )){
             $reset = $wpdb->update(
                 $hitinfo_table, 
                 array("ip_total_visits" => 0),
@@ -89,7 +79,6 @@ class WHTP_Hit_Info{
             );
         }
         else{
-            # reset all ip counters
             $reset_all = $wpdb->query( "UPDATE `$hitinfo_table` SET ip_total_visits = 0");
         }
         
@@ -99,16 +88,14 @@ class WHTP_Hit_Info{
     }
     
     # delete ip address
-    public static function delete_ip ( $ip, $all = "" ){
+    public static function delete_ip ( $ip_address, $which = 1 ){
         global $wpdb, $hitinfo_table;
         
-        if ( $delete_ip == "this_ip" ) {
-            $del = $wpdb->query ("DELETE FROM `$hitinfo_table` WHERE ip_address='$ip_address'");
-            
-                
+        if ( $which != 'all' ) {
+            $del = $wpdb->query ("DELETE * FROM `$hitinfo_table` WHERE ip_address='$ip_address'");
         }
-        elseif ( $delete_ip == "all" ){
-            $del = $wpdb->query("DELETE FROM `$hitinfo_table`");            
+        else{
+            $del = $wpdb->query("DELETE * FROM `$hitinfo_table`");            
         }
 
         if ( $del ) return true;
@@ -155,6 +142,60 @@ class WHTP_Hit_Info{
             ORDER BY ip_total_visits DESC LIMIT $number"
         );
     }
+
+    public static function ip_is_denied ( $ip_address ){
+        global $wpdb, $hitinfo_table;
+        $denied_ip	= $wpdb->get_var(
+            "SELECT ip_address 
+            FROM `$hitinfo_table` 
+            WHERE ip_status='denied' AND ip_address='$ip_address' 
+            LIMIT 1"
+        );
+        
+        if ( $denied_ip && $denied_ip != "" ) return true;
+        else return false;
+    }
+    
+    # set an IP's status as denied
+    public static function deny_ip( $ip_address ){
+        global $wpdb, $hitinfo_table;
+        
+        $deny = $wpdb->update(
+            $hitinfo_table, 
+            array("ip_status"=>"denied"), 
+            array("ip_address"=>$ip_address), array("%s"), array("%s")
+        );
+        
+        if ( $deny ) return true;
+        else return false;
+           
+    }
+
+    public static function add_denied_ip( $ip_address ){
+        global $wpdb, $hitinfo_table;
+		
+		$add_ip = $wpdb->insert(
+            $hitinfo_table, 
+            array("ip_status" => "denied" ,"ip_address" => $ip_address ), 
+            array("%s", "%s", "%s")
+        );
+        
+        if ( $add_ip ) return true;
+        else return false;
+    }
+    
+    public static function allow_ip( $ip_address ){
+        global $wpdb, $hitinfo_table;
+		
+		$allow = $wpdb->update(
+            $hitinfo_table, 
+            array("ip_status"=>"active"), 
+            array("ip_address"=>$ip_address), array("%s"), array("%s") 
+        );
+		
+        if ( $allow ) return true;
+        else return false;
+	}
 
     /*
     * start gathering unique user data
@@ -249,64 +290,4 @@ class WHTP_Hit_Info{
         // $country_code   = WHTP_IP2_Location::get_country_code( $ip_address );
         $counted        = WHTP_Visiting_Countries::country_count( $country_code, $country_name );
     }
-
-    public static function ip_is_denied ( $ip_address ){
-        global $wpdb, $hitinfo_table;
-        $denied_ip	= $wpdb->get_var(
-            "SELECT ip_address 
-            FROM `$hitinfo_table` 
-            WHERE ip_status='denied' AND ip_address='$ip_address' 
-            LIMIT 1"
-        );
-        
-        if ( $denied_ip && $denied_ip != "" ) return true;
-        else return false;
-    }
-    
-    # set an IP's status as denied
-    public static function deny_ip( $ip_address = ""){
-        global $wpdb, $hitinfo_table;
-
-        $ip_address = $ip_address != "" ? $ip_address : esc_attr( $_POST['ip_address'] );
-        
-        $deny = $wpdb->update(
-            $hitinfo_table, 
-            array("ip_status"=>"denied"), 
-            array("ip_address"=>$ip_address), array("%s"), array("%s")
-        );
-        
-        if ( $deny ) return true;
-        else return false;
-           
-    }
-
-    public static function add_denied_ip(){
-        global $wpdb, $hitinfo_table;
-		
-		$ip_address = stripslashes( $_POST['ip_address'] );
-		
-		$add_ip = $wpdb->insert(
-            $hitinfo_table, 
-            array("ip_status" => "denied" ,"ip_address" => $ip_address ), 
-            array("%s", "%s", "%s")
-        );
-        
-        if ( $add_ip ) return true;
-        else return false;
-    }
-    
-    public static function allow_ip(){
-        global $wpdb, $hitinfo_table;
-
-		$ip_address = stripslashes( esc_attr( $_POST['ip_address'] ) );
-		
-		$allow = $wpdb->update(
-            $hitinfo_table, 
-            array("ip_status"=>"active"), 
-            array("ip_address"=>$ip_address), array("%s"), array("%s") 
-        );
-		
-        if ( $allow ) return true;
-        else return false;
-	}
 }

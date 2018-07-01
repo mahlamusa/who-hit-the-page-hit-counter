@@ -18,7 +18,7 @@ if ( isset( $_GET['paging'] ) ) {
 $offset = $number != 'all'? $number * $paging: 0;
 
 $hit_info	= WHTP_Hit_Info::get_hitinfo( $offset, $number );
-$total	= count( $hit_info );
+$total	    = WHTP_Hit_Info::count();
 
 
 
@@ -69,13 +69,13 @@ if( $total > 0 ): ?>
                     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         for="demo-menu-lower-right-<?php echo $row->ip_address; ?>">
                         <li class="mdl-menu__item">
-                            <a href="<?php echo admin_url( 'admin.php?page=whtp-view-ip-hits&delete_ip=this_ip&delete_this_ip='.$row->ip_address. '&nonce='. $nonce ); ?>"><?php _e( 'Delete This IP', 'whtp' ); ?></a>
+                            <a class="confirm-delete" href="<?php echo admin_url( 'admin.php?page=whtp-view-ip-hits&delete_ip=this_ip&delete_this_ip='.$row->ip_address. '&nonce='. $nonce ); ?>"><?php _e( 'Delete This IP', 'whtp' ); ?></a>
                         </li>
                         <li class="mdl-menu__item">
-                            <a href="<?php echo admin_url( 'admin.php?page=whtp-view-ip-hits&deny_ip=this_ip&ip_address='.$row->ip_address. '&nonce='. $nonce ); ?>"><?php _e( 'Delete', 'whtp' ); ?></a>
+                            <a class="confirm-ignore" href="<?php echo admin_url( 'admin.php?page=whtp-view-ip-hits&deny_ip=this_ip&ip_address='.$row->ip_address. '&nonce='. $nonce ); ?>"><?php _e( 'Ignore Counts', 'whtp' ); ?></a>
                         </li>
                         <li class="mdl-menu__item">
-                            <a href="<?php echo admin_url( 'admin.php?page=whtp-view-ip-hits&reset_ip=this_ip&ip_address='. $row->ip_address . '&nonce='. $nonce ); ?>"><?php _e( 'Reset IP', 'whtp' ); ?></a>
+                            <a class="confirm-reset" href="<?php echo admin_url( 'admin.php?page=whtp-view-ip-hits&reset_ip=this_ip&ip_address='. $row->ip_address . '&nonce='. $nonce ); ?>"><?php _e( 'Reset IP', 'whtp' ); ?></a>
                         </li>
                     </ul>
                 </td>
@@ -97,13 +97,13 @@ if( $total > 0 ): ?>
                 <td class="title-footer ipv-title">
                     <form action="" method="post">
                         <input type="hidden" name="reset_ip" value="all" />
-                        <input type="submit" name="submit" value="<?php _e( 'Reset All', 'whtp' ); ?>" class="button-primary" />
+                        <input type="submit" name="submit" value="<?php _e( 'Reset All', 'whtp' ); ?>" class="button-primary confirm-reset" />
                     </form>
                 </td>
                 <td class="title-footer ftime-title">
                     <form action="" method="post">
                         <input type="hidden" name="delete_ip" value="all" />
-                        <input type="submit" name="submit" value="<?php _e( 'Delete All', 'whtp' ); ?>" class="button" />
+                        <input type="submit" name="submit" value="<?php _e( 'Delete All', 'whtp' ); ?>" class="button confirm-delete" />
                     </form>
                 </td>	
             </tr>

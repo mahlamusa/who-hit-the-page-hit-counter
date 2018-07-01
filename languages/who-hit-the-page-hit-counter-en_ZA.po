@@ -101,95 +101,91 @@ msgstr ""
 msgid "Backup Settings"
 msgstr ""
 
-#: partials/view-ip-hits.php:19, partials/view-page-hits.php:19
-msgid "The count for the page \"%s\" has been reset successfully."
-msgstr ""
-
-#: partials/view-ip-hits.php:24, partials/view-page-hits.php:24
-msgid "The count for all pages has been reset successfully."
-msgstr ""
-
-#: partials/view-ip-hits.php:29, partials/view-page-hits.php:29
-msgid "Failed to reset page counts"
-msgstr ""
-
-#: partials/view-ip-hits.php:42, partials/view-page-hits.php:42
-msgid "Failed to remove page count(s)."
-msgstr ""
-
-#: partials/view-ip-hits.php:52, partials/view-page-hits.php:52
-msgid "The Page \"%s\" has been discounted by %d"
-msgstr ""
-
-#: partials/view-ip-hits.php:59, partials/view-page-hits.php:59
-msgid "Failed to discount on the page"
-msgstr ""
-
-#: partials/view-ip-hits.php:72, partials/view-page-hits.php:72
+#: partials/view-ip-hits.php:18
 msgid "The count for ip address: \"%s\" has been reset successfully."
 msgstr ""
 
-#: partials/view-ip-hits.php:76, partials/view-page-hits.php:76
+#: partials/view-ip-hits.php:24
 msgid "Failed to reset count for IP: %s"
 msgstr ""
 
-#: partials/view-ip-hits.php:88, partials/view-page-hits.php:88
+#: partials/view-ip-hits.php:36
 msgid "IP addresse(s) removed from the database."
 msgstr ""
 
-#: partials/view-ip-hits.php:92, partials/view-page-hits.php:92
+#: partials/view-ip-hits.php:41
 msgid "Failed to remove IP addresse(s) from database"
 msgstr ""
 
-#: partials/view-ip-hits.php:101, partials/view-page-hits.php:101
+#: partials/view-ip-hits.php:50
 msgid "The IP Address will be ignored and will not be counted."
 msgstr ""
 
-#: partials/view-ip-hits.php:105, partials/view-page-hits.php:105
+#: partials/view-ip-hits.php:54
 msgid "Failed to add IP to ignore list"
 msgstr ""
 
-#: partials/view-ip-hits.php:112, partials/view-page-hits.php:112
-msgid "Visitor Data Goes Here for %s"
-msgstr ""
-
-#: partials/view-ip-hits.php:118
+#: partials/view-ip-hits.php:62
 msgid "Who Hit The Page Hit Counter - Visiting IP Addresses"
 msgstr ""
 
-#: partials/view-ip-hits.php:120
+#: partials/view-ip-hits.php:65
 msgid "View the raw hit counter information. This page lists all the IP addresses that have visited your pages."
 msgstr ""
 
-#: partials/view-ip-hits.php:127
+#: partials/view-ip-hits.php:72
 msgid "Visitors' IP addresses and Information"
 msgstr ""
 
-#: partials/view-ip-hits.php:132
-msgid "Support"
+#: partials/view-page-hits.php:18
+msgid "The count for the page \"%s\" has been reset successfully."
 msgstr ""
 
-#: partials/view-page-hits.php:118, partials/view/denied-ips.php:19, partials/view/visitor-info.php:72
+#: partials/view-page-hits.php:23
+msgid "The count for all pages has been reset successfully."
+msgstr ""
+
+#: partials/view-page-hits.php:28
+msgid "Failed to reset page counts"
+msgstr ""
+
+#: partials/view-page-hits.php:37
+msgid "Page count(s) deleted. New entries will be made when users visit your pages again. If you no longer wish to count visits on certain pages, go to the page editor and remove the <code>[whohit]..[/whohit]</code> shortcode."
+msgstr ""
+
+#: partials/view-page-hits.php:42
+msgid "Failed to remove page count(s)."
+msgstr ""
+
+#: partials/view-page-hits.php:52
+msgid "The Page \"%s\" has been discounted by %d"
+msgstr ""
+
+#: partials/view-page-hits.php:59
+msgid "Failed to discount on the page"
+msgstr ""
+
+#: partials/view-page-hits.php:66, partials/view/denied-ips.php:19, partials/view/visitor-info.php:72
 msgid "Who Hit The Page Hit Counter"
 msgstr ""
 
-#: partials/view-page-hits.php:120
+#: partials/view-page-hits.php:68
 msgid "Here you will see the raw page hit counter information. See all the visited pages along with the number of visits."
 msgstr ""
 
-#: partials/view-page-hits.php:127
+#: partials/view-page-hits.php:75
 msgid "Pages visited and number of visits per page."
 msgstr ""
 
-#: includes/classes/class-hit-info.php:185, includes/classes/class-hit-info.php:187
+#: includes/classes/class-hit-info.php:226, includes/classes/class-hit-info.php:228
 msgid "AA"
 msgstr ""
 
-#: includes/classes/class-hit-info.php:186, includes/classes/class-ip-to-location.php:36, includes/classes/class-visiting-countries.php:101
+#: includes/classes/class-hit-info.php:227, includes/classes/class-ip-to-location.php:36, includes/classes/class-visiting-countries.php:101
 msgid "Unknown Country"
 msgstr ""
 
-#: includes/classes/class-hit-info.php:188
+#: includes/classes/class-hit-info.php:229
 msgstr ""
 
 #: includes/classes/class-shortcodes.php:28
@@ -220,7 +216,7 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: partials/view/all-page-hits.php:66, partials/view/visiting-ip-addresses.php:75
+#: partials/view/all-page-hits.php:66
 msgid "Delete"
 msgstr ""
 
@@ -228,23 +224,23 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-#: partials/view/all-page-hits.php:78
+#: partials/view/all-page-hits.php:79
 msgid "Total Hits"
 msgstr ""
 
-#: partials/view/all-page-hits.php:86, partials/view/visiting-ip-addresses.php:100
+#: partials/view/all-page-hits.php:87, partials/view/visiting-ip-addresses.php:100
 msgid "Reset All"
 msgstr ""
 
-#: partials/view/all-page-hits.php:92, partials/view/visiting-ip-addresses.php:106
+#: partials/view/all-page-hits.php:93, partials/view/visiting-ip-addresses.php:106
 msgid "Delete All"
 msgstr ""
 
-#: partials/view/all-page-hits.php:101
+#: partials/view/all-page-hits.php:102
 msgid "No Data Found"
 msgstr ""
 
-#: partials/view/all-page-hits.php:104
+#: partials/view/all-page-hits.php:105
 msgid "No Page visits yet or the page counters have been reset. Read documentation to learn how to get started"
 msgstr ""
 
@@ -256,15 +252,15 @@ msgstr ""
 msgid "Please add an IP address to your deny list. All IP addresses in this list will not be counted when visiting your website. To allow an IP to be counted again, click 'Allow This IP' then it will be visible in your IP list on the counters' page and to remove it from the list click 'Delete This IP."
 msgstr ""
 
-#: partials/view/denied-ips.php:37
+#: partials/view/denied-ips.php:38
 msgid "The IP Address \"%s\" has been added to your deny list. This IP address will not be counted the next time it visits your website"
 msgstr ""
 
-#: partials/view/denied-ips.php:44
+#: partials/view/denied-ips.php:45
 msgid "Failed to Add IP Address \"%s\" to deny list."
 msgstr ""
 
-#: partials/view/denied-ips.php:56
+#: partials/view/denied-ips.php:57
 msgid "The IP \"%\" has been allowed and will now be counted the next time it visits your website."
 msgstr ""
 
@@ -308,19 +304,19 @@ msgstr ""
 msgid "Delete IP"
 msgstr ""
 
-#: partials/view/denied-ips.php:135
+#: partials/view/denied-ips.php:136
 msgid "Allow This IP"
 msgstr ""
 
-#: partials/view/denied-ips.php:142, partials/view/visiting-ip-addresses.php:72
+#: partials/view/denied-ips.php:143, partials/view/visiting-ip-addresses.php:72
 msgid "Delete This IP"
 msgstr ""
 
-#: partials/view/denied-ips.php:151
+#: partials/view/denied-ips.php:152
 msgid "Total Denied IP´s "
 msgstr ""
 
-#: partials/view/denied-ips.php:160, partials/view/visiting-ip-addresses.php:115
+#: partials/view/denied-ips.php:161, partials/view/visiting-ip-addresses.php:115
 msgid "There are currently no registered IP addresses, please read above to get started"
 msgstr ""
 
@@ -374,6 +370,10 @@ msgstr ""
 
 #: partials/view/visiting-ip-addresses.php:42
 msgid "Last Visit"
+msgstr ""
+
+#: partials/view/visiting-ip-addresses.php:75
+msgid "Ignore Counts"
 msgstr ""
 
 #: partials/view/visiting-ip-addresses.php:78
