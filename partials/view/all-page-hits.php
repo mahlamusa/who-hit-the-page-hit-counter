@@ -51,13 +51,14 @@ if( $total > 0 ): ?>
                         class="mdl-button mdl-js-button mdl-button--icon">
                         <i class="material-icons">more_vert</i>
                     </button>
-                    <?php $nonce = wp_create_nonce( 'delete_reset_action' ); ?>
+                    <?php $nonce = wp_create_nonce( 'delete_reset_deny' ); ?>
                     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         for="demo-menu-lower-right-<?php echo $row->page; ?>">
                         <li class="mdl-menu__item">
-                            <a class="confirm-delete" href="<?php echo admin_url( 'admin.php?page=whtp-view-page-hits&delete_page='.$row->page. '&nonce='. $nonce ); ?>"><?php _e( 'Delete', 'whtp' ); ?></a></li>
-                        <li class="confirm-reset" class="mdl-menu__item">
-                            <a href="<?php echo admin_url( 'admin.php?page=whtp-view-page-hits&reset_page='. $row->page. '&nonce='. $nonce ); ?>"><?php _e( 'Reset', 'whtp' ); ?>
+                            <a class="confirm-delete" href="<?php echo admin_url( 'admin.php?page=whtp-view-page-hits&delete_page='.$row->page. '&nonce='. $nonce ); ?>"><?php _e( 'Delete', 'whtp' ); ?></a>
+                        </li>
+                        <li class="mdl-menu__item">
+                            <a class="confirm-reset" href="<?php echo admin_url( 'admin.php?page=whtp-view-page-hits&reset_page='. $row->page. '&nonce='. $nonce ); ?>"><?php _e( 'Reset', 'whtp' ); ?>
                             </a>
                         </li>
                     </ul>

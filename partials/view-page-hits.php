@@ -8,8 +8,8 @@
 	/**
 	* check if there is an action to reset counters
 	*/
-	if ( isset ( $_REQUEST['reset_page'] ) && wp_verify_nonce( $_REQUEST['nonce'], 'nonce' ) ):
-        $page = isset( $_REQUEST['reset_page'] );
+	if ( isset ( $_GET['reset_page'] ) && wp_verify_nonce( $_GET['nonce'], 'delete_reset_deny' ) ):
+        $page = isset( $_GET['reset_page'] );
         
 		if ( WHTP_Hits::reset_page_count( $page ) ) :
 			if ( $page != "all" ): ?>
@@ -30,8 +30,9 @@
         endif;
     endif;
     
-	if ( isset( $_REQUEST['delete_page'] ) && wp_verify_nonce( $_REQUEST['nonce'], 'nonce' ) ):
-		if ( WHTP_Hits::delete_page( esc_attr( $_REQUEST['delete_page'] ) ) ): ?>
+    if ( isset( $_GET['delete_page'] ) && wp_verify_nonce( $_GET['nonce'], 'delete_reset_deny' ) ):
+        wp_verify_nonce( $nonce:string, $action:string|integer )
+		if ( WHTP_Hits::delete_page( esc_attr( $_GET['delete_page'] ) ) ): ?>
 			<div class="update-message notice notice-success">
 				<p>
                     <?php _e( 'Page count(s) deleted. New entries will be made when users visit your pages again. If you no longer wish to count visits on certain pages, go to the page editor and remove the <code>[whohit]..[/whohit]</code> shortcode.', 'whtp' ); ?>
@@ -45,18 +46,38 @@
     endif;
     
 
-	if ( isset( $_REQUEST['discount_page'] ) && wp_verify_nonce( $_REQUEST['nonce'], 'nonce' ) ) :
+	if ( isset( $_GET['discount_page'] ) && wp_verify_nonce( $_GET['nonce'], 'delete_reset_deny' ) ) :
         if ( WHTP_Hits::discount_page() ) : ?>
             <div class="update-message notice notice-success">
-                <?php echo sprintf( 
-                    __('The Page "%s" has been discounted by %d', 'whtp'), 
-                    esc_attr( $page ), 
-                    esc_attr( $discountby)
-                ); ?>
+                <?php _e('The Page has been discounted by', 'whtp'); ?>
             </div><?php
         else: ?>
             <div class="update-message notice notice-warning">
                 <p><?php _e( 'Failed to discount on the page', 'whtp' ); ?></p>
+            </div><?php
+        endif;
+    endif;
+
+    if ( isset ( $_POST['reset_all'] ) && wp_verify_nonce( $_POST['reset_all_nonce'], 'reset_all' ) ):
+        if ( WHTP_Hits::delete_page( 'all' ) ) : ?>
+			<div class="update-message notice notice-warning">
+                <p><?php _e( 'The count for all pages has been reset successfully.', 'whtp' ); ?></p>
+            </div><?php		
+		else: ?>
+			<div class="update-message notice notice-warning">
+                <p><?php _e( 'Failed to reset page counts', 'whtp' ); ?></p>
+            </div><?php
+        endif;
+    endif;
+
+    if ( isset ( $_POST['delete_all'] ) && wp_verify_nonce( $_POST['delete_all_nonce'], 'delete_all' ) ):
+        if ( WHTP_Hits::reset_page_count( 'all' ) ) : ?>
+			<div class="update-message notice notice-warning">
+                <p><?php _e( 'The count for all pages has been deleted successfully.', 'whtp' ); ?></p>
+            </div><?php		
+		else: ?>
+			<div class="update-message notice notice-warning">
+                <p><?php _e( 'Failed to delete page counts', 'whtp' ); ?></p>
             </div><?php
         endif;
     endif;

@@ -57,7 +57,7 @@ if( $total > 0 ): ?>
                         class="mdl-button mdl-js-button mdl-button--icon">
                         <i class="material-icons">more_vert</i>
                     </button>
-                    <?php $nonce = wp_create_nonce( 'delete_reset_action' ); ?>
+                    <?php $nonce = wp_create_nonce( 'delete_reset_deny' ); ?>
                     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         for="demo-menu-lower-right-<?php echo $row->ip_address; ?>">
                         <li class="mdl-menu__item">
@@ -88,12 +88,14 @@ if( $total > 0 ): ?>
                 <td class="title-footer ltime-title"></td>
                 <td class="title-footer ipv-title">
                     <form action="" method="post">
-                        <input type="hidden" name="reset_ip" value="all" />
+                        <input type="hidden" name="reset_all" value="all" />
+                        <?php wp_nonce_field( 'reset_all', 'reset_all_nonce' ); ?>
                         <input type="submit" name="submit" value="<?php _e( 'Reset All', 'whtp' ); ?>" class="button-primary confirm-reset" />
                     </form>
                 </td>
                 <td class="title-footer ftime-title">
                     <form action="" method="post">
+                        <?php wp_nonce_field( 'delete_all', 'delete_all_nonce'); ?>
                         <input type="hidden" name="delete_ip" value="all" />
                         <input type="submit" name="submit" value="<?php _e( 'Delete All', 'whtp' ); ?>" class="button confirm-delete" />
                     </form>
