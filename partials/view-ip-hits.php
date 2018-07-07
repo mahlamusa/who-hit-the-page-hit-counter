@@ -68,9 +68,6 @@
 
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet">
-            <h2 class="mdl-card__title-text">
-                <?php _e( 'Visitors\' IP addresses and Information', 'whtp' ); ?>    
-            </h2>
             <?php include( WHTP_PLUGIN_DIR_PATH . 'partials/view/visiting-ip-addresses.php'); ?>
         </div>
     </div>

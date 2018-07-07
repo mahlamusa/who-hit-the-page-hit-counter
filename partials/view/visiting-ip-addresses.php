@@ -3,11 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( isset( $_GET['number'] ) ) {
-    $number = esc_attr( $_GET['number'] );
-}else{
-    $number = 25;
-}
+$number = isset( $_GET['number'] ) ? esc_attr( $_GET['number'] ) : 15;
 
 if ( isset( $_GET['paging'] ) ) {
     $paging = esc_attr( $_GET['paging'] );
@@ -24,15 +20,11 @@ $total	    = WHTP_Hit_Info::count();
 
 $pagination = WHTP_Functions::pagination( $number, $paging, $total, 'whtp-pagination' );
 
-if( $total > 0 ): ?>
-    <div class="mdl-grid mdl-shadow--3dp">
-        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-            <input type="text" name="ip-filter-text" id="ip-filter-text">
-        </div>
-        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-            <?php echo WHTP_Functions::pagination( $number, $paging, $total, 'whtp-view-ip-hits' ); ?>
-        </div>
-    </div>
+if( $total > 0 ): ?>    
+    <?php
+        $filter_field_id = 'ip-text-filter';
+        include( WHTP_PLUGIN_DIR_PATH . 'partials/pagination.php');
+    ?>  
     <table class="table-responsive mdl-data-table mdl-js-data-table mdl-shadow--2dp">
         <thead>
             <th class="mdl-data-table__cell--non-numeric"><?php _e( 'Visitor\'s  IP', 'whtp' ); ?></th>

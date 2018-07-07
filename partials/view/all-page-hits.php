@@ -6,11 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $total_hits = WHTP_Hits::total();
 
-if ( isset( $_GET['number'] ) ) {
-    $number = esc_attr( $_GET['number'] );
-}else{
-    $number = 25;
-}
+$number = isset( $_GET['number'] ) ? esc_attr( $_GET['number'] ) : 15;
 
 if ( isset( $_GET['paging'] ) ) {
     $paging = esc_attr( $_GET['paging'] );
@@ -24,14 +20,10 @@ $hits   = WHTP_Hits::get_hits( $offset, $number );
 $total	= count( $hits );
 
 if( $total > 0 ): ?>
-    <div class="mdl-grid mdl-shadow--3dp">
-        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-            <input type="text" name="hits-filter-text" id="hits-filter-text">
-        </div>
-        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-            <?php echo WHTP_Functions::pagination( $number, $paging, $total, 'whtp-view-page-hits' ); ?>
-        </div>
-    </div>
+    <?php
+        $filter_field_id = 'hits-filter-text';
+        include( WHTP_PLUGIN_DIR_PATH . 'partials/pagination.php');
+    ?>
     <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
         <thead>
             <th class="mdl-data-table__cell--non-numeric"><?php _e( 'Page Visited', 'whtp' ); ?></th>

@@ -68,12 +68,8 @@
         <?php _e( 'Here you will see the raw page hit counter information. See all the visited pages along with the number of visits.', 'whtp' ); ?>
     </p>
 
-
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet">
-            <h2 class="mdl-card__title-text">
-                <?php _e( 'Pages visited and number of visits per page.', 'whtp' ); ?>
-            </h2>
             <?php include( WHTP_PLUGIN_DIR_PATH . 'partials/view/all-page-hits.php'); ?>
             <p class="clear"><br /></p>
         </div>
