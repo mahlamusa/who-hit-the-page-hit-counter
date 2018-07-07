@@ -31,8 +31,7 @@
     endif;
     
     if ( isset( $_GET['delete_page'] ) && wp_verify_nonce( $_GET['nonce'], 'delete_reset_deny' ) ):
-        wp_verify_nonce( $nonce:string, $action:string|integer )
-		if ( WHTP_Hits::delete_page( esc_attr( $_GET['delete_page'] ) ) ): ?>
+        if ( WHTP_Hits::delete_page( esc_attr( $_GET['delete_page'] ) ) ): ?>
 			<div class="update-message notice notice-success">
 				<p>
                     <?php _e( 'Page count(s) deleted. New entries will be made when users visit your pages again. If you no longer wish to count visits on certain pages, go to the page editor and remove the <code>[whohit]..[/whohit]</code> shortcode.', 'whtp' ); ?>
