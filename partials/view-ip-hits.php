@@ -8,11 +8,10 @@
     * Check if there is an action to be performed
     * to reset ip info
     */
-    if ( isset( $_GET['reset_ip'] ) && wp_verify_nonce( $_GET['nonce'], 'delete_reset_deny' ) ) :
+    if ( isset( $_GET['reset_ip'] ) && isset( $_GET['ip_address'] ) && wp_verify_nonce( $_GET['nonce'], 'delete_reset_deny' ) ) :
         $ip_address = esc_attr( $_GET[ 'ip_address' ] );
-        $which      = esc_attr( $_GET[ 'reset_ip' ] );
 
-        if ( WHTP_Hit_Info::reset_ip_info( $ip_address, $which ) ) : ?>
+        if ( WHTP_Hit_Info::reset_ip_info( $ip_address ) ) : ?>
             <div class="update-message notice notice-success">
                 <p>
                     <?php printf( __( 'The count for ip address: "%s" has been reset successfully.', 'whtp' ), esc_attr( $_GET['ip_address'] ) ); ?>
@@ -27,11 +26,10 @@
         endif; 
     endif;
 
-    if ( isset( $_GET['delete_ip'] ) && wp_verify_nonce( $_GET['nonce'], 'delete_reset_deny' ) ) :
-        $ip_address = esc_attr( $_GET['delete_this_ip']);	
-        $which      = esc_attr( $_GET['delete_ip'] );
+    if ( isset( $_GET['delete_ip'] ) && isset( $_GET['ip_address'] ) && wp_verify_nonce( $_GET['nonce'], 'delete_reset_deny' ) ) :
+        $ip_address = esc_attr( $_GET['ip_address']);
         
-        if ( WHTP_Hit_Info::delete_ip( $ip_address, $which ) ): ?>
+        if ( WHTP_Hit_Info::delete_ip( $ip_address ) ): ?>
                 <div class="update-message notice notice-success">
                     <p><?php _e("IP addresse(s) removed from the database.", "whtp"); ?></p>
                 </div>
@@ -44,8 +42,11 @@
         endif;
     endif;
 
-    if ( isset ( $_GET['deny_ip'] ) && wp_verify_nonce( $_GET['nonce'], 'delete_reset_deny' ) ): 
-        if ( WHTP_Hit_Info::deny_ip( esc_attr( $_GET['deny_ip'] ) ) ) : ?>
+    if ( isset ( $_GET['deny_ip'] ) && isset( $_GET['ip_address'] ) && wp_verify_nonce( $_GET['nonce'], 'delete_reset_deny' ) ):
+
+        $ip_address = esc_attr( $_GET['ip_address']);
+
+        if ( WHTP_Hit_Info::deny_ip( $ip_address ) ) : ?>
             <div class="update-message notice notice-success">
                 <p><?php _e( 'The IP Address will be ignored and will not be counted.', 'whtp' ); ?></p>
             </div>
@@ -56,11 +57,8 @@
         <?php endif;
     endif;
 
-    if ( isset( $_POST['delete_all'] ) && wp_verify_nonce( $_POST['delete_all_nonce'], 'delete_all' ) ) :
-        $ip_address = esc_attr( $_GET['delete_this_ip']);	
-        $which      = esc_attr( $_GET['delete_ip'] );
-        
-        if ( WHTP_Hit_Info::delete_ip( $ip_address, $which ) ): ?>
+    if ( isset( $_POST['delete_all_ips'] ) && wp_verify_nonce( $_POST['delete_all_ips_nonce'], 'delete_all_ips' ) ) :
+        if ( WHTP_Hit_Info::delete_ip( '', 'all' ) ): ?>
                 <div class="update-message notice notice-success">
                     <p><?php _e("IP addresse(s) removed from the database.", "whtp"); ?></p>
                 </div>
@@ -73,20 +71,19 @@
         endif;
     endif;
 
-    if ( isset( $_POST['reset_all'] ) && wp_verify_nonce( $_POST['reset_all_nonce'], 'reset_all' ) ) :
+    if ( isset( $_POST['reset_all_ips'] ) && wp_verify_nonce( $_POST['reset_all_ips_nonce'], 'reset_all_ips' ) ) :
         $ip_address = esc_attr( $_GET[ 'ip_address' ] );
-        $which      = esc_attr( $_GET[ 'reset_ip' ] );
 
-        if ( WHTP_Hit_Info::reset_ip_info( $ip_address, $which ) ) : ?>
+        if ( WHTP_Hit_Info::reset_ip_info( $ip_address, 'all' ) ) : ?>
             <div class="update-message notice notice-success">
                 <p>
-                    <?php printf( __( 'The count for ip address: "%s" has been reset successfully.', 'whtp' ), esc_attr( $_GET['ip_address'] ) ); ?>
+                    <?php _e( 'The count for all IP addresses has been reset successfully.', 'whtp' ) ?>
                 </p>
             </div><?php 
         else: ?>
             <div class="update-nag notice notice-warning">
                 <p>
-                    <?php printf( __( 'Failed to reset count for IP: %s', 'whtp' ), esc_attr( $_GET['reset_ip'] ) ); ?>
+                    <?php _e( 'Failed to reset count for all IP addresses', 'whtp' ); ?>
                 </p>
             </div><?php
         endif; 

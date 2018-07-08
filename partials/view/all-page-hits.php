@@ -38,7 +38,7 @@ if( $total > 0 ): ?>
                 <td><?php echo $row->count_hits; ?></td>	
                 <td class="mdl-data-table__cell--non-numeric">						
                     <form action="" method="post">
-                        <input type="hidden" name="discount_page" value="<?php echo $row->page; ?>" />
+                        <input type="hidden" name="discount_page" value="<?php echo $row->page_id; ?>" />
                         <input type="number" name="discountby" value="1" />
                         <!--<input type="submit" name="submit" value="--" class="button-primary" />-->
                         <button type="submit" class="mdl-button mdl-js-button mdl-button--icon confirm-discount">
@@ -53,12 +53,12 @@ if( $total > 0 ): ?>
                     </button>
                     <?php $nonce = wp_create_nonce( 'delete_reset_deny' ); ?>
                     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                        for="demo-menu-lower-right-<?php echo $row->page; ?>">
+                        for="demo-menu-lower-right-<?php echo $row->page_id; ?>">
                         <li class="mdl-menu__item">
-                            <a class="confirm-delete" href="<?php echo admin_url( 'admin.php?page=whtp-view-page-hits&delete_page='.$row->page. '&nonce='. $nonce ); ?>"><?php _e( 'Delete', 'whtp' ); ?></a>
+                            <a class="confirm-delete" href="<?php echo admin_url( 'admin.php?page=whtp-view-page-hits&delete_page=delete&page_id='.$row->page_id. '&nonce='. $nonce ); ?>"><?php _e( 'Delete', 'whtp' ); ?></a>
                         </li>
                         <li class="mdl-menu__item">
-                            <a class="confirm-reset" href="<?php echo admin_url( 'admin.php?page=whtp-view-page-hits&reset_page='. $row->page. '&nonce='. $nonce ); ?>"><?php _e( 'Reset', 'whtp' ); ?>
+                            <a class="confirm-reset" href="<?php echo admin_url( 'admin.php?page=whtp-view-page-hits&reset_page=reset&page_id='. $row->page_id. '&nonce='. $nonce ); ?>"><?php _e( 'Reset', 'whtp' ); ?>
                             </a>
                         </li>
                     </ul>
@@ -76,13 +76,15 @@ if( $total > 0 ): ?>
                 <td colspan="2">&nbsp;</td>
                 <td>
                     <form action="" method="post">
-                    <input type="hidden" name="reset_page" value="all" />
+                    <input type="hidden" name="reset_all_pages" value="all" />
+                    <?php wp_nonce_field( 'reset_all_pages', 'reset_all_pages_nonce' ); ?>
                     <input type="submit" name="submit" value="<?php _e( 'Reset All', 'whtp' ); ?>" class="button-primary confirm-reset" />
                     </form>	
                 </td>
                 <td>
                     <form action="" method="post">
-                    <input type="hidden" name="delete_page" value="all" />
+                    <input type="hidden" name="delete_all_pages" value="all" />
+                    <?php wp_nonce_field( 'delete_all_pages', 'delete_all_pages_nonce' ); ?>
                     <input type="submit" name="submit" value="<?php _e( 'Delete All', 'whtp' ); ?>" class="button confirm-delete" />
                     </form>
                 </td>

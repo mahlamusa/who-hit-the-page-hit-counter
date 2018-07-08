@@ -67,7 +67,7 @@ class WHTP_Hit_Info{
         }
     }
 
-    public static function reset_ip_info( $ip_address, $which = "this"){	
+    public static function reset_ip_info( $ip_address = '', $which = 1){	
         global $wpdb, $hitinfo_table;
 
        if ($which != "all" && isset( $ip_address )){
@@ -88,10 +88,10 @@ class WHTP_Hit_Info{
     }
     
     # delete ip address
-    public static function delete_ip ( $ip_address, $which = 1 ){
+    public static function delete_ip ( $ip_address = '', $which = 1 ){
         global $wpdb, $hitinfo_table;
         
-        if ( $which != 'all' ) {
+        if ( $which != 'all' && $ip_address != '' ) {
             $del = $wpdb->query ("DELETE * FROM `$hitinfo_table` WHERE ip_address='$ip_address'");
         }
         else{

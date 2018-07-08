@@ -61,7 +61,7 @@ if( $total > 0 ): ?>
                     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         for="demo-menu-lower-right-<?php echo $row->ip_address; ?>">
                         <li class="mdl-menu__item">
-                            <a class="confirm-delete" href="<?php echo admin_url( 'admin.php?page=whtp-view-ip-hits&delete_ip=this_ip&delete_this_ip='.$row->ip_address. '&nonce='. $nonce ); ?>"><?php _e( 'Delete This IP', 'whtp' ); ?></a>
+                            <a class="confirm-delete" href="<?php echo admin_url( 'admin.php?page=whtp-view-ip-hits&delete_ip=this_ip&ip_address='.$row->ip_address. '&nonce='. $nonce ); ?>"><?php _e( 'Delete This IP', 'whtp' ); ?></a>
                         </li>
                         <li class="mdl-menu__item">
                             <a class="confirm-ignore" href="<?php echo admin_url( 'admin.php?page=whtp-view-ip-hits&deny_ip=this_ip&ip_address='.$row->ip_address. '&nonce='. $nonce ); ?>"><?php _e( 'Ignore Counts', 'whtp' ); ?></a>
@@ -88,15 +88,15 @@ if( $total > 0 ): ?>
                 <td class="title-footer ltime-title"></td>
                 <td class="title-footer ipv-title">
                     <form action="" method="post">
-                        <input type="hidden" name="reset_all" value="all" />
-                        <?php wp_nonce_field( 'reset_all', 'reset_all_nonce' ); ?>
+                        <input type="hidden" name="reset_all_ips" value="all" />
+                        <?php wp_nonce_field( 'reset_all_ips', 'reset_all_ips_nonce' ); ?>
                         <input type="submit" name="submit" value="<?php _e( 'Reset All', 'whtp' ); ?>" class="button-primary confirm-reset" />
                     </form>
                 </td>
                 <td class="title-footer ftime-title">
                     <form action="" method="post">
-                        <?php wp_nonce_field( 'delete_all', 'delete_all_nonce'); ?>
-                        <input type="hidden" name="delete_ip" value="all" />
+                        <?php wp_nonce_field( 'delete_all_ips', 'delete_all__ips_nonce'); ?>
+                        <input type="hidden" name="delete_ip_ips" value="all" />
                         <input type="submit" name="submit" value="<?php _e( 'Delete All', 'whtp' ); ?>" class="button confirm-delete" />
                     </form>
                 </td>	

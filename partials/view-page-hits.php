@@ -45,8 +45,8 @@
     endif;
     
 
-	if ( isset( $_GET['discount_page'] ) && wp_verify_nonce( $_GET['nonce'], 'delete_reset_deny' ) ) :
-        if ( WHTP_Hits::discount_page() ) : ?>
+	if ( isset( $_POST['discount_page'] ) && wp_verify_nonce( $_POST['nonce'], 'delete_reset_deny' ) ) :
+        if ( WHTP_Hits::discount_page( esc_attr( $_GET['discount_page'] ), esc_attr( $_POST['discountby'] ) ) ) : ?>
             <div class="update-message notice notice-success">
                 <?php _e('The Page has been discounted by', 'whtp'); ?>
             </div><?php
@@ -57,7 +57,7 @@
         endif;
     endif;
 
-    if ( isset ( $_POST['reset_all'] ) && wp_verify_nonce( $_POST['reset_all_nonce'], 'reset_all' ) ):
+    if ( isset ( $_POST['reset_all_pages'] ) && wp_verify_nonce( $_POST['reset_all_pages_nonce'], 'reset_all_pages' ) ):
         if ( WHTP_Hits::delete_page( 'all' ) ) : ?>
 			<div class="update-message notice notice-warning">
                 <p><?php _e( 'The count for all pages has been reset successfully.', 'whtp' ); ?></p>
@@ -69,7 +69,7 @@
         endif;
     endif;
 
-    if ( isset ( $_POST['delete_all'] ) && wp_verify_nonce( $_POST['delete_all_nonce'], 'delete_all' ) ):
+    if ( isset ( $_POST['delete_all_pages'] ) && wp_verify_nonce( $_POST['delete_all_pages_nonce'], 'delete_all_pages' ) ):
         if ( WHTP_Hits::reset_page_count( 'all' ) ) : ?>
 			<div class="update-message notice notice-warning">
                 <p><?php _e( 'The count for all pages has been deleted successfully.', 'whtp' ); ?></p>

@@ -52,7 +52,7 @@ class WHTP_Hits{
     }
 
     public static function count_page( $page ) {	
-        $page = $page;
+        //$page = $page;
         
         $ip_address	= $_SERVER["REMOTE_ADDR"];	# visitor's ip address 
         
@@ -64,17 +64,15 @@ class WHTP_Hits{
         }
     }
 
-    public static function discount_page(){
+    public static function discount_page( $page_id, $dicount_by = 1 ){
         global $wpdb, $hits_table;
 
-        $page = stripslashes( $_POST['discount_page'] );
-        $discountby = stripslashes( $_POST['discountby'] );
         $old_count = $wpdb->get_var( "SELECT count_hits FROM `$hits_table` WHERE page='$page'" );
         
         $discount_page = $wpdb->update(
             WHTP_HITS_TABLE, 
-            array( "count_hits" => $old_count - $discountby ), 
-            array("page" => $page)
+            array( "count_hits" => $old_count - $discount_by ), 
+            array( "page_id" => $page_id )
         );
         
         if ( $discount_page ) return true;
@@ -127,15 +125,11 @@ class WHTP_Hits{
         return $page_id;
     }
 
-    public static function delete_page( $delete_page = ""){
+    public static function delete_page( $page_id = '' ){
         global $wpdb, $hits_table;
-
-        if ($delete_page == ""){
-            $delete_page = esc_attr( $_GET['delete_page'] );
-        }
         
-        if ( $delete_page != "all" ){
-            $del = $wpdb->query ("DELETE * FROM `$hits_table` WHERE page='$delete_page'");
+        if ( $page_id != "all" ){
+            $del = $wpdb->query ("DELETE * FROM `$hits_table` WHERE page_id='$page_id'");
         }
         else{
             $del = $wpdb->query("DELETE * FROM `$hits_table`");
@@ -145,15 +139,12 @@ class WHTP_Hits{
         else return false;
     }
 
-    public static function reset_page_count( $page = ""){
+    public static function reset_page_count( $page_id = ""){
         global $wpdb, $hits_table;
 
-        if ( $page == ""){
-            $page = isset( $_GET['reset_page'] ) ? esc_attr( $_GET['reset_page'] ) : esc_attr( $_POST['reset_page'] );
-        }
-        if( $page != "all" ){
+        if( $page_id != "all" ){
             #don't reset all but specific page
-            $update_page = $wpdb->query("UPDATE `$hits_table` SET count_hits = 0 WHERE page = '$page'");
+            $update_page = $wpdb->query("UPDATE `$hits_table` SET count_hits = 0 WHERE page_id = '$page'");
             
         }else{
             #reset all
