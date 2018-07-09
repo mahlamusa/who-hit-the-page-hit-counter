@@ -13,11 +13,11 @@ class WHTP_Hits{
     public static function count_exists(){
         global $wpdb, $hits_table;
 
-        $code = $wpdb->get_var(
+        $count = $wpdb->get_var(
             "SELECT count_hits FROM `$hits_table` 
             WHERE 1=1 LIMIT 1" 
         );
-        if ( $code ) return true;
+        if ( $count >= 0 ) return true;
         else return false;
     }
 
@@ -129,10 +129,10 @@ class WHTP_Hits{
         global $wpdb, $hits_table;
         
         if ( $page_id != "all" ){
-            $del = $wpdb->query ("DELETE * FROM `$hits_table` WHERE page_id='$page_id'");
+            $del = $wpdb->query ("DELETE FROM `$hits_table` WHERE page_id='$page_id'");
         }
         else{
-            $del = $wpdb->query("DELETE * FROM `$hits_table`");
+            $del = $wpdb->query("DELETE FROM `$hits_table`");
         }
 
         if ( $del ) return true;
@@ -154,7 +154,7 @@ class WHTP_Hits{
             }
         }
         
-        if ( $update_page || $update_all || $update_hit_info ) return true;
+        if ( isset( $update_page ) && $update_page || isset( $update_all ) && $update_all || isset( $update_hit_info ) && $update_hit_info ) return true;
         else return false;
     }
 }

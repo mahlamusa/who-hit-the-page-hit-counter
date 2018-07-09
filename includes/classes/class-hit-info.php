@@ -82,7 +82,7 @@ class WHTP_Hit_Info{
             $reset_all = $wpdb->query( "UPDATE `$hitinfo_table` SET ip_total_visits = 0");
         }
         
-        if ( $reset || $reset_all ) return true;
+        if ( isset( $reset ) && $reset || isset( $reset_all ) && $reset_all ) return true;
         else return false;
 
     }
@@ -92,10 +92,10 @@ class WHTP_Hit_Info{
         global $wpdb, $hitinfo_table;
         
         if ( $which != 'all' && $ip_address != '' ) {
-            $del = $wpdb->query ("DELETE * FROM `$hitinfo_table` WHERE ip_address='$ip_address'");
+            $del = $wpdb->query( "DELETE FROM `$hitinfo_table` WHERE ip_address='$ip_address'" );
         }
         else{
-            $del = $wpdb->query("DELETE * FROM `$hitinfo_table`");            
+            $del = $wpdb->query( "DELETE FROM `$hitinfo_table`" );            
         }
 
         if ( $del ) return true;

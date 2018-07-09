@@ -147,10 +147,12 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 <?php _e( 'No Pages Visited', 'whtp' ); ?>
                             </div><?php
                         else:
-                            foreach ( $pages_visited as $page): ?>
+                            foreach ( $pages_visited as $page): 
+                                if ( $page->page != '' ): ?>
                                 <div class="mdl-card__supporting-text mdl-color-text--grey-600">
                                     <?php echo $page->page . ' ('. $page->count_hits . ')'; ?>
-                                </div><?php	
+                                </div><?php
+                                endif;
                             endforeach;
                         endif;
                     ?>

@@ -47,7 +47,7 @@ if( $total > 0 ): ?>
                     </form>
                 </td>					
                 <td>						
-                    <button id="demo-menu-lower-right-<?php echo $row->page; ?>"
+                    <button id="demo-menu-lower-right-<?php echo $row->page_id; ?>"
                         class="mdl-button mdl-js-button mdl-button--icon">
                         <i class="material-icons">more_vert</i>
                     </button>

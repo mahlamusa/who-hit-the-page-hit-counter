@@ -26,11 +26,11 @@ class WHTP_Visiting_Countries{
     public static function count_exists(){
         global $wpdb, $visiting_countries_table;
 
-        $code = $wpdb->get_var(
+        $count = $wpdb->get_var(
             "SELECT count_hits FROM `$visiting_countries_table` 
             WHERE 1=1 LIMIT 1" 
         );
-        if ( $code ) return true;
+        if ( $count >= 0 ) return true;
         else return false;
     }
 

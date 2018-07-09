@@ -61,7 +61,7 @@ if( $total > 0 ): ?>
                     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                         for="demo-menu-lower-right-<?php echo $row->ip_address; ?>">
                         <li class="mdl-menu__item">
-                            <a class="confirm-delete" href="<?php echo admin_url( 'admin.php?page=whtp-view-ip-hits&delete_ip=this_ip&ip_address='.$row->ip_address. '&nonce='. $nonce ); ?>"><?php _e( 'Delete This IP', 'whtp' ); ?></a>
+                            <a class="confirm-delete" href="<?php echo admin_url( 'admin.php?page=whtp-view-ip-hits&delete_ip=this_ip&ip_address='. $row->ip_address . '&nonce='. $nonce ); ?>"><?php _e( 'Delete This IP', 'whtp' ); ?></a>
                         </li>
                         <li class="mdl-menu__item">
                             <a class="confirm-ignore" href="<?php echo admin_url( 'admin.php?page=whtp-view-ip-hits&deny_ip=this_ip&ip_address='.$row->ip_address. '&nonce='. $nonce ); ?>"><?php _e( 'Ignore Counts', 'whtp' ); ?></a>
