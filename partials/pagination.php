@@ -5,7 +5,7 @@
                 <input class="mdl-textfield__input" type="text"
                     name="<?php echo $filter_field_id; ?>"
                     id="<?php echo $filter_field_id; ?>">
-                <label class="mdl-textfield__label" for="result-perpage">
+                <label class="mdl-textfield__label" for="<?php echo $filter_field_id; ?>">
                     <?php _e( 'Search for...', 'whtp' ); ?>
                 </label>
             </div>
@@ -17,7 +17,8 @@
                     <input class="mdl-textfield__input" type="text"
                         pattern="-?[0-9]*(\.[0-9]+)?"
                         id="result-perpage"
-                        name="result-perpage" />                        
+                        name="result-perpage"
+                        value="<?php echo $number; ?>" />                        
                     <label class="mdl-textfield__label" for="result-perpage">
                         <?php _e( 'Results per page...', 'whtp' ); ?>
                     </label>

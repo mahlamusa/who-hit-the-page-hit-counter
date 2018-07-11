@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	//total unique visitors
 	$total_unique   = WHTP_Hit_Info::count_unique();
     
-    $number_of_visitors = 5;
+    $number_of_visitors = 15;
 	$top_visitors   = WHTP_Hit_Info::top( $number_of_visitors );
     
     $number_of_countries = 15;
@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <tbody>                                    
                         <tr>
                             <td class="mdl-data-table__cell--non-numeric">
-                                 <?php echo sprintf( __( 'Total Page Hits: %d', 'whtp' ), $total_hits ); ?>
+                                <?php echo sprintf( __( 'Total Page Hits: %d', 'whtp' ), $total_hits ); ?>
                             </td>
                         </tr>
                         <tr>
@@ -51,29 +51,28 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <?php _e( 'Top Visitors', 'whtp' ); ?>
                 </h3>
                 <?php 
-                if ( is_admin() ) :                                                 
-                    $limit = count ( $top_visitors );                                                    
-                    if ($limit > 5) {
-                        $limit = 5;
-                    }
-                    if ($limit > 0) : ?>
-                        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-                            <tbody>                                    
-                            <?php for ($i = 0; $i < $limit; $i ++): 
-                                $top = $top_visitors[$i] ;
-                                ?>
-                                <tr>
-                                    <td class="mdl-data-table__cell--non-numeric">
-                                        <a href="admin.php?page=whtp-visitor-stats&ip='<?php echo  $top->ip_address; ?>">
-                                            <?php echo esc_attr( $top->ip_address ); ?>
-                                        </a>
-                                    </td>
-                                    <td><?php echo esc_attr( $top->ip_total_visits ); ?></td>
-                                </tr>
-                            <?php endfor; ?>
-                            </tbody>
-                        </table><?php
-                    endif;
+                if ( count ( $top_visitors ) > 0) : ?>
+                    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                        <tbody>                                    
+                        <?php foreach ( $top_visitors as $top ): ?>
+                            <tr>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    <a href="admin.php?page=whtp-visitor-stats&ip=<?php echo  $top->ip_address; ?>">
+                                        <?php echo esc_attr( $top->ip_address ); ?>
+                                    </a>
+                                </td>
+                                <td><?php echo esc_attr( $top->ip_total_visits ); ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                            <tr>
+                                <td colspan="2" class="mdl-data-table__cell--non-numeric">
+                                    <a href="<?php echo admin_url( 'admin.php?page=whtp-view-ip-hits' ); ?>" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+                                        <?php _e( 'View All', 'whtp' ); ?>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table><?php
                 endif; ?>
             </div>
 
@@ -148,7 +147,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <?php require_once( WHTP_PLUGIN_DIR_PATH . 'partials/disclaimer.php' ); ?>
             </div>
             <div class="mdl-card__actions mdl-card--border">
-                <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
+                <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+                    <?php _e( 'Read More', 'whtp' ); ?></a>
             </div>
         </div>  
     </div>

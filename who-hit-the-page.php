@@ -1,13 +1,14 @@
 <?php
 /*
-Plugin Name: Who Hit The Page - Hit Counter
-Plugin URI: http://whohit.co.za/who-hit-the-page-hit-counter
-Description: Lets you know who visted your pages by adding an invisible page hit counter on your website, so you know how many times a page has been visited in total and how many times each user identified by IP address has visited each page. You will also know the IP addresses of your visitors and relate the IP addresses to the country of the visitor and all browsers used by that IP/user.
-Version: 1.4.6
-Author: mahlamusa
-Author URI: http://lindeni.co.za
-Plugin URI: http://whohit.co.za
-License: GPL
+* Plugin Name: Who Hit The Page - Hit Counter
+* Plugin URI: http://whohit.co.za/who-hit-the-page-hit-counter
+* Description: Lets you know who visted your pages by adding an invisible page hit counter on your website, so you know how many times a page has been visited in total and how many times each user identified by IP address has visited each page. You will also know the IP addresses of your visitors and relate the IP addresses to the country of the visitor and all browsers used by that IP/user.
+* Version: 1.4.6
+* Author: mahlamusa
+* Author URI: http://lindeni.co.za
+* License: GPL
+* Text Domain: whtp
+* Domain Path: /languages
 */
 /*
  * Copyright © 2012 - 2018 Lindeni Mahlalela. All rights reserved.
@@ -76,11 +77,11 @@ function whtp_remove(){
 
 class Who_Hit_The_Page_Admin{
 	public function __construct(){		
-		add_action( 'admin_menu', array( $this, 'admin_menu') );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
-		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), array( $this, 'add_action_links' ) );
+		add_action( 'admin_menu', 				array( $this, 'admin_menu') );
+		add_action( 'admin_enqueue_scripts', 	array( $this, 'enqueue_styles' ) );
+		add_action( 'admin_enqueue_scripts',	array( $this, 'enqueue_scripts' ) );
+		add_action( 'admin_notices', 			array( $this, 'admin_notices' ) );
+		add_filter( 'plugin_action_links_' . 	plugin_basename(__FILE__), array( $this, 'add_action_links' ) );
 	}
 
 	public function admin_menu(){		
@@ -125,14 +126,14 @@ class Who_Hit_The_Page_Admin{
 			'whtp-denied-ips',
 			array( $this, 'whtp_denied_submenu_callback' )
 		);
-		add_submenu_page(
+		/**add_submenu_page(
 			'whtp-admin-menu',
 			__('Export / Import', 'whtp'),
 			__('Export / Import', 'whtp'),
 			'administrator',
 			'whtp-import-export',
 			array( $this, 'whtp_export_import_submenu_callback' )
-		);
+		);**/
 		add_submenu_page(
 			'whtp-admin-menu',
 			__('Settings', 'whtp' ),

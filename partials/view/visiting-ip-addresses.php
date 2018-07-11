@@ -3,7 +3,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$number = isset( $_GET['number'] ) ? esc_attr( $_GET['number'] ) : 15;
+if ( isset( $_POST[ 'result-perpage' ] ) ) {
+    $number = esc_attr( $_POST['result-perpage'] );
+}else{
+    $number = isset( $_GET['number'] ) ? esc_attr( $_GET['number'] ) : 15;
+}
 
 if ( isset( $_GET['paging'] ) ) {
     $paging = esc_attr( $_GET['paging'] );
