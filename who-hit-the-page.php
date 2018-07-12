@@ -77,11 +77,15 @@ function whtp_remove(){
 
 class Who_Hit_The_Page_Admin{
 	public function __construct(){		
-		add_action( 'admin_menu', 				array( $this, 'admin_menu') );
-		add_action( 'admin_enqueue_scripts', 	array( $this, 'enqueue_styles' ) );
-		add_action( 'admin_enqueue_scripts',	array( $this, 'enqueue_scripts' ) );
+		add_action( 'admin_menu', 				array( $this, 'admin_menu') );				
 		add_action( 'admin_notices', 			array( $this, 'admin_notices' ) );
+		add_action( 'admin_init', 				array( 'suggest_privacy_content' ), 20 );
 		add_filter( 'plugin_action_links_' . 	plugin_basename(__FILE__), array( $this, 'add_action_links' ) );
+
+		if ( self::is_whtp_admin() ) {
+			add_action( 'admin_enqueue_scripts', 	array( $this, 'enqueue_styles' ) );
+			add_action( 'admin_enqueue_scripts',	array( $this, 'enqueue_scripts' ) );
+		}
 	}
 
 	public function admin_menu(){		
@@ -109,7 +113,7 @@ class Who_Hit_The_Page_Admin{
 			'administrator',
 			'whtp-view-ip-hits',
 			array( $this, 'whtp_view_ip_hits' )
-		);
+		);		
 		add_submenu_page(
 			'whtp-admin-menu',
 			__('Visitor Stats', 'whtp'),
@@ -133,7 +137,7 @@ class Who_Hit_The_Page_Admin{
 			'administrator',
 			'whtp-import-export',
 			array( $this, 'whtp_export_import_submenu_callback' )
-		);**/
+		);**/		
 		add_submenu_page(
 			'whtp-admin-menu',
 			__('Settings', 'whtp' ),
@@ -181,6 +185,15 @@ class Who_Hit_The_Page_Admin{
 		include( WHTP_PLUGIN_DIR_PATH . 'partials/help.php');//admin page
 	}
 
+	public static function is_whtp_admin( $page = '' ){
+		if ( $page == '' ) $page = esc_attr( $_GET['page'] );
+		
+		$whtp_pages = array( 'whtp-admin-menu', 'whtp-view-page-hits', 'whtp-visitor-stats', 'whtp-denied-ips', 'whtp-denied-ips', 'whtp-import-export', 'whtp-settings', 'whtp-help' );
+
+		if ( in_array( $page, $whtp_pages ) && is_admin() ) return true;
+		return false;
+	}
+
 	function add_action_links ( $links ) {
 		$links[] = '<a href="' . admin_url( 'admin.php?page=whtp-settings' ) . '">' .__('Settings','whtp') . '</a>';
 		$links[] = '<a href="' . admin_url( 'admin.php?page=whtp-help' ) . '">'. __('Help', 'whtp') . '</a>';
@@ -188,7 +201,7 @@ class Who_Hit_The_Page_Admin{
 		return $links;
 	}
 
-	public function enqueue_styles(){
+	public function enqueue_styles(){		
 		wp_register_style( 
             'mdl-admin-css', 
             'https://code.getmdl.io/1.3.0/material.indigo-pink.min.css'
@@ -249,8 +262,19 @@ class Who_Hit_The_Page_Admin{
 		<?php
 		endif;
 	}
+	
+	public static function get_default_privacy_content() {
+		return
+		'<h2>' . __( 'The IP address, user agent/browser name will be recorded for internal statistical purposes.', 'whtp' ) . '</h2>' .
+		'<p>' . __( 'Who Hit The Page Hit Counter collect the visitor\s IP address and the browser name or user agent used to visit the page, it also records the time and the pages visited by the speciic IP address. This data is collected for statistical purposes only and is not in any way linked to a user\'s account on this website', 'whtp' ) . '</p>';
+	}
+
+	public static function suggest_privacy_content() {
+		$content = $this->get_default_privacy_content();
+		wp_add_privacy_policy_content( __( 'Who Hit The Page Hit Counter' ), $content );
+	}
 }
 add_action("plugins_loaded", function(){
-	global $whtp;
+	global $whtpa;
 	$whtpa = new Who_Hit_The_Page_Admin();
 });

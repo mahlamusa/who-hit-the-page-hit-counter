@@ -67,10 +67,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 		
 	?>
-<div class="mdl-layout whtps-content">
-    <h2 class="mdl-card__title-text">
-        <?php _e( 'Who Hit The Page Hit Counter', 'whtp' ); ?>
-    </h2>
+<div class="mdl-layout whtps-content mdl-grid">
+    <div class="mdl-row">
+        <div class="mdl-grid">
+            <h2 class="mdl-card__title-text">
+                <?php _e( 'Who Hit The Page Hit Counter', 'whtp' ); ?>
+            </h2>
+            <p></p>
+        </div>
+    </div>
     <div class="mdl-row">
         <div class="mdl-grid">
             <div class="mdl-color--white mdl-cell mdl-cell--12-col">
@@ -100,9 +105,13 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
     
     <div class="mdl-row">
-        <h2 class="mdl-card__title-text">
-            <?php _e( 'View Visitor\'s Behaviour (IP:', 'whtp' ); ?> <?php echo $visitor_ip; ?>)
-        </h2>    
+        <div class="mdl-grid">
+            <div class="mdl-row">
+                <h2 class="mdl-card__title-text">
+                    <?php _e( 'View Visitor\'s Behaviour (IP:', 'whtp' ); ?> <?php echo $visitor_ip; ?>)
+                </h2>    
+            </div>
+        </div>   
     </div>
     
     <div class="mdl-row">
