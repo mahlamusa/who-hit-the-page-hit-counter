@@ -1,7 +1,0 @@
-[08-Jul-2018 07:39:04 UTC] PHP Notice:  add_object_page is <strong>deprecated</strong> since version 4.5.0! Use add_menu_page() instead. in /home/lindenico/public_html/wp-includes/functions.php on line 3853
-[08-Jul-2018 07:39:55 UTC] PHP Notice:  add_object_page is <strong>deprecated</strong> since version 4.5.0! Use add_menu_page() instead. in /home/lindenico/public_html/wp-includes/functions.php on line 3853
-[08-Jul-2018 07:39:55 UTC] PHP Notice:  Undefined variable: reset_all in /home/lindenico/public_html/wp-content/plugins/who-hit-the-page-hit-counter/includes/classes/class-hit-info.php on line 85
-[08-Jul-2018 07:39:55 UTC] PHP Notice:  Undefined variable: update_page in /home/lindenico/public_html/wp-content/plugins/who-hit-the-page-hit-counter/includes/classes/class-hits.php on line 157
-[08-Jul-2018 07:40:30 UTC] PHP Notice:  add_object_page is <strong>deprecated</strong> since version 4.5.0! Use add_menu_page() instead. in /home/lindenico/public_html/wp-includes/functions.php on line 3853
-[08-Jul-2018 07:48:28 UTC] PHP Notice:  add_object_page is <strong>deprecated</strong> since version 4.5.0! Use add_menu_page() instead. in /home/lindenico/public_html/wp-includes/functions.php on line 3853
-[08-Jul-2018 07:48:43 UTC] PHP Notice:  add_object_page is <strong>deprecated</strong> since version 4.5.0! Use add_menu_page() instead. in /home/lindenico/public_html/wp-includes/functions.php on line 3853

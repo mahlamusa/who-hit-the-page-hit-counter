@@ -5,7 +5,7 @@ Author URI: http://lindeni.co.za
 Plugin URI: http://whohit.co.za/
 Tags: geolocation, geo location, hit counter, visit counter, visitor stats, ip statistics, statistics, ip counter, browser detector
 Requires at least: 3.5
-Tested up to: 4.9.6
+Tested up to: 4.9.7
 Stable tag: 1.4.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -74,7 +74,7 @@ If you know the IP address of your own devices like Home/Work Computer, you can 
 
 = 1.4.6 =
 
-* Complete code rewrite to comply with standards
+* Update: Complete code rewrite to comply with standards
 * Added: Pagination for long pages
 * Added: Filter for displayed results
 * Added: Support for multisite subsites, now can activate per blog in multisite
@@ -82,6 +82,7 @@ If you know the IP address of your own devices like Home/Work Computer, you can 
 * Added: File based database to improve lookup results
 * Fix: Activation error if plugin was previously installed
 * Fix: Avoid direct access to plugin files
+* Fix: Load styles and scripts only where required
 * Minor bug fixes
 
 = 1.4.5 =
