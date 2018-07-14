@@ -270,7 +270,7 @@ class Who_Hit_The_Page_Admin{
 	}
 
 	public static function suggest_privacy_content() {
-		$content = $this->get_default_privacy_content();
+		$content = self::get_default_privacy_content();
 		wp_add_privacy_policy_content( __( 'Who Hit The Page Hit Counter' ), $content );
 	}
 }
