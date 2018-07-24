@@ -188,7 +188,7 @@ class Who_Hit_The_Page_Admin{
 	public static function is_whtp_admin( $page = '' ){
 		if ( $page == '' ) $page = esc_attr( $_GET['page'] );
 		
-		$whtp_pages = array( 'whtp-admin-menu', 'whtp-view-page-hits', 'whtp-visitor-stats', 'whtp-denied-ips', 'whtp-denied-ips', 'whtp-import-export', 'whtp-settings', 'whtp-help' );
+		$whtp_pages = array( 'whtp-admin-menu', 'whtp-view-page-hits', 'whtp-visitor-stats', 'whtp-view-ip-hits', 'whtp-denied-ips', 'whtp-denied-ips', 'whtp-import-export', 'whtp-settings', 'whtp-help' );
 
 		if ( in_array( $page, $whtp_pages ) && is_admin() ) return true;
 		return false;
