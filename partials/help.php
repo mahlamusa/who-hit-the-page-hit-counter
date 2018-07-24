@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <p>3. Go to the "Settings" page under "Who Hit The Page - Hit Counter", then under "Uninstall Settings" choose an option that is suitable to your needs and click "Update Options". This is an impotant decision that you need to make regarding the action that should be taken when uninstalling the plugin.</p>
             </div>
             <div class="mdl-card__actions mdl-card--border">
-                <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
+                <a href="http://whohit.co.za/who-hit-the-page-hit-counter" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
             </div>
         </div>  
     </div>
@@ -55,9 +55,6 @@ if ( ! defined( 'ABSPATH' ) ) {
             </div>
             <div class="mdl-card__supporting-text mdl-color-text--grey-600">
                 <?php require_once( WHTP_PLUGIN_DIR_PATH . 'partials/disclaimer.php' ); ?>
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-                <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
             </div>
         </div>  
     </div>

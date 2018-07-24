@@ -58,23 +58,19 @@ If you know the IP address of your own devices like Home/Work Computer, you can 
 
 == screenshots ==
 
-1. screenshot-1.jpg - Shows the plugin's main menu link; the highlighted/selected menu button is what you will click on to view your website's statisitics, and there is also a link labeled "Denied IPs" this is the page for creating an IP deny list so you can restrict some IPs from being counted when visiting your website.
-
-2. screenshot-1.jpg - Shows what appears on the plugin's first use, when there are still no visitors yet, or the pages to be counted are not yet specified by the use of the shortcode
-
-3. screenshot-3.jpg - Shows pages that have been visited along with the number of visits for each page, thats the page visited and the number of hits for that page and also action buttons for resestting, deleting, or discount page visits
-
-4. screenshot-4.jpg - Shows visitor's information: the ip address, total visits for that Ip address, browser used, time of first and last visit and action buttons to "deny", "delete" or "reset" count ip count. Only unique IP addresses are shown
-
-5. screenshot-5.jpg - Shows the IP deny table and a form to add a new IP address to the deny list. IPs in this list will not be counted when visiting your website
-
-6. screenshot-6.jpg - Shows information and support links and an update subsrciption form
+1. screenshot-1.png - Shows the plugin's main menu link; the highlighted/selected menu button is what you will click on to view your website's statisitics, and there is also a link labeled "Denied IPs" this is the page for creating an IP deny list so you can restrict some IPs from being counted when visiting your website.
+2. screenshot-2.png - Shows the main dasboard page of the plugin
+3. screenshot-3.png - Shows pages that have been visited along with the number of visits for each page, thats the page visited and the number of hits for that page and also action buttons for resestting, deleting, or discount page visits
+4. screenshot-4.png - Shows single visitor's detailed information: the ip address, total visits for that Ip address, browser used, time of first and last visit.
+5. screenshot-5.png - Shows the IP deny table and a form to add a new IP address to the deny list. IPs in this list will not be counted when visiting your website.
+6. screenshot-6.png - Shows denied IP addresses.
 
 == Changelog ==
 
 = 1.4.6 =
 
 * Update: Complete code rewrite to comply with standards
+* Update: WordPress 4.9.7 compatibility
 * Added: Pagination for long pages
 * Added: Filter for displayed results
 * Added: Support for multisite subsites, now can activate per blog in multisite
