@@ -68,54 +68,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 		
 	?>
 <div class="mdl-layout whtps-content mdl-grid">
-    <div class="mdl-row">
-        <div class="mdl-grid">
-            <h2 class="mdl-card__title-text">
-                <?php _e( 'Who Hit The Page Hit Counter', 'whtp' ); ?>
-            </h2>
-            <p></p>
-        </div>
+    <div class="mdl-row mdl-grid mdl-grid mdl-cell mdl-cell--12-col">
+        <h2 class="mdl-card__title-text">
+            <?php _e( 'Who Hit The Page Hit Counter', 'whtp' ); ?>
+        </h2>
+        <p></p>
     </div>
-    <div class="mdl-row">
-        <div class="mdl-grid">
-            <div class="mdl-color--white mdl-cell mdl-cell--12-col">
-                <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-                    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                        <p><?php _e( 'To start viewing the details of a single visitor, select the visitor\'s IP below and click "View Details", do the same to view another IP. Please select an IP to see more details about that IP Address.', 'whtp' ); ?></p>
-                        <?php
-                            $ip_results = WHTP_Hit_Info::get_ip_count_hits();
-                            if ( $ip_results ) : ?>
-                                <form name="select_ip" method="post" action="" >
-                                    <select name="ip" class="whtp-select-single" style="width: 40%; padding: 5px;display: inline;"><?php
-                                        foreach ( $ip_results as $ip ) : ?>
-                                            <option style="padding:15px; display: block; float: left;" 
-                                                value="<?php echo esc_attr( $ip->ip_address ); ?>">
-                                                    <?php echo esc_attr( $ip->ip_address . ' (' . $ip->ip_total_visits . ')' 
-                                            ); ?>
-                                            </option><?php
-                                        endforeach;	?>
-                                    </select>
-                                    <input style="display:inline;" type="submit" value="<?php _e( 'View Details', 'whtp' ); ?>" class="button button-primary mdl-button mdl-js-button mdl-js-ripple-effect" />
-                                </form><?php	
-                            endif; ?>
-                    </div>
-                </div>  
+    <div class="mdl-row mdl-grid mdl-grid mdl-cell mdl-cell--12-col">
+        <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                <p><?php _e( 'To start viewing the details of a single visitor, select the visitor\'s IP below and click "View Details", do the same to view another IP. Please select an IP to see more details about that IP Address.', 'whtp' ); ?></p>
+                <?php
+                    $ip_results = WHTP_Hit_Info::get_ip_count_hits();
+                    if ( $ip_results ) : ?>
+                        <form name="select_ip" method="post" action="" >
+                            <select name="ip" class="whtp-select-single" style="width: 40%; padding: 5px;display: inline;"><?php
+                                foreach ( $ip_results as $ip ) : ?>
+                                    <option style="padding:15px; display: block; float: left;" 
+                                        value="<?php echo esc_attr( $ip->ip_address ); ?>">
+                                            <?php echo esc_attr( $ip->ip_address . ' (' . $ip->ip_total_visits . ')' 
+                                    ); ?>
+                                    </option><?php
+                                endforeach;	?>
+                            </select>
+                            <input style="display:inline;" type="submit" value="<?php _e( 'View Details', 'whtp' ); ?>" class="button button-primary mdl-button mdl-js-button mdl-js-ripple-effect" />
+                        </form><?php	
+                    endif; ?>
             </div>
-        </div>
+        </div> 
     </div>
     
-    <div class="mdl-row">
-        <div class="mdl-grid">
-            <div class="mdl-row">
-                <h2 class="mdl-card__title-text">
-                    <?php _e( 'View Visitor\'s Behaviour (IP:', 'whtp' ); ?> <?php echo $visitor_ip; ?>)
-                </h2>    
-            </div>
-        </div>   
+    <div class="mdl-grid mdl-grid mdl-cell mdl-cell--12-col">
+        <h2 class="mdl-card__title-text">
+            <?php _e( 'View Visitor\'s Behaviour (IP:', 'whtp' ); ?> <?php echo $visitor_ip; ?>)
+        </h2> 
     </div>
     
-    <div class="mdl-row">
-        <div class="mdl-grid">
+    <div class="mdl-row whtp-updates mdl-cell mdl-cell--12-col">
+        <div class="mdl-grid mdl-cell mdl-cell--12-col">
             <div class="mdl-color--white mdl-cell mdl-cell--6-col">
                 <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
                     <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
@@ -187,21 +177,17 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
     
 
-    <div class="mdl-row">
-        <div class="mdl-grid">
-            <div class="mdl-color--white mdl-cell mdl-cell--12-col">
-                <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-                    <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
-                        <?php _e( 'Disclaimer', 'whtp' ); ?>
-                    </div>
-                    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                        <?php require_once( WHTP_PLUGIN_DIR_PATH . 'partials/disclaimer.php' ); ?>
-                    </div>
-                    <!--<div class="mdl-card__actions mdl-card--border">
-                        <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
-                    </div>-->
-                </div>  
+    <div class="mdl-row mdl-grid mdl-grid mdl-cell mdl-cell--12-col">
+        <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+                <?php _e( 'Disclaimer', 'whtp' ); ?>
             </div>
+            <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                <?php require_once( WHTP_PLUGIN_DIR_PATH . 'partials/disclaimer.php' ); ?>
+            </div>
+            <!--<div class="mdl-card__actions mdl-card--border">
+                <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
+            </div>-->
         </div>
     </div>
 </div>
