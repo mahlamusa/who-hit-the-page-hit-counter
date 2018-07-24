@@ -47,7 +47,7 @@ gulp.task('makepot', function () {
         .pipe(notify({message: 'Congratulations! Translation files created!', onLast: true}));
 });
 
-gulp.task('default', ['styles', 'scripts', 'watch-js', 'watch-css', 'makepot', 'watch-php', 'clean','copy', 'zip']);
+gulp.task('default', ['styles', 'scripts', 'watch-js', 'watch-css', 'makepot', 'watch-php', 'copy', 'zip']);
 
 gulp.task('watch', function(){
     gulp.watch('assets/src/**/.{js,css}', ['scripts','styles']);
@@ -124,4 +124,4 @@ gulp.task('clean', function () {
         .pipe(notify({message: 'Congratulations! All Clean!', onLast: true}));
 });
 
-gulp.task('package', ['clean', 'copy','zip'] );
+gulp.task('package', ['copy','zip'] );
