@@ -6,7 +6,7 @@ Plugin URI: http://whohit.co.za/
 Tags: geolocation, geo location, hit counter, visit counter, visitor stats, ip statistics, statistics, ip counter, browser detector
 Requires at least: 3.5
 Tested up to: 4.9.7
-Stable tag: 1.4.6
+Stable tag: 1.4.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,6 +66,10 @@ If you know the IP address of your own devices like Home/Work Computer, you can 
 6. screenshot-6.png - Shows denied IP addresses.
 
 == Changelog ==
+
+= 1.4.7 =
+
+* Fix minor bugs
 
 = 1.4.6 =
 
