@@ -14,10 +14,10 @@ class WHTP_Hits{
         global $wpdb, $hits_table;
 
         $count = $wpdb->get_var(
-            "SELECT count_hits FROM `$hits_table` 
-            WHERE 1=1 LIMIT 1" 
+            "SELECT count FROM `$hits_table` 
+            WHERE 1=1 ORDER BY count DESC LIMIT 1" 
         );
-        if ( $count >= 0 ) return true;
+        if ( $count && $count >= 0 ) return true;
         else return false;
     }
 

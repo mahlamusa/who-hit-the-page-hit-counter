@@ -70,7 +70,7 @@ class WHTP_Installer{
 	}
 
 	public static function update_count(){
-		if ( WHTP_Hits::count_exists() && WHTP_Visiting_Countries::count_exists() ) return;
+		if ( ! WHTP_Hits::count_exists() || ! WHTP_Visiting_Countries::count_exists() ) return;
 
 		global $wpdb;
 		if ( ! WHTP_Hits::count_exists() ) {

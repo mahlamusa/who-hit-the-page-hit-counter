@@ -254,7 +254,7 @@ class Who_Hit_The_Page_Admin{
 	}
 
 	public static function admin_notices() {
-		if ( WHTP_Hits::count_exists() &&  WHTP_Visiting_Countries::count_exists() ):
+		if ( ! WHTP_Hits::count_exists() && ! WHTP_Visiting_Countries::count_exists() ):
 			return;
 		else:
 		?>

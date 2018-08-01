@@ -27,10 +27,11 @@ class WHTP_Visiting_Countries{
         global $wpdb, $visiting_countries_table;
 
         $count = $wpdb->get_var(
-            "SELECT count_hits FROM `$visiting_countries_table` 
-            WHERE 1=1 LIMIT 1" 
+            "SELECT count FROM `$visiting_countries_table` 
+            WHERE 1=1 ORDER BY count DESC LIMIT 1" 
         );
-        if ( $count >= 0 ) return true;
+
+        if ( $count && $count >= 0 ) return true;
         else return false;
     }
 
