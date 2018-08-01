@@ -220,7 +220,7 @@ class WHTP_Hit_Info{
         if ( $record ) {
             $country_code   = $record['country']['iso_code'];
             $country_name   = $record['country']['names']['en'];
-            $continent_code = $record['continent']['iso_code'];
+            $continent_code = $record['continent']['code'];
             $continent_name = $record['continent']['names']['en'];
         }else{
             $country_code   = __( 'AA', 'whtp' );

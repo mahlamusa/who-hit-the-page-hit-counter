@@ -3,7 +3,7 @@
 * Plugin Name: Who Hit The Page - Hit Counter
 * Plugin URI: http://whohit.co.za/who-hit-the-page-hit-counter
 * Description: Lets you know who visted your pages by adding an invisible page hit counter on your website, so you know how many times a page has been visited in total and how many times each user identified by IP address has visited each page. You will also know the IP addresses of your visitors and relate the IP addresses to the country of the visitor and all browsers used by that IP/user.
-* Version: 1.4.7
+* Version: 1.4.8
 * Author: mahlamusa
 * Author URI: http://lindeni.co.za
 * License: GPL
@@ -186,7 +186,11 @@ class Who_Hit_The_Page_Admin{
 	}
 
 	public static function is_whtp_admin( $page = '' ){
-		if ( $page == '' ) $page = esc_attr( $_GET['page'] );
+		if ( isset( $page ) && $page == '' ) {
+			$page = isset( $_GET['page'] )? esc_attr( $_GET['page'] ): '';
+		}
+
+		if ( $page == '' ) return false;
 		
 		$whtp_pages = array( 'whtp-admin-menu', 'whtp-view-page-hits', 'whtp-visitor-stats', 'whtp-view-ip-hits', 'whtp-denied-ips', 'whtp-denied-ips', 'whtp-import-export', 'whtp-settings', 'whtp-help' );
 
