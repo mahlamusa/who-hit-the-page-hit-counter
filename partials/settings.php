@@ -108,3 +108,16 @@ endif;
         </div>
     </div>
 </form>
+
+<div class="mdl-color--white mdl-cell mdl-cell--12-col">
+    <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+        <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+            <?php _e( 'Tools', 'whtp' ); ?>
+        </div>
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+            <a href="<?php echo admin_url( 'admin.php?page=whtp-force-update' ); ?>" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color--teal-300" target="_blank">
+                <?php _e( 'Click here to Force Database Update', 'whtp' ); ?>
+            </a>            
+        </div>
+    </div>  
+</div>

@@ -154,6 +154,14 @@ class Who_Hit_The_Page_Admin{
 			'whtp-help',
 			array( $this, 'whtp_help_submenu_callback' )
 		);
+		add_submenu_page(
+			'whtp-admin-menu',			
+			__('Help', 'whtp' ),
+			'',
+			'administrator',
+			'whtp-force-update',
+			array( $this, 'whtp_force_update' )
+		);
 	}
 
 	/*
@@ -183,6 +191,9 @@ class Who_Hit_The_Page_Admin{
 	}
 	public function whtp_help_submenu_callback(){
 		include( WHTP_PLUGIN_DIR_PATH . 'partials/help.php');//admin page
+	}
+	public function whtp_force_update(){
+		include( WHTP_PLUGIN_DIR_PATH . 'partials/update/force-update.php');
 	}
 
 	public static function is_whtp_admin( $page = '' ){

@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </a>
             </div>
         </div>  
-    </div>
+    </div>    
 
     <div class="mdl-color--white mdl-cell mdl-cell--12-col">
         <div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
