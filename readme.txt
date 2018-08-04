@@ -67,6 +67,13 @@ If you know the IP address of your own devices like Home/Work Computer, you can 
 
 == Changelog ==
 
+= 1.5.0 =
+
+* Fixed: Deprecated function warning
+* Fixed: Database update checks
+* Updated: Removed unnecessary steps in help page
+* Updated: WordPress 4.9.8 compatibility issues
+
 = 1.4.9 =
 
 * Fixed: Database update not triggered
