@@ -5,7 +5,7 @@ Author URI: http://lindeni.co.za
 Plugin URI: http://whohit.co.za/
 Tags: geolocation, geo location, hit counter, visit counter, visitor stats, ip statistics, statistics, ip counter, browser detector
 Requires at least: 3.5
-Tested up to: 4.9.7
+Tested up to: 4.9.8
 Stable tag: 1.4.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -22,13 +22,13 @@ This section describes how to install the plugin and get it working.
 
 1. Upload the folder/directory named `who-hit-the-page` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to "Export Import" under "Who Hit The Page" in your admin and click the big button "Import Geo Location Data" to import the geolocation database
-4. 
+3. 
  * Place [whohit]Page name/identifier[/whohit] on the page or post you want visitors counted - e.g. place `[whohit]About Us[/whohit]`
  on your `About Us` page to see how many people visited that page.
  * Place `<?php who_hit_the_page( "Page Name" ); ?>` on your theme if you are a developer.
  * Optional: link to us by placing [whlinkback] in a wordpress page or post, or `<?php whtp_link_bank(); ?>` on your template files
-5. Visit one page you placed the shortcode once and go to your wordpress admin and click on 'Who Hit The Page' on the left to see your new statistics.
+4. Visit one page you placed the shortcode once and go to your wordpress admin and click on 'Who Hit The Page' on the left to see your new statistics.
+5. After an update, look out for the update notice and if you see it then click on the button to update the database otherwise some functions may not function properly.
 
 See the Arbitrary Information for more details
 
@@ -56,7 +56,7 @@ This plugin does not have that feature, when you add an IP to the deny list, the
 
 If you know the IP address of your own devices like Home/Work Computer, you can go to "Who Hit The Page" then "Denied IPs" and 'Enter IP address to add to deny list' and click on 'Add To Deny List' to continuously disallow the plugin to count visits from that IP address. But Make sure this is a static IP address - meaning it doesn't change over time, otherwise you will have to keep updating your denied IP list.
 
-== screenshots ==
+== Screenshots ==
 
 1. screenshot-1.png - Shows the plugin's main menu link; the highlighted/selected menu button is what you will click on to view your website's statisitics, and there is also a link labeled "Denied IPs" this is the page for creating an IP deny list so you can restrict some IPs from being counted when visiting your website.
 2. screenshot-2.png - Shows the main dasboard page of the plugin

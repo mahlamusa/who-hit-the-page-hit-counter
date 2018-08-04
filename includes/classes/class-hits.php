@@ -13,12 +13,14 @@ class WHTP_Hits{
     public static function count_exists(){
         global $wpdb, $hits_table;
 
-        $count = $wpdb->get_var(
-            "SELECT count FROM `$hits_table` 
-            WHERE 1=1 ORDER BY count DESC LIMIT 1" 
-        );
-        if ( $count && $count >= 0 ) return true;
-        else return false;
+        $column = $wpdb->get_results( $wpdb->prepare(
+            "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = %s AND TABLE_NAME = %s AND COLUMN_NAME = %s ",
+            DB_NAME, $hits_table, 'count'
+        ) );
+        if ( ! empty( $column ) ) {
+            return true;
+        }
+        return false;
     }
 
     public static function total(){
@@ -52,13 +54,10 @@ class WHTP_Hits{
     }
 
     public static function count_page( $page ) {	
-        //$page = $page;
-        
         $ip_address	= $_SERVER["REMOTE_ADDR"];	# visitor's ip address 
         
         #count if the IP is not denied
         if ( ! WHTP_Hit_Info::ip_is_denied ( $ip_address ) ) {
-            $page = $page;
             self::count_hits( $page );
             WHTP_Hit_Info::hit_info( $page );
         }
@@ -85,15 +84,13 @@ class WHTP_Hits{
     */
     public static function count_hits( $page ){
         global $wpdb, $hits_table;
-
-        $page = $page;
         
         //$ua = getBrowser(); //Get browser info
         $ua = WHTP_Browser::browser_info();
         $browser = $ua['name'];
             
         $page_check = $wpdb->get_var("SELECT page FROM `$hits_table` WHERE page = '$page' LIMIT 1");
-        if ( $page_check != "" ){
+        if ( $page_check != $page ){
             $count = $wpdb->get_var("SELECT count_hits FROM `$hits_table` WHERE page = '$page' LIMIT 1");
             $ucount = $count + 1;
             $update = $wpdb->update(
@@ -122,7 +119,10 @@ class WHTP_Hits{
             "SELECT page_id FROM `$hits_table` 
             WHERE page = '$page' LIMIT 1"
         );
-        return $page_id;
+        
+        if ( is_int( $page_id ) ) return $page_id;
+        
+        else return new WP_Error;
     }
 
     public static function delete_page( $page_id = '' ){

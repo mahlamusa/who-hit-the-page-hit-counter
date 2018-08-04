@@ -25,14 +25,15 @@ class WHTP_Visiting_Countries{
 
     public static function count_exists(){
         global $wpdb, $visiting_countries_table;
-
-        $count = $wpdb->get_var(
-            "SELECT count FROM `$visiting_countries_table` 
-            WHERE 1=1 ORDER BY count DESC LIMIT 1" 
-        );
-
-        if ( $count && $count >= 0 ) return true;
-        else return false;
+        
+        $column = $wpdb->get_results( $wpdb->prepare(
+            "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = %s AND TABLE_NAME = %s AND COLUMN_NAME = %s ",
+            DB_NAME, $visiting_countries_table, 'count'
+        ) );
+        if ( ! empty( $column ) ) {
+            return true;
+        }
+        return false;
     }
 
     /*

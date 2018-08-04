@@ -279,12 +279,14 @@ class WHTP_Hit_Info{
             
         $ua_id      = WHTP_Browser::get_agent_id( $browser );
         $ip_id      = WHTP_Hit_Info::get_ip_id( $ip_address );
-        $page_id    = WHTP_Hits::get_page_id ( $page );
         
         if ( !  WHTP_Browser::browser_exists( $browser ) ){
             WHTP_Browser::add_browser( $browser );
         }
-        WHTP_Ip_Hits::ip_hit( $ip_id, $page_id, $date_ftime, $ua_id ); //insert new hit
+
+        if ( ! is_wp_error( $page_id ) ) {
+            WHTP_Ip_Hits::ip_hit( $ip_id, $page_id, $date_ftime, $ua_id ); //insert new hit
+        }
 
         // get the country code corresponding to the visitor's IP
         // $country_code   = WHTP_IP2_Location::get_country_code( $ip_address );

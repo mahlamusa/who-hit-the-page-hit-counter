@@ -12,8 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <?php _e( 'Getting Started', 'whtp' ); ?>
             </div>
             <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                <p><?php _e( '1. Before you do anything, please go to the "Export / Import" page under "Who Hit The Page - Hit counter" on the left vertical menuand click "Import Geo Location Data" under the title "Import Geo Location Data" if you have not done so already.', 'whtp' ); ?></p>
-                <p><?php _e( '2. On the "Export / Import" page under "Merge Existing Records" click "Update Previous Records". This will match the existing IP addresses from the previous version of the plugin with the new Geolocation data so tha you can see the corresponding countries of the IP addresses that were already in the database before the Geolocation data was imported.', 'whtp' ); ?></p>
+                <p><?php _e( '1. Add the shortcode tp any page you want to count. The shortcode is <code>[whohit]Page Name[/whohit]</code>.', 'whtp' ); ?></p>
+                <p><?php _e( '2. After addin the shortcode to the page, visit the page once and then check if the page is added in the "Who Hit The Page > View Page Hits" page.', 'whtp' ); ?></p>
                 <p><?php _e( '3. Go to the "Settings" page under "Who Hit The Page - Hit Counter", then under "Uninstall Settings" choose an option that is suitable to your needs and click "Update Options". This is an impotant decision that you need to make regarding the action that should be taken when uninstalling the plugin.', 'whtp' ); ?></p>
             </div>
             <div class="mdl-card__actions mdl-card--border">
