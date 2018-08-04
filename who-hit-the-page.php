@@ -89,7 +89,7 @@ class Who_Hit_The_Page_Admin{
 	}
 
 	public function admin_menu(){		
-		add_object_page(
+		add_menu_page(
 			__('Who Hit The Page', 'whtp'), 
 			__('Who Hit The Page', 'whtp'), 
 			'administrator', 
