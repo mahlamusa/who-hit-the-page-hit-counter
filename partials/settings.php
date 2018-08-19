@@ -106,6 +106,8 @@ endif;
                 <input type="submit" value="Update Options" class="whtp-link mdl-button mdl-js-button mdl-typography--text-uppercase" />
             </div>
         </div>
+
+        <?php do_action( 'whtp-settings-after' ); ?>
     </div>
 </form>
 
