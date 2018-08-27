@@ -97,6 +97,7 @@ class Who_Hit_The_Page_Admin{
 			array( $this, 'whtp_object_page_callback' ),
 			WHTP_PLUGIN_URL . 'assets/images/whtp-icon.png'
 		);
+		do_action( 'whtp_admin_menu_after_dashboard' );
 		add_submenu_page(
 			'whtp-admin-menu',
 			__('View Page Hits', 'whtp'),
@@ -146,6 +147,8 @@ class Who_Hit_The_Page_Admin{
 			'whtp-settings',
 			array( $this, 'whtp_settings_submenu_callback' )
 		);
+		do_action( 'whtp_admin_menu_after_settings' );
+
 		add_submenu_page(
 			'whtp-admin-menu',
 			__('Help', 'whtp' ),
@@ -154,14 +157,18 @@ class Who_Hit_The_Page_Admin{
 			'whtp-help',
 			array( $this, 'whtp_help_submenu_callback' )
 		);
+		do_action( 'whtp_admin_menu_after_help' );
+
 		add_submenu_page(
 			'whtp-admin-menu',			
-			__('Help', 'whtp' ),
+			__('Force Update', 'whtp' ),
 			'',
 			'administrator',
 			'whtp-force-update',
 			array( $this, 'whtp_force_update' )
 		);
+
+		do_action( 'whtp_admin_menu_after' );
 	}
 
 	/*
@@ -203,7 +210,7 @@ class Who_Hit_The_Page_Admin{
 
 		if ( $page == '' ) return false;
 		
-		$whtp_pages = array( 'whtp-admin-menu', 'whtp-view-page-hits', 'whtp-visitor-stats', 'whtp-view-ip-hits', 'whtp-denied-ips', 'whtp-denied-ips', 'whtp-import-export', 'whtp-settings', 'whtp-help' );
+		$whtp_pages = array( 'whtp-admin-menu', 'whtp-view-page-hits', 'whtp-visitor-stats', 'whtp-view-ip-hits', 'whtp-denied-ips', 'whtp-denied-ips', 'whtp-import-export', 'whtp-settings', 'whtp-help', 'whtp-widget-settings' );
 
 		if ( in_array( $page, $whtp_pages ) && is_admin() ) return true;
 		return false;
