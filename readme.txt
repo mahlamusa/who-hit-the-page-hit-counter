@@ -4,9 +4,9 @@ Donate link: https://www.2checkout.com/checkout/purchase?sid=102959491&quantity=
 Author URI: http://lindeni.co.za
 Plugin URI: http://whohit.co.za/
 Tags: geolocation, geo location, hit counter, visit counter, visitor stats, ip statistics, statistics, ip counter, browser detector
-Requires at least: 3.5
-Tested up to: 4.9.8
-Stable tag: 1.4.9
+Requires at least: 4.0
+Tested up to: 5.0
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,7 +72,8 @@ If you know the IP address of your own devices like Home/Work Computer, you can 
 * Fixed: Deprecated function warning
 * Fixed: Database update checks
 * Updated: Removed unnecessary steps in help page
-* Updated: WordPress 4.9.8 compatibility issues
+* Updated: WordPress 4.5 compatibility issues
+* Updated: Get current time based on site's timezone
 
 = 1.4.9 =
 

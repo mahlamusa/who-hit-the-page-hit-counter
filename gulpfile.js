@@ -47,7 +47,7 @@ gulp.task('makepot', function () {
         .pipe(notify({message: 'Congratulations! Translation files created!', onLast: true}));
 });
 
-gulp.task('default', ['styles', 'scripts', 'watch-js', 'watch-css', 'makepot', 'watch-php', 'copy', 'zip']);
+gulp.task('default', ['styles', 'scripts', 'watch-js', 'watch-css', 'makepot', 'watch-php']);
 
 gulp.task('watch', function(){
     gulp.watch('assets/src/**/.{js,css}', ['scripts','styles']);
@@ -98,10 +98,10 @@ var sourceFiles =[
     '!./composer.json',
     '!./composer.lock',
     '!./deploy.sh',
-    '!./README.md'
+    '!./README.md',
 ]
 
-var destination = '../_release/who-hit-the-page-hit-counter';
+var destination = '../_release';
 var options = [];
  
 gulp.task('copy', function(){
@@ -119,9 +119,9 @@ gulp.task('zip', function() {
 });
 
 gulp.task('clean', function () {
-    return gulp.src('../_release/who-hit-the-page-hit-counter', {read: false})
+    return gulp.src('../_release', {read: false})
         .pipe(clean())
         .pipe(notify({message: 'Congratulations! All Clean!', onLast: true}));
 });
 
-gulp.task('package', ['copy','zip'] );
+gulp.task('package', ['clean','zip'] );

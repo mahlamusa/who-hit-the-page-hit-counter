@@ -13,44 +13,60 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: who-hit-the-page.php:88, who-hit-the-page.php:89
+#: who-hit-the-page.php:93, who-hit-the-page.php:94
 msgid "Who Hit The Page"
 msgstr ""
 
-#: who-hit-the-page.php:97, who-hit-the-page.php:98
+#: who-hit-the-page.php:103, who-hit-the-page.php:104
 msgid "View Page Hits"
 msgstr ""
 
-#: who-hit-the-page.php:106, who-hit-the-page.php:107
+#: who-hit-the-page.php:112, who-hit-the-page.php:113
 msgid "View IP Hits"
 msgstr ""
 
-#: who-hit-the-page.php:114, who-hit-the-page.php:115
+#: who-hit-the-page.php:120, who-hit-the-page.php:121
 msgid "Visitor Stats"
 msgstr ""
 
-#: who-hit-the-page.php:122, who-hit-the-page.php:123
+#: who-hit-the-page.php:128, who-hit-the-page.php:129
 msgid "Denied IPs"
 msgstr ""
 
-#: who-hit-the-page.php:130, who-hit-the-page.php:131
-msgid "Export / Import"
-msgstr ""
-
-#: who-hit-the-page.php:138, who-hit-the-page.php:139, who-hit-the-page.php:184, partials/settings.php:44
+#: who-hit-the-page.php:144, who-hit-the-page.php:145, who-hit-the-page.php:220, partials/settings.php:44
 msgid "Settings"
 msgstr ""
 
-#: who-hit-the-page.php:146, who-hit-the-page.php:147, who-hit-the-page.php:185
+#: who-hit-the-page.php:154, who-hit-the-page.php:155, who-hit-the-page.php:221
 msgid "Help"
 msgstr ""
 
-#: who-hit-the-page.php:186
+#: who-hit-the-page.php:164
+msgid "Force Update"
+msgstr ""
+
+#: who-hit-the-page.php:222
 msgid "Documentation"
 msgstr ""
 
-#: who-hit-the-page.php:245
+#: who-hit-the-page.php:281, partials/update/force-update.php:4
 msgid "We notice that you have updated the plugin! We need to update the database to make sure the plugin works as it should. <a href=\"%s\" class=\"button\">Click here to update database</a>"
+msgstr ""
+
+#: who-hit-the-page.php:290
+msgid "The IP address, user agent/browser name will be recorded for internal statistical purposes."
+msgstr ""
+
+#: who-hit-the-page.php:291
+msgid "Who Hit The Page Hit Counter collect the visitor\s IP address and the browser name or user agent used to visit the page, it also records the time and the pages visited by the speciic IP address. This data is collected for statistical purposes only and is not in any way linked to a user's account on this website"
+msgstr ""
+
+#: who-hit-the-page.php:296, partials/view-page-hits.php:83, partials/view/denied-ips.php:19, partials/view/visitor-info.php:73
+msgid "Who Hit The Page Hit Counter"
+msgstr ""
+
+#: includes/functions.php:65
+msgid "<p>Showing %d to %d of %d results.</p>"
 msgstr ""
 
 #: partials/disclaimer.php:7
@@ -77,7 +93,7 @@ msgstr ""
 msgid "Import Geo Location Data"
 msgstr ""
 
-#: partials/help.php:7
+#: partials/help.php:7, partials/update/force-update.php:1
 msgid "Help and Support"
 msgstr ""
 
@@ -85,12 +101,72 @@ msgstr ""
 msgid "Getting Started"
 msgstr ""
 
+#: partials/help.php:15
+msgid "1. Add the shortcode tp any page you want to count. The shortcode is <code>[whohit]Page Name[/whohit]</code>."
+msgstr ""
+
+#: partials/help.php:16
+msgid "2. After addin the shortcode to the page, visit the page once and then check if the page is added in the \"Who Hit The Page > View Page Hits\" page."
+msgstr ""
+
+#: partials/help.php:17
+msgid "3. Go to the \"Settings\" page under \"Who Hit The Page - Hit Counter\", then under \"Uninstall Settings\" choose an option that is suitable to your needs and click \"Update Options\". This is an impotant decision that you need to make regarding the action that should be taken when uninstalling the plugin."
+msgstr ""
+
+#: partials/help.php:20, partials/view/stats-summary.php:151
+msgid "Read More"
+msgstr ""
+
 #: partials/help.php:28
 msgid "How to?"
 msgstr ""
 
-#: partials/help.php:54, partials/view/stats-summary.php:144, partials/view/visitor-info.php:184
+#: partials/help.php:31
+msgid "The hits per page are shown on the first table, and the visitor's IP addresses are shown on the last table. Place the following shortcode snippet in any page or post you wish visitors counted on."
+msgstr ""
+
+#: partials/help.php:32
+msgid "[whohit]-Page name or identifier-[/whohit]</code> <br />- please remember to replace the `<code>-Page name or identifier-</code>` with the name of the page you placed the shortcode on, if you like you can put in anything you want to use as an identifier for the page."
+msgstr ""
+
+#: partials/help.php:33
+msgid "For example: On our <a href=\"https://whohit.co.za/about-us\">about us page</a> we placed <code>[whohit]About Us[/whohit]</code> and on our <a href=\"https://whohit.co.za/web-hosting\">web hosting</a> page we placed <code>[whohit]Web Hosting[/whohit]</code>. Please note that what you put between [whohit] and [/whohit] doesn't need to be the same as the page name - that means; for our <a href=\"https://whohit.co.za/web-design-and-development\">website design and development page</a> we can use <code>[whohit]Development[whohit]</code> instead of the whole <code>[whohit]website design and development page[whohit]</code> string, its completely up to you what you put as long as you will be able to see it on your admin what page has how many visits."
+msgstr ""
+
+#: partials/help.php:34
+msgid "Please make sure you place the shortcode <code>[whohit]..[/whohit]</code> only once in a page or post, if you place it twice, that page will be counted twice and thats not what you want. If you don't put anything between the inner square brackets of the shortcode, like so:<code>[whohit][/whohit]</code>, then you will have an unknown page appering with a count on the hits table and you will not know what page that is on your website."
+msgstr ""
+
+#: partials/help.php:35
+msgid "Please link to our website if you like our plugin, we really appreciate your kind gesture. Visit our website at https://whohit.co.za/"
+msgstr ""
+
+#: partials/help.php:36
+msgid "Please copy and paste this: <code>[supportlink]</code> on any page or post in visual view to display the link shown above."
+msgstr ""
+
+#: partials/help.php:40
+msgid "Read Documentation"
+msgstr ""
+
+#: partials/help.php:43
+msgid "Author's Website"
+msgstr ""
+
+#: partials/help.php:52, partials/view/stats-summary.php:143, partials/view/visitor-info.php:183
 msgid "Disclaimer"
+msgstr ""
+
+#: partials/pagination.php:9
+msgid "Search for..."
+msgstr ""
+
+#: partials/pagination.php:23
+msgid "Results per page..."
+msgstr ""
+
+#: partials/pagination.php:26
+msgid "Input is not a number!"
 msgstr ""
 
 #: partials/settings.php:52
@@ -101,87 +177,99 @@ msgstr ""
 msgid "Backup Settings"
 msgstr ""
 
-#: partials/view-ip-hits.php:18
+#: partials/settings.php:117
+msgid "Tools"
+msgstr ""
+
+#: partials/settings.php:121
+msgid "Click here to Force Database Update"
+msgstr ""
+
+#: partials/view-ip-hits.php:17
 msgid "The count for ip address: \"%s\" has been reset successfully."
 msgstr ""
 
-#: partials/view-ip-hits.php:24
+#: partials/view-ip-hits.php:23
 msgid "Failed to reset count for IP: %s"
 msgstr ""
 
-#: partials/view-ip-hits.php:36
+#: partials/view-ip-hits.php:34, partials/view-ip-hits.php:63
 msgid "IP addresse(s) removed from the database."
 msgstr ""
 
-#: partials/view-ip-hits.php:41
+#: partials/view-ip-hits.php:39, partials/view-ip-hits.php:68
 msgid "Failed to remove IP addresse(s) from database"
 msgstr ""
 
-#: partials/view-ip-hits.php:50
+#: partials/view-ip-hits.php:51
 msgid "The IP Address will be ignored and will not be counted."
 msgstr ""
 
-#: partials/view-ip-hits.php:54
+#: partials/view-ip-hits.php:55
 msgid "Failed to add IP to ignore list"
 msgstr ""
 
-#: partials/view-ip-hits.php:62
+#: partials/view-ip-hits.php:80
+msgid "The count for all IP addresses has been reset successfully."
+msgstr ""
+
+#: partials/view-ip-hits.php:86
+msgid "Failed to reset count for all IP addresses"
+msgstr ""
+
+#: partials/view-ip-hits.php:96
 msgid "Who Hit The Page Hit Counter - Visiting IP Addresses"
 msgstr ""
 
-#: partials/view-ip-hits.php:65
+#: partials/view-ip-hits.php:99
 msgid "View the raw hit counter information. This page lists all the IP addresses that have visited your pages."
 msgstr ""
 
-#: partials/view-ip-hits.php:72
-msgid "Visitors' IP addresses and Information"
+#: partials/view-page-hits.php:17
+msgid "The count for the page has been reset successfully."
 msgstr ""
 
-#: partials/view-page-hits.php:18
-msgid "The count for the page \"%s\" has been reset successfully."
-msgstr ""
-
-#: partials/view-page-hits.php:23
-msgid "The count for all pages has been reset successfully."
-msgstr ""
-
-#: partials/view-page-hits.php:28
+#: partials/view-page-hits.php:22, partials/view-page-hits.php:64
 msgid "Failed to reset page counts"
 msgstr ""
 
-#: partials/view-page-hits.php:37
-msgid "Page count(s) deleted. New entries will be made when users visit your pages again. If you no longer wish to count visits on certain pages, go to the page editor and remove the <code>[whohit]..[/whohit]</code> shortcode."
+#: partials/view-page-hits.php:34
+msgid "Page count deleted. New entries will be made when users visit your pages again. If you no longer wish to count visits on certain pages, go to the page editor and remove the <code>[whohit]..[/whohit]</code> shortcode."
 msgstr ""
 
-#: partials/view-page-hits.php:42
+#: partials/view-page-hits.php:39
 msgid "Failed to remove page count(s)."
 msgstr ""
 
-#: partials/view-page-hits.php:52
-msgid "The Page \"%s\" has been discounted by %d"
+#: partials/view-page-hits.php:48
+msgid "The Page has been discounted by"
 msgstr ""
 
-#: partials/view-page-hits.php:59
+#: partials/view-page-hits.php:52
 msgid "Failed to discount on the page"
 msgstr ""
 
-#: partials/view-page-hits.php:66, partials/view/denied-ips.php:19, partials/view/visitor-info.php:72
-msgid "Who Hit The Page Hit Counter"
+#: partials/view-page-hits.php:60
+msgid "The count for all pages has been reset successfully."
 msgstr ""
 
-#: partials/view-page-hits.php:68
+#: partials/view-page-hits.php:72
+msgid "The count for all pages has been deleted successfully."
+msgstr ""
+
+#: partials/view-page-hits.php:76
+msgid "Failed to delete page counts"
+msgstr ""
+
+#: partials/view-page-hits.php:85
 msgid "Here you will see the raw page hit counter information. See all the visited pages along with the number of visits."
 msgstr ""
 
-#: partials/view-page-hits.php:75
-msgid "Pages visited and number of visits per page."
-msgstr ""
-
-#: includes/classes/class-hit-info.php:226, includes/classes/class-hit-info.php:228
+#: includes/classes/class-hit-info.php:226, includes/classes/class-hit-info.php:228, includes/classes/class-ip-to-location.php:78
 msgid "AA"
 msgstr ""
 
-#: includes/classes/class-hit-info.php:227, includes/classes/class-ip-to-location.php:36, includes/classes/class-visiting-countries.php:101
+#: includes/classes/class-hit-info.php:227, includes/classes/class-ip-to-location.php:98, includes/classes/class-visiting-countries.php:103
 msgid "Unknown Country"
 msgstr ""
 
@@ -200,47 +288,47 @@ msgstr ""
 msgid "Wordpress plugins by Mahlamusa Mahlalela"
 msgstr ""
 
-#: partials/view/all-page-hits.php:37
+#: partials/view/all-page-hits.php:33
 msgid "Page Visited"
 msgstr ""
 
-#: partials/view/all-page-hits.php:38
+#: partials/view/all-page-hits.php:34
 msgid "Number of Hits"
 msgstr ""
 
-#: partials/view/all-page-hits.php:39
+#: partials/view/all-page-hits.php:35
 msgid "Discount By"
 msgstr ""
 
-#: partials/view/all-page-hits.php:40, partials/view/visiting-ip-addresses.php:43
+#: partials/view/all-page-hits.php:36, partials/view/visiting-ip-addresses.php:39
 msgid "Actions"
 msgstr ""
 
-#: partials/view/all-page-hits.php:66
+#: partials/view/all-page-hits.php:62
 msgid "Delete"
 msgstr ""
 
-#: partials/view/all-page-hits.php:68
+#: partials/view/all-page-hits.php:65
 msgid "Reset"
 msgstr ""
 
-#: partials/view/all-page-hits.php:79
+#: partials/view/all-page-hits.php:76
 msgid "Total Hits"
 msgstr ""
 
-#: partials/view/all-page-hits.php:87, partials/view/visiting-ip-addresses.php:100
+#: partials/view/all-page-hits.php:85, partials/view/visiting-ip-addresses.php:97
 msgid "Reset All"
 msgstr ""
 
-#: partials/view/all-page-hits.php:93, partials/view/visiting-ip-addresses.php:106
+#: partials/view/all-page-hits.php:92, partials/view/visiting-ip-addresses.php:104
 msgid "Delete All"
 msgstr ""
 
-#: partials/view/all-page-hits.php:102
+#: partials/view/all-page-hits.php:101
 msgid "No Data Found"
 msgstr ""
 
-#: partials/view/all-page-hits.php:105
+#: partials/view/all-page-hits.php:104
 msgid "No Page visits yet or the page counters have been reset. Read documentation to learn how to get started"
 msgstr ""
 
@@ -264,59 +352,59 @@ msgstr ""
 msgid "The IP \"%\" has been allowed and will now be counted the next time it visits your website."
 msgstr ""
 
-#: partials/view/denied-ips.php:65
+#: partials/view/denied-ips.php:66
 msgid "Failed to Allow \"%s\""
 msgstr ""
 
-#: partials/view/denied-ips.php:82
+#: partials/view/denied-ips.php:83
 msgid "The IP address \"%s\"\" has been removed from the database."
 msgstr ""
 
-#: partials/view/denied-ips.php:89
+#: partials/view/denied-ips.php:90
 msgid "Failed to remove IP from database."
 msgstr ""
 
-#: partials/view/denied-ips.php:95
+#: partials/view/denied-ips.php:96
 msgid "Enter IP address to add to deny list"
 msgstr ""
 
-#: partials/view/denied-ips.php:98
+#: partials/view/denied-ips.php:99
 msgid "Add To Deny List"
 msgstr ""
 
-#: partials/view/denied-ips.php:107
+#: partials/view/denied-ips.php:108
 msgid "Currently denied IP Addresses"
 msgstr ""
 
-#: partials/view/denied-ips.php:110
+#: partials/view/denied-ips.php:111
 msgid "Here is a list of currently denied IP addresses"
 msgstr ""
 
-#: partials/view/denied-ips.php:118
+#: partials/view/denied-ips.php:119
 msgid "Visitor's  IP Address"
 msgstr ""
 
-#: partials/view/denied-ips.php:121
+#: partials/view/denied-ips.php:122
 msgid "Allow Count"
 msgstr ""
 
-#: partials/view/denied-ips.php:123
+#: partials/view/denied-ips.php:124
 msgid "Delete IP"
 msgstr ""
 
-#: partials/view/denied-ips.php:136
+#: partials/view/denied-ips.php:137
 msgid "Allow This IP"
 msgstr ""
 
-#: partials/view/denied-ips.php:143, partials/view/visiting-ip-addresses.php:72
+#: partials/view/denied-ips.php:144, partials/view/visiting-ip-addresses.php:68
 msgid "Delete This IP"
 msgstr ""
 
-#: partials/view/denied-ips.php:152
+#: partials/view/denied-ips.php:153
 msgid "Total Denied IP´s "
 msgstr ""
 
-#: partials/view/denied-ips.php:161, partials/view/visiting-ip-addresses.php:115
+#: partials/view/denied-ips.php:162, partials/view/visiting-ip-addresses.php:113
 msgid "There are currently no registered IP addresses, please read above to get started"
 msgstr ""
 
@@ -336,138 +424,142 @@ msgstr ""
 msgid "Top Visitors"
 msgstr ""
 
-#: partials/view/stats-summary.php:83
+#: partials/view/stats-summary.php:70
+msgid "View All"
+msgstr ""
+
+#: partials/view/stats-summary.php:82
 msgid "Top Countries"
 msgstr ""
 
-#: partials/view/stats-summary.php:102
+#: partials/view/stats-summary.php:101
 msgid "Flag of %s"
 msgstr ""
 
-#: partials/view/stats-summary.php:119
+#: partials/view/stats-summary.php:118
 msgid "Used Browsers"
 msgstr ""
 
-#: partials/view/stats-summary.php:134
+#: partials/view/stats-summary.php:133
 msgid "No Browsers used so far"
 msgstr ""
 
-#: partials/view/visiting-ip-addresses.php:38
+#: partials/view/visiting-ip-addresses.php:34
 msgid "Visitor's  IP"
 msgstr ""
 
-#: partials/view/visiting-ip-addresses.php:39
+#: partials/view/visiting-ip-addresses.php:35
 msgid "Visits"
 msgstr ""
 
-#: partials/view/visiting-ip-addresses.php:40
+#: partials/view/visiting-ip-addresses.php:36
 msgid "User Agent"
 msgstr ""
 
-#: partials/view/visiting-ip-addresses.php:41
+#: partials/view/visiting-ip-addresses.php:37
 msgid "1st Visit"
 msgstr ""
 
-#: partials/view/visiting-ip-addresses.php:42
+#: partials/view/visiting-ip-addresses.php:38
 msgid "Last Visit"
 msgstr ""
 
-#: partials/view/visiting-ip-addresses.php:75
+#: partials/view/visiting-ip-addresses.php:71
 msgid "Ignore Counts"
 msgstr ""
 
-#: partials/view/visiting-ip-addresses.php:78
+#: partials/view/visiting-ip-addresses.php:74
 msgid "Reset IP"
 msgstr ""
 
-#: partials/view/visiting-ip-addresses.php:88
+#: partials/view/visiting-ip-addresses.php:84
 msgid "Total unique IP´s"
 msgstr ""
 
-#: partials/view/visitor-info.php:79
+#: partials/view/visitor-info.php:80
 msgid "To start viewing the details of a single visitor, select the visitor's IP below and click \"View Details\", do the same to view another IP. Please select an IP to see more details about that IP Address."
 msgstr ""
 
-#: partials/view/visitor-info.php:93
+#: partials/view/visitor-info.php:94
 msgid "View Details"
 msgstr ""
 
-#: partials/view/visitor-info.php:104
+#: partials/view/visitor-info.php:103
 msgid "View Visitor's Behaviour (IP:"
 msgstr ""
 
-#: partials/view/visitor-info.php:113
+#: partials/view/visitor-info.php:112
 msgid "Visitor Statistics!"
 msgstr ""
 
-#: partials/view/visitor-info.php:116
+#: partials/view/visitor-info.php:115
 msgid "This are the statistics for a single user/visitor with IP Address :"
 msgstr ""
 
-#: partials/view/visitor-info.php:119
+#: partials/view/visitor-info.php:118
 msgid "Visitor's IP: %s"
 msgstr ""
 
-#: partials/view/visitor-info.php:122
+#: partials/view/visitor-info.php:121
 msgid "Total Visits: %s"
 msgstr ""
 
-#: partials/view/visitor-info.php:125
+#: partials/view/visitor-info.php:124
 msgid "Location: %s"
 msgstr ""
 
-#: partials/view/visitor-info.php:128
+#: partials/view/visitor-info.php:127
 msgid "First Visit :"
 msgstr ""
 
-#: partials/view/visitor-info.php:131
+#: partials/view/visitor-info.php:130
 msgid "Last Visit : "
 msgstr ""
 
-#: partials/view/visitor-info.php:139
+#: partials/view/visitor-info.php:138
 msgid "Browsers & Pages!"
 msgstr ""
 
-#: partials/view/visitor-info.php:142
+#: partials/view/visitor-info.php:141
 msgid "Pages Visited by this user"
 msgstr ""
 
-#: partials/view/visitor-info.php:147
+#: partials/view/visitor-info.php:146
 msgid "No Pages Visited"
 msgstr ""
 
-#: partials/view/visitor-info.php:158
+#: partials/view/visitor-info.php:159
 msgid "The User Has The following Browsers"
 msgstr ""
 
-#: partials/view/visitor-info.php:163
+#: partials/view/visitor-info.php:164
 msgid "No Browser(s)"
 msgstr ""
 
-#: partials/view/visitor-info.php:212
+#: partials/view/visitor-info.php:209
 msgid "Sorry no results found"
 msgstr ""
 
-#: partials/view/visitor-info.php:217
+#: partials/view/visitor-info.php:214
 msgid "It seems there are no IP Addresses registered in your database at the moment. Maybe I've done something wrong or you have missed some steps during setup."
 msgstr ""
 
-#: partials/view/visitor-info.php:221
+#: partials/view/visitor-info.php:218
 msgid "Please check if you have done the following"
 msgstr ""
 
-#: partials/view/visitor-info.php:227
+#: partials/view/visitor-info.php:224
 msgid "Included the shortcode <code>[whohit]Page Name[/whohit]</code> on your pages. If not, click get started below."
 msgstr ""
 
-#: partials/view/visitor-info.php:232
+#: partials/view/visitor-info.php:229
 msgid "Imported all Geo Location data via the <a href=\"admin.php?page=whtp-import-export\">Export/ Import</a> page."
 msgstr ""
 
-#: partials/view/visitor-info.php:237
+#: partials/view/visitor-info.php:234
 msgid "If you haven't done this, click \"Get Started\" below."
 msgstr ""
 
-#: partials/view/visitor-info.php:242
+#: partials/view/visitor-info.php:239
 msgid "Get Started"
 msgstr ""

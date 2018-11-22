@@ -207,8 +207,8 @@ class WHTP_Hit_Info{
         $page = $page;
         
         $ip_address			= $_SERVER["REMOTE_ADDR"];	# visitor's ip address
-        $date_ftime 		= date("Y/m/d") . ' ' . date('H:i:s'); # visitor's first visit
-        $date_ltime			= date("Y/m/d") . ' ' . date('H:i:s'); # visitor's last visit
+        $date_ftime 		= date('Y/m/d H:i:s', current_time( 'timestamp', 0 ) ); # visitor's first visit
+        $date_ltime			= date('Y/m/d H:i:s', current_time( 'timestamp', 0 ) ); # visitor's last visit
 
         //MaxMind GeoIP2
         require_once WHTP_PLUGIN_DIR_PATH . 'vendor/autoload.php';
