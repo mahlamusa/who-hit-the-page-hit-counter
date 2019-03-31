@@ -67,8 +67,9 @@ If you know the IP address of your own devices like Home/Work Computer, you can 
 
 == Changelog ==
 
-= 1.5.0 =
+= 1.4.10 =
 
+* WordPress 5.1.1 update
 * Fixed: Deprecated function warning
 * Fixed: Database update checks
 * Updated: Removed unnecessary steps in help page

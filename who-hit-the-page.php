@@ -79,7 +79,7 @@ class Who_Hit_The_Page_Admin{
 	public function __construct(){		
 		add_action( 'admin_menu', 				array( $this, 'admin_menu') );				
 		add_action( 'admin_notices', 			array( $this, 'admin_notices' ) );
-		add_action( 'admin_init', 				array( 'suggest_privacy_content' ), 20 );
+		add_action( 'admin_init', 				array( $this, 'suggest_privacy_content' ), 20 );
 		add_filter( 'plugin_action_links_' . 	plugin_basename(__FILE__), array( $this, 'add_action_links' ) );
 
 		if ( self::is_whtp_admin() ) {
@@ -204,16 +204,15 @@ class Who_Hit_The_Page_Admin{
 	}
 
 	public static function is_whtp_admin( $page = '' ){
-		if ( isset( $page ) && $page == '' ) {
-			$page = isset( $_GET['page'] )? esc_attr( $_GET['page'] ): '';
+		if ( '' === $page ) {
+			$page = ! empty( $_GET[ 'page' ] )? esc_attr( $_GET['page'] ): '';
 		}
 
-		if ( $page == '' ) return false;
+		if ( empty( $page ) ) return false;
 		
 		$whtp_pages = array( 'whtp-admin-menu', 'whtp-view-page-hits', 'whtp-visitor-stats', 'whtp-view-ip-hits', 'whtp-denied-ips', 'whtp-denied-ips', 'whtp-import-export', 'whtp-settings', 'whtp-help', 'whtp-widget-settings' );
 
-		if ( in_array( $page, $whtp_pages ) && is_admin() ) return true;
-		return false;
+		return in_array( $page, $whtp_pages, true );
 	}
 
 	function add_action_links ( $links ) {
