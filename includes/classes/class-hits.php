@@ -6,8 +6,9 @@ class WHTP_Hits{
     public static $hits_table;
 
     public function __construct(){        
-        global $wpdb;
+        global $wpdb, $hits_table;
         self::$hits_table = $wpdb->prefix . 'whtp_hits';
+        $hits_table = self::$hits_table;
     }
 
     public static function count_exists(){
@@ -34,7 +35,6 @@ class WHTP_Hits{
 
     public static function get_hits( $offset = 0, $number = 15, $order = 'DESC') {
         global $wpdb, $hits_table;
-
         $sql = "SELECT * FROM `$hits_table` ORDER BY count_hits $order";
 
         if ( self::count_exists() > $number ) {
@@ -54,8 +54,7 @@ class WHTP_Hits{
     }
 
     public static function count_page( $page ) {	
-        $ip_address	= $_SERVER["REMOTE_ADDR"];	# visitor's ip address 
-        
+        $ip_address	= WHTP_IP2_Location::get_ip_address();
         #count if the IP is not denied
         if ( ! WHTP_Hit_Info::ip_is_denied ( $ip_address ) ) {
             self::count_hits( $page );
@@ -86,11 +85,11 @@ class WHTP_Hits{
         global $wpdb, $hits_table;
         
         //$ua = getBrowser(); //Get browser info
-        $ua = WHTP_Browser::browser_info();
+        $ua      = WHTP_Browser::browser_info();
         $browser = $ua['name'];
             
         $page_check = $wpdb->get_var("SELECT page FROM `$hits_table` WHERE page = '$page' LIMIT 1");
-        if ( $page_check != $page ){
+        if ( $page_check === $page ){
             $count = $wpdb->get_var("SELECT count_hits FROM `$hits_table` WHERE page = '$page' LIMIT 1");
             $ucount = $count + 1;
             $update = $wpdb->update(

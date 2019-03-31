@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$visitor_ip = esc_attr( $_POST['ip'] );			
 		}		
 		else {
-            $visitor_ip = $_SERVER['REMOTE_ADDR'];
+            $visitor_ip = WHTP_IP2_Location::get_ip_address();
         }
         
         $ip_id = WHTP_Hit_Info::get_ip_id($visitor_ip);

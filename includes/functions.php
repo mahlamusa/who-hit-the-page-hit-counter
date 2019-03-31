@@ -167,7 +167,7 @@ class WHTP_Functions{
 		$local 		= $_SERVER['HTTP_HOST'];	# this host's name
 		$siteurl 	= get_option('siteurl');	# wordpress site url
 		$ref 		= $_SERVER['HTTP_REFERER']; # referrer host name	
-		$rem 		= $_SERVER['REMOTE_ADDR'];  # visitor's ip address
+		$rem 		= WHTP_IP2_Location::get_ip_address();  # visitor's ip address
 		
 		if ( isset ( $_SERVER['SERVER_ADDR'] ) ) {
 			$local_addr	= $_SERVER['SERVER_ADDR'];  # this host's ip address

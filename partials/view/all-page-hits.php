@@ -18,7 +18,7 @@ if ( isset( $_GET['paging'] ) ) {
     $paging = 1;
 }
 
-$offset = $number != 'all' ? $paging * $number: 0;
+$offset = $number !== 'all' ? $paging * $number: 0;
 
 $hits   = WHTP_Hits::get_hits( $offset, $number );
 $total	= count( $hits );

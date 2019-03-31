@@ -184,17 +184,22 @@ class WHTP_Hit_Info{
         else return false;
     }
     
-    public static function allow_ip( $ip_address ){
+    public static function allow_ip( $ip_address ) {
         global $wpdb, $hitinfo_table;
 		
 		$allow = $wpdb->update(
             $hitinfo_table, 
-            array("ip_status"=>"active"), 
-            array("ip_address"=>$ip_address), array("%s"), array("%s") 
+            array( 'ip_status'  => 'active' ), 
+            array( 'ip_address' => $ip_address ),
+            array( '%s' ),
+            array( '%s' ), 
         );
 		
-        if ( $allow ) return true;
-        else return false;
+        if ( $allow ) {
+            return true;
+        } else {
+            return false;
+        }
 	}
 
     /*
@@ -206,7 +211,7 @@ class WHTP_Hit_Info{
 
         $page = $page;
         
-        $ip_address			= $_SERVER["REMOTE_ADDR"];	# visitor's ip address
+        $ip_address			= WHTP_IP2_Location::get_ip_address();	# visitor's ip address
         $date_ftime 		= date('Y/m/d H:i:s', current_time( 'timestamp', 0 ) ); # visitor's first visit
         $date_ltime			= date('Y/m/d H:i:s', current_time( 'timestamp', 0 ) ); # visitor's last visit
 
