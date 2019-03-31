@@ -3,7 +3,7 @@
 * Plugin Name: Who Hit The Page - Hit Counter
 * Plugin URI: http://whohit.co.za/who-hit-the-page-hit-counter
 * Description: Lets you know who visted your pages by adding an invisible page hit counter on your website, so you know how many times a page has been visited in total and how many times each user identified by IP address has visited each page. You will also know the IP addresses of your visitors and relate the IP addresses to the country of the visitor and all browsers used by that IP/user.
-* Version: 1.5.0
+* Version: 1.4.10
 * Author: mahlamusa
 * Author URI: http://lindeni.co.za
 * License: GPL
@@ -11,7 +11,7 @@
 * Domain Path: /languages
 */
 /*
- * Copyright © 2012 - 2018 Lindeni Mahlalela. All rights reserved.
+ * Copyright © 2012 - 2019 Lindeni Mahlalela. All rights reserved.
  * <himself@lindeni.co.za> 
  * <https://lindeni.co.za>
  *
