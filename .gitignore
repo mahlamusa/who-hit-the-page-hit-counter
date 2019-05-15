@@ -69,6 +69,7 @@ node_modules
 
 ### Composer ###
 composer.phar
+vendor/
 
 
 # Commit your application's lock file http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file
@@ -78,4 +79,13 @@ composer.phar
 
 # Other, add your own ignored things here.
 .idea/
-release
+releases
+*.rej
+tmp
+
+# Dist files
+assets/*
+!assets/src/
+
+# Language files
+*.pot
