@@ -4,40 +4,40 @@ use MaxMind\Db\Reader;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-class WHTP_IP2_Location{
-    
-    private static $ip_to_location_table;
+class WHTP_IP2_Location {
 
-    /**
-     * Current user's location data
-     *
-     * @since 1.0.0
-     * @var array
-     */
-    private static $location = null;
+	private static $ip_to_location_table;
 
-    /**
+	/**
+	 * Current user's location data
+	 *
+	 * @since 1.0.0
+	 * @var array
+	 */
+	private static $location = null;
+
+	/**
 	 * Instance of this class.
 	 *
- 	 * @since 1.0.0
+	 * @since 1.0.0
 	 * @var object
 	 */
 	protected static $instance = null;
 
-    /**
-     * Initialize the class
-     * 
-     * @since 1.0.0
-     * @return void
-     */
-    public function __construct(){
-        self::$location = self::get_location();
+	/**
+	 * Initialize the class
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function __construct() {
+		self::$location = self::get_location();
 
-        global $wpdb;        
-        self::$ip_to_location_table	= $wpdb->prefix . 'whtp_ip2location';
-    } // __construct()
+		global $wpdb;
+		self::$ip_to_location_table = $wpdb->prefix . 'whtp_ip2location';
+	} // __construct()
 
-    /**
+	/**
 	 * Return an instance of this class.
 	 *
 	 * @since 1.0.0
@@ -56,151 +56,150 @@ class WHTP_IP2_Location{
 
 	} // get_instance()
 
-   /**
-    * Get the current visitor's country code
-    *
-    * @return void
-    * @since 1.0.0
-    */
-    public static function get_country_code( $ip = ' '){
+	/**
+	 * Get the current visitor's country code
+	 *
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public static function get_country_code( $ip = ' ' ) {
 
-        if ( $ip == '' ) {
-            $location = self::get_location();
-        }else{
-            $location = self::get_results_by_ip( $ip );
-        }
-        
+		if ( $ip == '' ) {
+			$location = self::get_location();
+		} else {
+			$location = self::get_results_by_ip( $ip );
+		}
 
-        if ( isset( $location[ 'country_code' ] ) ) {
-            return $location[ 'country_code' ];
-        }
-        
-        return __( "AA", 'whtp' );  //Dummy country code      
-    } // get_country_code()
+		if ( isset( $location['country_code'] ) ) {
+			return $location['country_code'];
+		}
 
-    /**
-     * Get the name of the current visitor's country
-     *
-     * @return string - name of the current visitor's country
-     */
-    public static function get_country_name( $ip = '' ){ 
-        if ( $ip == '' ) {
-            $location = self::get_location();
-        }else{
-            $location = self::get_results_by_ip( $ip );
-        }
-        
+		return __( 'AA', 'whtp' );  // Dummy country code
+	} // get_country_code()
 
-        if ( isset( $location[ 'country_name'] ) ) {
-            return $location[ 'country_name'];
-        }   
-        
-        return __( 'Unknown Country', 'whtp' );
-    } // get_country_name()
+	/**
+	 * Get the name of the current visitor's country
+	 *
+	 * @return string - name of the current visitor's country
+	 */
+	public static function get_country_name( $ip = '' ) {
+		if ( $ip == '' ) {
+			$location = self::get_location();
+		} else {
+			$location = self::get_results_by_ip( $ip );
+		}
 
-    /**
-     * Get the location data of the current visitor
-     *
-     * @return array - the location data of the current visitor
-     */
-    public static function get_results(){
+		if ( isset( $location['country_name'] ) ) {
+			return $location['country_name'];
+		}
 
-        require_once WHTP_PLUGIN_DIR_PATH . 'vendor/autoload.php';
+		return __( 'Unknown Country', 'whtp' );
+	} // get_country_name()
 
-        $databaseFile   = WHTP_PLUGIN_DIR_PATH . 'geodata/geodata/GeoLite2-City.mmdb';
+	/**
+	 * Get the location data of the current visitor
+	 *
+	 * @return array - the location data of the current visitor
+	 */
+	public static function get_results() {
 
-        $reader         = new Reader( $databaseFile );        
-        $record         = $reader->get( self::get_ip_address() );
-        $reader->close();
+		require_once WHTP_PLUGIN_DIR_PATH . 'vendor/autoload.php';
 
-        return apply_filters( 'whtp_locate_ip', array(
-            'country_code'      => $record['country']['iso_code'],
-            'country_name'      => $record['country']['names']['en'],
-            'continent_code'    => $record['continent']['iso_code'],
-            'continent_name'    => $record['continent']['names']['en']
-        ), $record );
-    }
+		$databaseFile = WHTP_PLUGIN_DIR_PATH . 'geodata/geodata/GeoLite2-City.mmdb';
 
-    public static function country_code_to_ip( $country_code ) {
-        global $wpdb, $ip_to_location_table;
-    }
+		$reader = new Reader( $databaseFile );
+		$record = $reader->get( self::get_ip_address() );
+		$reader->close();
 
-    public static function get_results_by_ip( $ip_address ){
-        if ( $ip_address == null ) return array();
+		return apply_filters(
+			'whtp_locate_ip',
+			array(
+				'country_code'   => $record['country']['iso_code'],
+				'country_name'   => $record['country']['names']['en'],
+				'continent_code' => $record['continent']['iso_code'],
+				'continent_name' => $record['continent']['names']['en'],
+			),
+			$record
+		);
+	}
 
-        require_once WHTP_PLUGIN_DIR_PATH . 'vendor/autoload.php';
+	public static function country_code_to_ip( $country_code ) {
+		global $wpdb, $ip_to_location_table;
+	}
 
-        $databaseFile = WHTP_PLUGIN_DIR_PATH . 'geodata/GeoLite2-City.mmdb';
+	public static function get_results_by_ip( $ip_address ) {
+		if ( $ip_address == null ) {
+			return array();
+		}
 
-        $reader         = new Reader( $databaseFile );        
-        $record         = $reader->get( $ip_address );
-        $reader->close();
+		require_once WHTP_PLUGIN_DIR_PATH . 'vendor/autoload.php';
 
-        return apply_filters( 'whtp_locate_ip', array(
-            'country_code'  => $record['country']['iso_code'],
-            'country_name'  => $record['country']['names']['en'],
-            'continent_code' => $record['continent']['iso_code'],
-            'continent_name' => $record['continent']['names']['en']
-        ), $record);
-    }
+		$databaseFile = WHTP_PLUGIN_DIR_PATH . 'geodata/GeoLite2-City.mmdb';
 
-    /**
-     * Get the current user's IP Address
-     *
-     * @return string - the IP address of the current visitor
-     */
-    public static function get_ip_address() {
+		$reader = new Reader( $databaseFile );
+		$record = $reader->get( $ip_address );
+		$reader->close();
 
-        if ( getenv('HTTP_CLIENT_IP') ) {
-            return getenv( 'HTTP_CLIENT_IP' );
-        }
-            
-        else if( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
-            return getenv('HTTP_X_FORWARDED_FOR');
-        }
-        
-        else if( getenv( 'HTTP_X_FORWARDED' ) ) {
-            return getenv( 'HTTP_X_FORWARDED' );
-        }
-            
-        else if( getenv( 'HTTP_FORWARDED_FOR' ) ) {
-            return getenv('HTTP_FORWARDED_FOR');
-        }
-        else if( getenv('HTTP_FORWARDED' ) ) {
-            return getenv('HTTP_FORWARDED');
-        }
-        
-        else if( getenv( 'REMOTE_ADDR' ) ) {
-            return getenv('REMOTE_ADDR');
-        }
-        
-        //We don't want to get here
-        return '127.0.0.1';
-    }
+		return apply_filters(
+			'whtp_locate_ip',
+			array(
+				'country_code'   => $record['country']['iso_code'],
+				'country_name'   => $record['country']['names']['en'],
+				'continent_code' => $record['continent']['iso_code'],
+				'continent_name' => $record['continent']['names']['en'],
+			),
+			$record
+		);
+	}
 
-    /**
-     * Get the current location
-     *
-     * @return array - the current visitor's location data
-     */ 
-    public static function get_location() {
+	/**
+	 * Get the current user's IP Address
+	 *
+	 * @return string - the IP address of the current visitor
+	 */
+	public static function get_ip_address() {
 
-        if ( self::$location == null ) {
-            self::$location = self::get_results();
-        }
+		if ( getenv( 'HTTP_CLIENT_IP' ) ) {
+			return getenv( 'HTTP_CLIENT_IP' );
+		} elseif ( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
+			return getenv( 'HTTP_X_FORWARDED_FOR' );
+		} elseif ( getenv( 'HTTP_X_FORWARDED' ) ) {
+			return getenv( 'HTTP_X_FORWARDED' );
+		} elseif ( getenv( 'HTTP_FORWARDED_FOR' ) ) {
+			return getenv( 'HTTP_FORWARDED_FOR' );
+		} elseif ( getenv( 'HTTP_FORWARDED' ) ) {
+			return getenv( 'HTTP_FORWARDED' );
+		} elseif ( getenv( 'REMOTE_ADDR' ) ) {
+			return getenv( 'REMOTE_ADDR' );
+		}
 
-        return self::$location;
-    }
+		// We don't want to get here
+		return '127.0.0.1';
+	}
 
-    /**
-     * Set the current user's location data
-     *
-     * @param  array  $location
-     * @return array - the current user's location details
-     */ 
-    public static function set_location( $location) {
-        self::$location = $location;
+	/**
+	 * Get the current location
+	 *
+	 * @return array - the current visitor's location data
+	 */
+	public static function get_location() {
 
-        return self::$location;
-    }
+		if ( self::$location == null ) {
+			self::$location = self::get_results();
+		}
+
+		return self::$location;
+	}
+
+	/**
+	 * Set the current user's location data
+	 *
+	 * @param  array $location
+	 * @return array - the current user's location details
+	 */
+	public static function set_location( $location ) {
+		self::$location = $location;
+
+		return self::$location;
+	}
 }
