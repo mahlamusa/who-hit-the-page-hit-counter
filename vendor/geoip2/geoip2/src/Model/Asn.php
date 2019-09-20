@@ -13,23 +13,22 @@ namespace GeoIp2\Model;
  * @property-read string $ipAddress The IP address that the data in the model is
  *     for.
  */
-class Asn extends AbstractModel
-{
-    protected $autonomousSystemNumber;
-    protected $autonomousSystemOrganization;
-    protected $ipAddress;
+class Asn extends AbstractModel {
 
-    /**
-     * @ignore
-     *
-     * @param mixed $raw
-     */
-    public function __construct($raw)
-    {
-        parent::__construct($raw);
-        $this->autonomousSystemNumber = $this->get('autonomous_system_number');
-        $this->autonomousSystemOrganization =
-            $this->get('autonomous_system_organization');
-        $this->ipAddress = $this->get('ip_address');
-    }
+	protected $autonomousSystemNumber;
+	protected $autonomousSystemOrganization;
+	protected $ipAddress;
+
+	/**
+	 * @ignore
+	 *
+	 * @param mixed $raw
+	 */
+	public function __construct( $raw ) {
+		parent::__construct( $raw );
+		$this->autonomousSystemNumber       = $this->get( 'autonomous_system_number' );
+		$this->autonomousSystemOrganization =
+			$this->get( 'autonomous_system_organization' );
+		$this->ipAddress                    = $this->get( 'ip_address' );
+	}
 }

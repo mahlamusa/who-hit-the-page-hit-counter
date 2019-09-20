@@ -17,10 +17,10 @@ namespace GeoIp2\Record;
  * available from the Insights service and the GeoIP2 Enterprise
  * database.
  */
-class Postal extends AbstractRecord
-{
-    /**
-     * @ignore
-     */
-    protected $validAttributes = ['code', 'confidence'];
+class Postal extends AbstractRecord {
+
+	/**
+	 * @ignore
+	 */
+	protected $validAttributes = [ 'code', 'confidence' ];
 }

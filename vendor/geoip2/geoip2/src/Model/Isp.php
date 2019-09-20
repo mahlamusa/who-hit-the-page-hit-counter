@@ -17,28 +17,27 @@ namespace GeoIp2\Model;
  * @property-read string $ipAddress The IP address that the data in the model is
  *     for.
  */
-class Isp extends AbstractModel
-{
-    protected $autonomousSystemNumber;
-    protected $autonomousSystemOrganization;
-    protected $isp;
-    protected $organization;
-    protected $ipAddress;
+class Isp extends AbstractModel {
 
-    /**
-     * @ignore
-     *
-     * @param mixed $raw
-     */
-    public function __construct($raw)
-    {
-        parent::__construct($raw);
-        $this->autonomousSystemNumber = $this->get('autonomous_system_number');
-        $this->autonomousSystemOrganization =
-            $this->get('autonomous_system_organization');
-        $this->isp = $this->get('isp');
-        $this->organization = $this->get('organization');
+	protected $autonomousSystemNumber;
+	protected $autonomousSystemOrganization;
+	protected $isp;
+	protected $organization;
+	protected $ipAddress;
 
-        $this->ipAddress = $this->get('ip_address');
-    }
+	/**
+	 * @ignore
+	 *
+	 * @param mixed $raw
+	 */
+	public function __construct( $raw ) {
+		parent::__construct( $raw );
+		$this->autonomousSystemNumber       = $this->get( 'autonomous_system_number' );
+		$this->autonomousSystemOrganization =
+			$this->get( 'autonomous_system_organization' );
+		$this->isp                          = $this->get( 'isp' );
+		$this->organization                 = $this->get( 'organization' );
+
+		$this->ipAddress = $this->get( 'ip_address' );
+	}
 }

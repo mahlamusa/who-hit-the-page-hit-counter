@@ -26,14 +26,14 @@ namespace GeoIp2\Record;
  * representing the country. Currently we only return <code>military</code>
  * but this could expand to include other types in the future.
  */
-class RepresentedCountry extends Country
-{
-    protected $validAttributes = [
-        'confidence',
-        'geonameId',
-        'isInEuropeanUnion',
-        'isoCode',
-        'names',
-        'type',
-    ];
+class RepresentedCountry extends Country {
+
+	protected $validAttributes = [
+		'confidence',
+		'geonameId',
+		'isInEuropeanUnion',
+		'isoCode',
+		'names',
+		'type',
+	];
 }

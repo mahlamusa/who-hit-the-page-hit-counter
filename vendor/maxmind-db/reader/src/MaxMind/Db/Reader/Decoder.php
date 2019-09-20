@@ -2,310 +2,293 @@
 
 namespace MaxMind\Db\Reader;
 
-class Decoder
-{
-    private $fileStream;
-    private $pointerBase;
-    // This is only used for unit testing
-    private $pointerTestHack;
-    private $switchByteOrder;
+class Decoder {
 
-    private $types = [
-        0 => 'extended',
-        1 => 'pointer',
-        2 => 'utf8_string',
-        3 => 'double',
-        4 => 'bytes',
-        5 => 'uint16',
-        6 => 'uint32',
-        7 => 'map',
-        8 => 'int32',
-        9 => 'uint64',
-        10 => 'uint128',
-        11 => 'array',
-        12 => 'container',
-        13 => 'end_marker',
-        14 => 'boolean',
-        15 => 'float',
-    ];
+	private $fileStream;
+	private $pointerBase;
+	// This is only used for unit testing
+	private $pointerTestHack;
+	private $switchByteOrder;
 
-    public function __construct(
-        $fileStream,
-        $pointerBase = 0,
-        $pointerTestHack = false
-    ) {
-        $this->fileStream = $fileStream;
-        $this->pointerBase = $pointerBase;
-        $this->pointerTestHack = $pointerTestHack;
+	private $types = [
+		0  => 'extended',
+		1  => 'pointer',
+		2  => 'utf8_string',
+		3  => 'double',
+		4  => 'bytes',
+		5  => 'uint16',
+		6  => 'uint32',
+		7  => 'map',
+		8  => 'int32',
+		9  => 'uint64',
+		10 => 'uint128',
+		11 => 'array',
+		12 => 'container',
+		13 => 'end_marker',
+		14 => 'boolean',
+		15 => 'float',
+	];
 
-        $this->switchByteOrder = $this->isPlatformLittleEndian();
-    }
+	public function __construct(
+		$fileStream,
+		$pointerBase = 0,
+		$pointerTestHack = false
+	) {
+		$this->fileStream      = $fileStream;
+		$this->pointerBase     = $pointerBase;
+		$this->pointerTestHack = $pointerTestHack;
 
-    public function decode($offset)
-    {
-        list(, $ctrlByte) = unpack(
-            'C',
-            Util::read($this->fileStream, $offset, 1)
-        );
-        $offset++;
+		$this->switchByteOrder = $this->isPlatformLittleEndian();
+	}
 
-        $type = $this->types[$ctrlByte >> 5];
+	public function decode( $offset ) {
+		list(, $ctrlByte) = unpack(
+			'C',
+			Util::read( $this->fileStream, $offset, 1 )
+		);
+		$offset++;
 
-        // Pointers are a special case, we don't read the next $size bytes, we
-        // use the size to determine the length of the pointer and then follow
-        // it.
-        if ($type === 'pointer') {
-            list($pointer, $offset) = $this->decodePointer($ctrlByte, $offset);
+		$type = $this->types[ $ctrlByte >> 5 ];
 
-            // for unit testing
-            if ($this->pointerTestHack) {
-                return [$pointer];
-            }
+		// Pointers are a special case, we don't read the next $size bytes, we
+		// use the size to determine the length of the pointer and then follow
+		// it.
+		if ( $type === 'pointer' ) {
+			list($pointer, $offset) = $this->decodePointer( $ctrlByte, $offset );
 
-            list($result) = $this->decode($pointer);
+			// for unit testing
+			if ( $this->pointerTestHack ) {
+				return [ $pointer ];
+			}
 
-            return [$result, $offset];
-        }
+			list($result) = $this->decode( $pointer );
 
-        if ($type === 'extended') {
-            list(, $nextByte) = unpack(
-                'C',
-                Util::read($this->fileStream, $offset, 1)
-            );
+			return [ $result, $offset ];
+		}
 
-            $typeNum = $nextByte + 7;
+		if ( $type === 'extended' ) {
+			list(, $nextByte) = unpack(
+				'C',
+				Util::read( $this->fileStream, $offset, 1 )
+			);
 
-            if ($typeNum < 8) {
-                throw new InvalidDatabaseException(
-                    'Something went horribly wrong in the decoder. An extended type '
-                    . 'resolved to a type number < 8 ('
-                    . $this->types[$typeNum]
-                    . ')'
-                );
-            }
+			$typeNum = $nextByte + 7;
 
-            $type = $this->types[$typeNum];
-            $offset++;
-        }
+			if ( $typeNum < 8 ) {
+				throw new InvalidDatabaseException(
+					'Something went horribly wrong in the decoder. An extended type '
+					. 'resolved to a type number < 8 ('
+					. $this->types[ $typeNum ]
+					. ')'
+				);
+			}
 
-        list($size, $offset) = $this->sizeFromCtrlByte($ctrlByte, $offset);
+			$type = $this->types[ $typeNum ];
+			$offset++;
+		}
 
-        return $this->decodeByType($type, $offset, $size);
-    }
+		list($size, $offset) = $this->sizeFromCtrlByte( $ctrlByte, $offset );
 
-    private function decodeByType($type, $offset, $size)
-    {
-        switch ($type) {
-            case 'map':
-                return $this->decodeMap($size, $offset);
-            case 'array':
-                return $this->decodeArray($size, $offset);
-            case 'boolean':
-                return [$this->decodeBoolean($size), $offset];
-        }
+		return $this->decodeByType( $type, $offset, $size );
+	}
 
-        $newOffset = $offset + $size;
-        $bytes = Util::read($this->fileStream, $offset, $size);
-        switch ($type) {
-            case 'utf8_string':
-                return [$this->decodeString($bytes), $newOffset];
-            case 'double':
-                $this->verifySize(8, $size);
+	private function decodeByType( $type, $offset, $size ) {
+		switch ( $type ) {
+			case 'map':
+				return $this->decodeMap( $size, $offset );
+			case 'array':
+				return $this->decodeArray( $size, $offset );
+			case 'boolean':
+				return [ $this->decodeBoolean( $size ), $offset ];
+		}
 
-                return [$this->decodeDouble($bytes), $newOffset];
-            case 'float':
-                $this->verifySize(4, $size);
+		$newOffset = $offset + $size;
+		$bytes     = Util::read( $this->fileStream, $offset, $size );
+		switch ( $type ) {
+			case 'utf8_string':
+				return [ $this->decodeString( $bytes ), $newOffset ];
+			case 'double':
+				$this->verifySize( 8, $size );
 
-                return [$this->decodeFloat($bytes), $newOffset];
-            case 'bytes':
-                return [$bytes, $newOffset];
-            case 'uint16':
-            case 'uint32':
-                return [$this->decodeUint($bytes), $newOffset];
-            case 'int32':
-                return [$this->decodeInt32($bytes), $newOffset];
-            case 'uint64':
-            case 'uint128':
-                return [$this->decodeBigUint($bytes, $size), $newOffset];
-            default:
-                throw new InvalidDatabaseException(
-                    'Unknown or unexpected type: ' . $type
-                );
-        }
-    }
+				return [ $this->decodeDouble( $bytes ), $newOffset ];
+			case 'float':
+				$this->verifySize( 4, $size );
 
-    private function verifySize($expected, $actual)
-    {
-        if ($expected !== $actual) {
-            throw new InvalidDatabaseException(
-                "The MaxMind DB file's data section contains bad data (unknown data type or corrupt data)"
-            );
-        }
-    }
+				return [ $this->decodeFloat( $bytes ), $newOffset ];
+			case 'bytes':
+				return [ $bytes, $newOffset ];
+			case 'uint16':
+			case 'uint32':
+				return [ $this->decodeUint( $bytes ), $newOffset ];
+			case 'int32':
+				return [ $this->decodeInt32( $bytes ), $newOffset ];
+			case 'uint64':
+			case 'uint128':
+				return [ $this->decodeBigUint( $bytes, $size ), $newOffset ];
+			default:
+				throw new InvalidDatabaseException(
+					'Unknown or unexpected type: ' . $type
+				);
+		}
+	}
 
-    private function decodeArray($size, $offset)
-    {
-        $array = [];
+	private function verifySize( $expected, $actual ) {
+		if ( $expected !== $actual ) {
+			throw new InvalidDatabaseException(
+				"The MaxMind DB file's data section contains bad data (unknown data type or corrupt data)"
+			);
+		}
+	}
 
-        for ($i = 0; $i < $size; $i++) {
-            list($value, $offset) = $this->decode($offset);
-            array_push($array, $value);
-        }
+	private function decodeArray( $size, $offset ) {
+		$array = [];
 
-        return [$array, $offset];
-    }
+		for ( $i = 0; $i < $size; $i++ ) {
+			list($value, $offset) = $this->decode( $offset );
+			array_push( $array, $value );
+		}
 
-    private function decodeBoolean($size)
-    {
-        return $size === 0 ? false : true;
-    }
+		return [ $array, $offset ];
+	}
 
-    private function decodeDouble($bits)
-    {
-        // XXX - Assumes IEEE 754 double on platform
-        list(, $double) = unpack('d', $this->maybeSwitchByteOrder($bits));
+	private function decodeBoolean( $size ) {
+		return $size === 0 ? false : true;
+	}
 
-        return $double;
-    }
+	private function decodeDouble( $bits ) {
+		// XXX - Assumes IEEE 754 double on platform
+		list(, $double) = unpack( 'd', $this->maybeSwitchByteOrder( $bits ) );
 
-    private function decodeFloat($bits)
-    {
-        // XXX - Assumes IEEE 754 floats on platform
-        list(, $float) = unpack('f', $this->maybeSwitchByteOrder($bits));
+		return $double;
+	}
 
-        return $float;
-    }
+	private function decodeFloat( $bits ) {
+		// XXX - Assumes IEEE 754 floats on platform
+		list(, $float) = unpack( 'f', $this->maybeSwitchByteOrder( $bits ) );
 
-    private function decodeInt32($bytes)
-    {
-        $bytes = $this->zeroPadLeft($bytes, 4);
-        list(, $int) = unpack('l', $this->maybeSwitchByteOrder($bytes));
+		return $float;
+	}
 
-        return $int;
-    }
+	private function decodeInt32( $bytes ) {
+		$bytes       = $this->zeroPadLeft( $bytes, 4 );
+		list(, $int) = unpack( 'l', $this->maybeSwitchByteOrder( $bytes ) );
 
-    private function decodeMap($size, $offset)
-    {
-        $map = [];
+		return $int;
+	}
 
-        for ($i = 0; $i < $size; $i++) {
-            list($key, $offset) = $this->decode($offset);
-            list($value, $offset) = $this->decode($offset);
-            $map[$key] = $value;
-        }
+	private function decodeMap( $size, $offset ) {
+		$map = [];
 
-        return [$map, $offset];
-    }
+		for ( $i = 0; $i < $size; $i++ ) {
+			list($key, $offset)   = $this->decode( $offset );
+			list($value, $offset) = $this->decode( $offset );
+			$map[ $key ]          = $value;
+		}
 
-    private $pointerValueOffset = [
-        1 => 0,
-        2 => 2048,
-        3 => 526336,
-        4 => 0,
-    ];
+		return [ $map, $offset ];
+	}
 
-    private function decodePointer($ctrlByte, $offset)
-    {
-        $pointerSize = (($ctrlByte >> 3) & 0x3) + 1;
+	private $pointerValueOffset = [
+		1 => 0,
+		2 => 2048,
+		3 => 526336,
+		4 => 0,
+	];
 
-        $buffer = Util::read($this->fileStream, $offset, $pointerSize);
-        $offset = $offset + $pointerSize;
+	private function decodePointer( $ctrlByte, $offset ) {
+		$pointerSize = ( ( $ctrlByte >> 3 ) & 0x3 ) + 1;
 
-        $packed = $pointerSize === 4
-            ? $buffer
-            : (pack('C', $ctrlByte & 0x7)) . $buffer;
+		$buffer = Util::read( $this->fileStream, $offset, $pointerSize );
+		$offset = $offset + $pointerSize;
 
-        $unpacked = $this->decodeUint($packed);
-        $pointer = $unpacked + $this->pointerBase
-            + $this->pointerValueOffset[$pointerSize];
+		$packed = $pointerSize === 4
+			? $buffer
+			: ( pack( 'C', $ctrlByte & 0x7 ) ) . $buffer;
 
-        return [$pointer, $offset];
-    }
+		$unpacked = $this->decodeUint( $packed );
+		$pointer  = $unpacked + $this->pointerBase
+			+ $this->pointerValueOffset[ $pointerSize ];
 
-    private function decodeUint($bytes)
-    {
-        list(, $int) = unpack('N', $this->zeroPadLeft($bytes, 4));
+		return [ $pointer, $offset ];
+	}
 
-        return $int;
-    }
+	private function decodeUint( $bytes ) {
+		list(, $int) = unpack( 'N', $this->zeroPadLeft( $bytes, 4 ) );
 
-    private function decodeBigUint($bytes, $byteLength)
-    {
-        $maxUintBytes = log(PHP_INT_MAX, 2) / 8;
+		return $int;
+	}
 
-        if ($byteLength === 0) {
-            return 0;
-        }
+	private function decodeBigUint( $bytes, $byteLength ) {
+		$maxUintBytes = log( PHP_INT_MAX, 2 ) / 8;
 
-        $numberOfLongs = ceil($byteLength / 4);
-        $paddedLength = $numberOfLongs * 4;
-        $paddedBytes = $this->zeroPadLeft($bytes, $paddedLength);
-        $unpacked = array_merge(unpack("N$numberOfLongs", $paddedBytes));
+		if ( $byteLength === 0 ) {
+			return 0;
+		}
 
-        $integer = 0;
+		$numberOfLongs = ceil( $byteLength / 4 );
+		$paddedLength  = $numberOfLongs * 4;
+		$paddedBytes   = $this->zeroPadLeft( $bytes, $paddedLength );
+		$unpacked      = array_merge( unpack( "N$numberOfLongs", $paddedBytes ) );
 
-        // 2^32
-        $twoTo32 = '4294967296';
+		$integer = 0;
 
-        foreach ($unpacked as $part) {
-            // We only use gmp or bcmath if the final value is too big
-            if ($byteLength <= $maxUintBytes) {
-                $integer = ($integer << 32) + $part;
-            } elseif (extension_loaded('gmp')) {
-                $integer = gmp_strval(gmp_add(gmp_mul($integer, $twoTo32), $part));
-            } elseif (extension_loaded('bcmath')) {
-                $integer = bcadd(bcmul($integer, $twoTo32), $part);
-            } else {
-                throw new \RuntimeException(
-                    'The gmp or bcmath extension must be installed to read this database.'
-                );
-            }
-        }
+		// 2^32
+		$twoTo32 = '4294967296';
 
-        return $integer;
-    }
+		foreach ( $unpacked as $part ) {
+			// We only use gmp or bcmath if the final value is too big
+			if ( $byteLength <= $maxUintBytes ) {
+				$integer = ( $integer << 32 ) + $part;
+			} elseif ( extension_loaded( 'gmp' ) ) {
+				$integer = gmp_strval( gmp_add( gmp_mul( $integer, $twoTo32 ), $part ) );
+			} elseif ( extension_loaded( 'bcmath' ) ) {
+				$integer = bcadd( bcmul( $integer, $twoTo32 ), $part );
+			} else {
+				throw new \RuntimeException(
+					'The gmp or bcmath extension must be installed to read this database.'
+				);
+			}
+		}
 
-    private function decodeString($bytes)
-    {
-        // XXX - NOOP. As far as I know, the end user has to explicitly set the
-        // encoding in PHP. Strings are just bytes.
-        return $bytes;
-    }
+		return $integer;
+	}
 
-    private function sizeFromCtrlByte($ctrlByte, $offset)
-    {
-        $size = $ctrlByte & 0x1f;
-        $bytesToRead = $size < 29 ? 0 : $size - 28;
-        $bytes = Util::read($this->fileStream, $offset, $bytesToRead);
-        $decoded = $this->decodeUint($bytes);
+	private function decodeString( $bytes ) {
+		// XXX - NOOP. As far as I know, the end user has to explicitly set the
+		// encoding in PHP. Strings are just bytes.
+		return $bytes;
+	}
 
-        if ($size === 29) {
-            $size = 29 + $decoded;
-        } elseif ($size === 30) {
-            $size = 285 + $decoded;
-        } elseif ($size > 30) {
-            $size = ($decoded & (0x0FFFFFFF >> (32 - (8 * $bytesToRead))))
-                + 65821;
-        }
+	private function sizeFromCtrlByte( $ctrlByte, $offset ) {
+		$size        = $ctrlByte & 0x1f;
+		$bytesToRead = $size < 29 ? 0 : $size - 28;
+		$bytes       = Util::read( $this->fileStream, $offset, $bytesToRead );
+		$decoded     = $this->decodeUint( $bytes );
 
-        return [$size, $offset + $bytesToRead];
-    }
+		if ( $size === 29 ) {
+			$size = 29 + $decoded;
+		} elseif ( $size === 30 ) {
+			$size = 285 + $decoded;
+		} elseif ( $size > 30 ) {
+			$size = ( $decoded & ( 0x0FFFFFFF >> ( 32 - ( 8 * $bytesToRead ) ) ) )
+				+ 65821;
+		}
 
-    private function zeroPadLeft($content, $desiredLength)
-    {
-        return str_pad($content, $desiredLength, "\x00", STR_PAD_LEFT);
-    }
+		return [ $size, $offset + $bytesToRead ];
+	}
 
-    private function maybeSwitchByteOrder($bytes)
-    {
-        return $this->switchByteOrder ? strrev($bytes) : $bytes;
-    }
+	private function zeroPadLeft( $content, $desiredLength ) {
+		return str_pad( $content, $desiredLength, "\x00", STR_PAD_LEFT );
+	}
 
-    private function isPlatformLittleEndian()
-    {
-        $testint = 0x00FF;
-        $packed = pack('S', $testint);
+	private function maybeSwitchByteOrder( $bytes ) {
+		return $this->switchByteOrder ? strrev( $bytes ) : $bytes;
+	}
 
-        return $testint === current(unpack('v', $packed));
-    }
+	private function isPlatformLittleEndian() {
+		$testint = 0x00FF;
+		$packed  = pack( 'S', $testint );
+
+		return $testint === current( unpack( 'v', $packed ) );
+	}
 }
