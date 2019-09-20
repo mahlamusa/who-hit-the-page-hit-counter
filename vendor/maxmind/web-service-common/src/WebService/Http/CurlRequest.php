@@ -9,102 +9,97 @@ use MaxMind\Exception\HttpException;
  *
  * @internal
  */
-class CurlRequest implements Request
-{
-    private $url;
-    private $options;
+class CurlRequest implements Request {
 
-    /**
-     * @param $url
-     * @param $options
-     */
-    public function __construct($url, $options)
-    {
-        $this->url = $url;
-        $this->options = $options;
-    }
+	private $url;
+	private $options;
 
-    /**
-     * @param $body
-     *
-     * @return array
-     */
-    public function post($body)
-    {
-        $curl = $this->createCurl();
+	/**
+	 * @param $url
+	 * @param $options
+	 */
+	public function __construct( $url, $options ) {
+		$this->url     = $url;
+		$this->options = $options;
+	}
 
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $body);
+	/**
+	 * @param $body
+	 *
+	 * @return array
+	 */
+	public function post( $body ) {
+		$curl = $this->createCurl();
 
-        return $this->execute($curl);
-    }
+		curl_setopt( $curl, CURLOPT_POST, true );
+		curl_setopt( $curl, CURLOPT_POSTFIELDS, $body );
 
-    public function get()
-    {
-        $curl = $this->createCurl();
+		return $this->execute( $curl );
+	}
 
-        curl_setopt($curl, CURLOPT_HTTPGET, true);
+	public function get() {
+		$curl = $this->createCurl();
 
-        return $this->execute($curl);
-    }
+		curl_setopt( $curl, CURLOPT_HTTPGET, true );
 
-    /**
-     * @return resource
-     */
-    private function createCurl()
-    {
-        $curl = curl_init($this->url);
+		return $this->execute( $curl );
+	}
 
-        if (!empty($this->options['caBundle'])) {
-            $opts[CURLOPT_CAINFO] = $this->options['caBundle'];
-        }
-        $opts[CURLOPT_SSL_VERIFYHOST] = 2;
-        $opts[CURLOPT_FOLLOWLOCATION] = false;
-        $opts[CURLOPT_SSL_VERIFYPEER] = true;
-        $opts[CURLOPT_RETURNTRANSFER] = true;
+	/**
+	 * @return resource
+	 */
+	private function createCurl() {
+		$curl = curl_init( $this->url );
 
-        $opts[CURLOPT_HTTPHEADER] = $this->options['headers'];
-        $opts[CURLOPT_USERAGENT] = $this->options['userAgent'];
-        $opts[CURLOPT_PROXY] = $this->options['proxy'];
+		if ( ! empty( $this->options['caBundle'] ) ) {
+			$opts[ CURLOPT_CAINFO ] = $this->options['caBundle'];
+		}
+		$opts[ CURLOPT_SSL_VERIFYHOST ] = 2;
+		$opts[ CURLOPT_FOLLOWLOCATION ] = false;
+		$opts[ CURLOPT_SSL_VERIFYPEER ] = true;
+		$opts[ CURLOPT_RETURNTRANSFER ] = true;
 
-        // The defined()s are here as the *_MS opts are not available on older
-        // cURL versions
-        $connectTimeout = $this->options['connectTimeout'];
-        if (defined('CURLOPT_CONNECTTIMEOUT_MS')) {
-            $opts[CURLOPT_CONNECTTIMEOUT_MS] = ceil($connectTimeout * 1000);
-        } else {
-            $opts[CURLOPT_CONNECTTIMEOUT] = ceil($connectTimeout);
-        }
+		$opts[ CURLOPT_HTTPHEADER ] = $this->options['headers'];
+		$opts[ CURLOPT_USERAGENT ]  = $this->options['userAgent'];
+		$opts[ CURLOPT_PROXY ]      = $this->options['proxy'];
 
-        $timeout = $this->options['timeout'];
-        if (defined('CURLOPT_TIMEOUT_MS')) {
-            $opts[CURLOPT_TIMEOUT_MS] = ceil($timeout * 1000);
-        } else {
-            $opts[CURLOPT_TIMEOUT] = ceil($timeout);
-        }
+		// The defined()s are here as the *_MS opts are not available on older
+		// cURL versions
+		$connectTimeout = $this->options['connectTimeout'];
+		if ( defined( 'CURLOPT_CONNECTTIMEOUT_MS' ) ) {
+			$opts[ CURLOPT_CONNECTTIMEOUT_MS ] = ceil( $connectTimeout * 1000 );
+		} else {
+			$opts[ CURLOPT_CONNECTTIMEOUT ] = ceil( $connectTimeout );
+		}
 
-        curl_setopt_array($curl, $opts);
+		$timeout = $this->options['timeout'];
+		if ( defined( 'CURLOPT_TIMEOUT_MS' ) ) {
+			$opts[ CURLOPT_TIMEOUT_MS ] = ceil( $timeout * 1000 );
+		} else {
+			$opts[ CURLOPT_TIMEOUT ] = ceil( $timeout );
+		}
 
-        return $curl;
-    }
+		curl_setopt_array( $curl, $opts );
 
-    private function execute($curl)
-    {
-        $body = curl_exec($curl);
-        if ($errno = curl_errno($curl)) {
-            $errorMessage = curl_error($curl);
+		return $curl;
+	}
 
-            throw new HttpException(
-                "cURL error ({$errno}): {$errorMessage}",
-                0,
-                $this->url
-            );
-        }
+	private function execute( $curl ) {
+		$body = curl_exec( $curl );
+		if ( $errno = curl_errno( $curl ) ) {
+			$errorMessage = curl_error( $curl );
 
-        $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $contentType = curl_getinfo($curl, CURLINFO_CONTENT_TYPE);
-        curl_close($curl);
+			throw new HttpException(
+				"cURL error ({$errno}): {$errorMessage}",
+				0,
+				$this->url
+			);
+		}
 
-        return [$statusCode, $contentType, $body];
-    }
+		$statusCode  = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
+		$contentType = curl_getinfo( $curl, CURLINFO_CONTENT_TYPE );
+		curl_close( $curl );
+
+		return [ $statusCode, $contentType, $body ];
+	}
 }

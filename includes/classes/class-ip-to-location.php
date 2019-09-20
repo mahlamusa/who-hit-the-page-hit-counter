@@ -6,13 +6,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 class WHTP_IP2_Location {
 
+
+	/**
+	 * Table name for storing country locations
+	 *
+	 * @var     1.4.0
+	 * @version
+	 * @since
+	 */
 	private static $ip_to_location_table;
 
 	/**
 	 * Current user's location data
 	 *
 	 * @since 1.0.0
-	 * @var array
+	 * @var   array
 	 */
 	private static $location = null;
 
@@ -20,14 +28,14 @@ class WHTP_IP2_Location {
 	 * Instance of this class.
 	 *
 	 * @since 1.0.0
-	 * @var object
+	 * @var   object
 	 */
 	protected static $instance = null;
 
 	/**
 	 * Initialize the class
 	 *
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -40,7 +48,7 @@ class WHTP_IP2_Location {
 	/**
 	 * Return an instance of this class.
 	 *
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @access public
 	 *
 	 * @return object A single instance of this class.
@@ -60,7 +68,7 @@ class WHTP_IP2_Location {
 	 * Get the current visitor's country code
 	 *
 	 * @return void
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 */
 	public static function get_country_code( $ip = ' ' ) {
 
@@ -103,7 +111,7 @@ class WHTP_IP2_Location {
 	 */
 	public static function get_results() {
 
-		require_once WHTP_PLUGIN_DIR_PATH . 'vendor/autoload.php';
+		include_once WHTP_PLUGIN_DIR_PATH . 'vendor/autoload.php';
 
 		$databaseFile = WHTP_PLUGIN_DIR_PATH . 'geodata/geodata/GeoLite2-City.mmdb';
 
@@ -132,7 +140,7 @@ class WHTP_IP2_Location {
 			return array();
 		}
 
-		require_once WHTP_PLUGIN_DIR_PATH . 'vendor/autoload.php';
+		include_once WHTP_PLUGIN_DIR_PATH . 'vendor/autoload.php';
 
 		$databaseFile = WHTP_PLUGIN_DIR_PATH . 'geodata/GeoLite2-City.mmdb';
 

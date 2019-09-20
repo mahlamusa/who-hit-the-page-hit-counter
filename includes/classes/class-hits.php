@@ -3,6 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 class WHTP_Hits {
+
 	public static $hits_table;
 
 	public function __construct() {
@@ -188,7 +189,7 @@ function who_hit_the_page( $page ) {
 	WHTP_Counter::count_page( $page );
 }
 function whtp_count_hits( $page ) {
-	WHTP_Counter::count_hits( $page );
+	 WHTP_Counter::count_hits( $page );
 }
 function whtp_hit_info( $page ) {
 	WHTP_Counter::hit_info( $page );

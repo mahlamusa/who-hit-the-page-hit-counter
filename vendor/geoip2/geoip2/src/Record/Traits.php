@@ -88,27 +88,27 @@ namespace GeoIp2\Record;
  *   GeoIP2 Enterprise database.
  * </p>
  */
-class Traits extends AbstractRecord
-{
-    /**
-     * @ignore
-     */
-    protected $validAttributes = [
-        'autonomousSystemNumber',
-        'autonomousSystemOrganization',
-        'connectionType',
-        'domain',
-        'ipAddress',
-        'isAnonymous',
-        'isAnonymousProxy',
-        'isAnonymousVpn',
-        'isHostingProvider',
-        'isLegitimateProxy',
-        'isp',
-        'isPublicProxy',
-        'isSatelliteProvider',
-        'isTorExitNode',
-        'organization',
-        'userType',
-    ];
+class Traits extends AbstractRecord {
+
+	/**
+	 * @ignore
+	 */
+	protected $validAttributes = [
+		'autonomousSystemNumber',
+		'autonomousSystemOrganization',
+		'connectionType',
+		'domain',
+		'ipAddress',
+		'isAnonymous',
+		'isAnonymousProxy',
+		'isAnonymousVpn',
+		'isHostingProvider',
+		'isLegitimateProxy',
+		'isp',
+		'isPublicProxy',
+		'isSatelliteProvider',
+		'isTorExitNode',
+		'organization',
+		'userType',
+	];
 }

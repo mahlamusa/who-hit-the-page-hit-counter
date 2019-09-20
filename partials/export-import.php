@@ -7,46 +7,46 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<div class="wrap">	
-	<h2 class="mdl-card__title-text"><?php es_attr_e( 'Export / Imports', 'whtp' ); ?></h2>
+<div class="wrap">    
+	<h2 class="mdl-card__title-text"><?php esc_attr_e( 'Export / Imports', 'whtp' ); ?></h2>
 	<p></p>
 
 	<div class="whtp-card-container mdl-grid">
 		<div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--12-col-phone mdl-card">
 			<div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
 				<div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
-					<?php es_attr_e( 'Export All Now', 'whtp' ); ?>
+		<?php esc_attr_e( 'Export All Now', 'whtp' ); ?>
 				</div>
 				<div class="mdl-card__supporting-text mdl-color-text--grey-600">
-					<?php
-					if ( ! defined( 'WHTP_BACKUP_DIR' ) ) {
-						if ( WHTP_Functions::make_backup_dir() ) {
-							echo '<div class="success"><p>Backup directory setup complete. Now you can backup your data and CSV files will be saved on : ' . WHTP_BACKUP_DIR . '</p></div>';
-						}
-					} else {
-						if ( isset( $_POST['export-all'] ) ) {
-							$backup_date = date( 'Y-m-d' ) . '-' . date( 'H-i-s' );
-							wp_mkdir_p( WHTP_BACKUP_DIR . '/' . $backup_date );
+		<?php
+		if ( ! defined( 'WHTP_BACKUP_DIR' ) ) {
+			if ( WHTP_Functions::make_backup_dir() ) {
+				echo '<div class="success"><p>Backup directory setup complete. Now you can backup your data and CSV files will be saved on : ' . WHTP_BACKUP_DIR . '</p></div>';
+			}
+		} else {
+			if ( isset( $_POST['export-all'] ) ) {
+				$backup_date = date( 'Y-m-d' ) . '-' . date( 'H-i-s' );
+				wp_mkdir_p( WHTP_BACKUP_DIR . '/' . $backup_date );
 
-							echo '<div class="success"><p>';
-							// export hits table (page, count_hits)
-							$recent_backups[] = WHTP_Functions::export_hits( $backup_date );
+				echo '<div class="success"><p>';
+				// export hits table (page, count_hits)
+				$recent_backups[] = WHTP_Functions::export_hits( $backup_date );
 
-							// export hitinfo table (ip_address, ip_total_count, user_agent, datetime_first_visit, atetime_last_visit)
-							$recent_backups[] = WHTP_Functions::export_hitinfo( $backup_date );
+				// export hitinfo table (ip_address, ip_total_count, user_agent, datetime_first_visit, atetime_last_visit)
+				$recent_backups[] = WHTP_Functions::export_hitinfo( $backup_date );
 
-							// export user agents (agent_name, agent_details)
-							$recent_backups[] = WHTP_Functions::export_user_agents( $backup_date );
+				// export user agents (agent_name, agent_details)
+				$recent_backups[] = WHTP_Functions::export_user_agents( $backup_date );
 
-							// export ip hits
-							$recent_backups[] = WHTP_Functions::export_ip_hits( $backup_date );
+				// export ip hits
+				$recent_backups[] = WHTP_Functions::export_ip_hits( $backup_date );
 
-							update_option( 'whtp_recent_backups', $recent_backups );
+				update_option( 'whtp_recent_backups', $recent_backups );
 
-							echo '</p></div>';
-						}
-					}
-					?>
+				echo '</p></div>';
+			}
+		}
+		?>
 					<form method="post" action="" enctype="multipart/form-data" name="form1" id="form1">
 						<p>Clicking "Export All Data" will generate CSV files and save them in a folder: <br />
 						<code>&lt;site-or-blog-url&gt;wp-content/uploads/whtp_backups/&lt;YEAR-MONTH-DAY-HOUR-MINUTE-SECOND&gt;</code>
@@ -62,42 +62,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--12-col-phone mdl-card">
 			<div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
 				<div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
-					<?php es_attr_e( 'Most Recent Backups', 'whtp' ); ?>
+		<?php esc_attr_e( 'Most Recent Backups', 'whtp' ); ?>
 				</div>
 				<div class="mdl-card__supporting-text mdl-color-text--grey-600">
-					<?php
-						$recent_backups = get_option( 'whtp_recent_backups' );
-					if ( count( $recent_backups ) > 0 ) :
-					?>
-						<p>The most recent backups are shown here, ealier backups may be found in the folder/directory <br /><code>&lt;sitename&gt;wp-content/uploads/whtp_backups</code></p>	
-					<ul>
-						<?php
-						$num_backups = count( $recent_backups );
-						if ( $num_backups > 0 ) :
-							for ( $i = 0; $i < $num_backups; $i ++ ) :
-							?>
-							<li>
-								<div class="welcome-icon icon-download">
-									<a href="<?php echo $recent_backups[ $i ]['link']; ?>">
-										<?php echo $recent_backups[ $i ]['filename']; ?>
+		<?php
+		$recent_backups = get_option( 'whtp_recent_backups' );
+		if ( count( $recent_backups ) > 0 ) :
+		?>
+		 <p>The most recent backups are shown here, ealier backups may be found in the folder/directory <br /><code>&lt;sitename&gt;wp-content/uploads/whtp_backups</code></p>    
+		<ul>
+			<?php
+			$num_backups = count( $recent_backups );
+			if ( $num_backups > 0 ) :
+				for ( $i = 0; $i < $num_backups; $i ++ ) :
+				?>
+				<li>
+				 <div class="welcome-icon icon-download">
+				  <a href="<?php echo $recent_backups[ $i ]['link']; ?>">
+				<?php echo $recent_backups[ $i ]['filename']; ?>
 									</a>
 								</div>
-							</li>
-							<?php
-							endfor;
-						else :
-						?>
-							<div><p>There are no backups recently created</p></div>
-							<?php
-						endif;
-						?>
-					</ul>
-					<?php
+				</li>
+				<?php
+				endfor;
+		 else :
+			?>
+		  <div><p>There are no backups recently created</p></div>
+			<?php
+		 endif;
+			?>
+		</ul>
+		<?php
 
 					else :
 						echo '<p>There are no backups created. To create a backup, click "Export All Data" to start the export</p>';
 					endif;
-					?>
+		?>
 					</div>
 				</div>
 			</div>            
@@ -113,7 +113,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card">
 			<div class="whtp-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
 				<div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
-					<?php es_attr_e( 'Import Geo Location Data', 'whtp' ); ?>
+		<?php esc_attr_e( 'Import Geo Location Data', 'whtp' ); ?>
 				</div>
 				<div class="mdl-card__supporting-text mdl-color-text--grey-600">
 					
@@ -196,7 +196,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 										
 								</form>
 							</div>
-							<?php if ( get_option( whtp_vc_updated ) == true ) : ?>
+		<?php if ( get_option( whtp_vc_updated ) == true ) : ?>
 							<div class="welcome-panel-column" style="padding-right: 25px;">
 								<h4>Merge existing records</h4>
 								<?php
@@ -224,7 +224,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								</form>
 								</div>
 							</div>
-							<?php endif; ?>
+		<?php endif; ?>
 							<div class="welcome-panel-column" style="padding-right: 25px;">
 								<h4>Credits Where They Belong</h4>
 								<div>

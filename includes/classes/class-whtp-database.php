@@ -3,6 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 abstract class WHTP_Database {
+
 	public static $hits_table;
 	public static $hitinfo_table;
 	public static $user_agents_table;

@@ -2,60 +2,54 @@
 
 namespace GeoIp2\Record;
 
-abstract class AbstractRecord implements \JsonSerializable
-{
-    private $record;
+abstract class AbstractRecord implements \JsonSerializable {
 
-    /**
-     * @ignore
-     *
-     * @param mixed $record
-     */
-    public function __construct($record)
-    {
-        $this->record = isset($record) ? $record : [];
-    }
+	private $record;
 
-    /**
-     * @ignore
-     *
-     * @param mixed $attr
-     */
-    public function __get($attr)
-    {
-        // XXX - kind of ugly but greatly reduces boilerplate code
-        $key = $this->attributeToKey($attr);
+	/**
+	 * @ignore
+	 *
+	 * @param mixed $record
+	 */
+	public function __construct( $record ) {
+		$this->record = isset( $record ) ? $record : [];
+	}
 
-        if ($this->__isset($attr)) {
-            return $this->record[$key];
-        } elseif ($this->validAttribute($attr)) {
-            if (preg_match('/^is_/', $key)) {
-                return false;
-            }
+	/**
+	 * @ignore
+	 *
+	 * @param mixed $attr
+	 */
+	public function __get( $attr ) {
+		// XXX - kind of ugly but greatly reduces boilerplate code
+		$key = $this->attributeToKey( $attr );
 
-            return null;
-        }
-        throw new \RuntimeException("Unknown attribute: $attr");
-    }
+		if ( $this->__isset( $attr ) ) {
+			return $this->record[ $key ];
+		} elseif ( $this->validAttribute( $attr ) ) {
+			if ( preg_match( '/^is_/', $key ) ) {
+				return false;
+			}
 
-    public function __isset($attr)
-    {
-        return $this->validAttribute($attr) &&
-             isset($this->record[$this->attributeToKey($attr)]);
-    }
+			return null;
+		}
+		throw new \RuntimeException( "Unknown attribute: $attr" );
+	}
 
-    private function attributeToKey($attr)
-    {
-        return strtolower(preg_replace('/([A-Z])/', '_\1', $attr));
-    }
+	public function __isset( $attr ) {
+		return $this->validAttribute( $attr ) &&
+			 isset( $this->record[ $this->attributeToKey( $attr ) ] );
+	}
 
-    private function validAttribute($attr)
-    {
-        return in_array($attr, $this->validAttributes, true);
-    }
+	private function attributeToKey( $attr ) {
+		return strtolower( preg_replace( '/([A-Z])/', '_\1', $attr ) );
+	}
 
-    public function jsonSerialize()
-    {
-        return $this->record;
-    }
+	private function validAttribute( $attr ) {
+		return in_array( $attr, $this->validAttributes, true );
+	}
+
+	public function jsonSerialize() {
+		return $this->record;
+	}
 }

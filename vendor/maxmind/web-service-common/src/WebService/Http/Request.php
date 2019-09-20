@@ -7,23 +7,23 @@ namespace MaxMind\WebService\Http;
  *
  * @internal
  */
-interface Request
-{
-    /**
-     * @param $url
-     * @param $options
-     */
-    public function __construct($url, $options);
+interface Request {
 
-    /**
-     * @param $body
-     *
-     * @return mixed
-     */
-    public function post($body);
+	/**
+	 * @param $url
+	 * @param $options
+	 */
+	public function __construct( $url, $options);
 
-    /**
-     * @return mixed
-     */
-    public function get();
+	/**
+	 * @param $body
+	 *
+	 * @return mixed
+	 */
+	public function post( $body);
+
+	/**
+	 * @return mixed
+	 */
+	public function get();
 }

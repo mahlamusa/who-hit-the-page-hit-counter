@@ -33,20 +33,20 @@ namespace GeoIp2\Record;
  * specified by the {@link http://www.iana.org/time-zones IANA Time Zone
  * Database}, e.g., "America/New_York".
  */
-class Location extends AbstractRecord
-{
-    /**
-     * @ignore
-     */
-    protected $validAttributes = [
-        'averageIncome',
-        'accuracyRadius',
-        'latitude',
-        'longitude',
-        'metroCode',
-        'populationDensity',
-        'postalCode',
-        'postalConfidence',
-        'timeZone',
-    ];
+class Location extends AbstractRecord {
+
+	/**
+	 * @ignore
+	 */
+	protected $validAttributes = [
+		'averageIncome',
+		'accuracyRadius',
+		'latitude',
+		'longitude',
+		'metroCode',
+		'populationDensity',
+		'postalCode',
+		'postalConfidence',
+		'timeZone',
+	];
 }

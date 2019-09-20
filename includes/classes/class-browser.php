@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 class WHTP_Browser {
+
 	private static $user_agents_table;
 
 	public function __construct() {

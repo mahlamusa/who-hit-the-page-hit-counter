@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class WHTP_Deactivator {
+
 	private static $hits_table;
 	private static $hitinfo_table;
 	private static $user_agents_table;

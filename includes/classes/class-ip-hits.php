@@ -3,6 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 class WHTP_Ip_Hits {
+
 	private static $ip_hits_table;
 
 	public function __construct() {

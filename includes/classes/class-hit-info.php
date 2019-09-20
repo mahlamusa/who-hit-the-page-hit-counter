@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WHTP_Hit_Info {
 
+
 	/**
 	 * Table name to store the information.
 	 *
@@ -29,9 +30,9 @@ class WHTP_Hit_Info {
 	/**
 	 * Get info given some parameters.
 	 *
-	 * @param integer $offset
-	 * @param integer $number
-	 * @param string  $status
+	 * @param  integer $offset
+	 * @param  integer $number
+	 * @param  string  $status
 	 * @return void
 	 */
 	public static function get_hitinfo( $offset = 0, $number = 15, $status = 'active' ) {
@@ -57,7 +58,7 @@ class WHTP_Hit_Info {
 	/**
 	 * Count hit info.
 	 *
-	 * @param string $status
+	 * @param  string $status
 	 * @return void
 	 */
 	public static function count( $status = 'active' ) {
@@ -97,7 +98,7 @@ class WHTP_Hit_Info {
 	/**
 	 * Get IP id given address.
 	 *
-	 * @param [type] $ip_address
+	 * @param  [type] $ip_address
 	 * @return void
 	 */
 	public static function get_ip_id( $ip_address ) {
@@ -112,8 +113,8 @@ class WHTP_Hit_Info {
 	/**
 	 * Reset IP information.
 	 *
-	 * @param string  $ip_address
-	 * @param integer $which
+	 * @param  string  $ip_address
+	 * @param  integer $which
 	 * @return void
 	 */
 	public static function reset_ip_info( $ip_address = '', $which = 1 ) {
@@ -142,8 +143,8 @@ class WHTP_Hit_Info {
 	/**
 	 * Delete IP address.
 	 *
-	 * @param string  $ip_address
-	 * @param integer $which
+	 * @param  string  $ip_address
+	 * @param  integer $which
 	 * @return void
 	 */
 	public static function delete_ip( $ip_address = '', $which = 1 ) {
@@ -211,7 +212,7 @@ class WHTP_Hit_Info {
 	/**
 	 * Get top hits.
 	 *
-	 * @param integer $number
+	 * @param  integer $number
 	 * @return void
 	 */
 	public static function top( $number = 10 ) {
@@ -228,7 +229,7 @@ class WHTP_Hit_Info {
 	/**
 	 * Check if IP is denied.
 	 *
-	 * @param [type] $ip_address
+	 * @param  [type] $ip_address
 	 * @return void
 	 */
 	public static function ip_is_denied( $ip_address ) {
@@ -250,7 +251,7 @@ class WHTP_Hit_Info {
 	/**
 	 * Set an IP's status as denied
 	 *
-	 * @param [type] $ip_address
+	 * @param  [type] $ip_address
 	 * @return void
 	 */
 	public static function deny_ip( $ip_address ) {

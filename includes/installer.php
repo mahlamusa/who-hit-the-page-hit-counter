@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 class WHTP_Installer {
+
 	private static $hits_table;
 	private static $hitinfo_table;
 	private static $user_agents_table;
@@ -14,14 +15,16 @@ class WHTP_Installer {
 	public function __construct() {
 		global $wpdb;
 
-		/**self::$hits_table                = $wpdb->prefix . 'whtp_hits';
+		/**
+* self::$hits_table                = $wpdb->prefix . 'whtp_hits';
 		self::$hitinfo_table            = $wpdb->prefix . 'whtp_hitinfo';
 		self::$user_agents_table        = $wpdb->prefix . 'whtp_user_agents';
 		self::$ip_hits_table            = $wpdb->prefix . 'whtp_ip_hits';
 		self::$visiting_countries_table = $wpdb->prefix . 'whtp_visiting_countries';
-		self::$ip_to_location_table = $wpdb->prefix . 'whtp_ip2location';*/
+		self::$ip_to_location_table = $wpdb->prefix . 'whtp_ip2location';
+*/
 
-		require_once 'config.php';
+		include_once 'config.php';
 
 		/*
 		* define backup directory
@@ -44,13 +47,13 @@ class WHTP_Installer {
 			update_option( 'whtp_version', WHTP_VERSION );
 		}
 
-		if ( get_option( 'whtp_count_renamed', 'no' ) != 'yes' && version_compare( get_option( 'whtp_version' ), '1.4.6', '<' ) ) {
+		if ( get_option( 'whtp_count_renamed', 'no' ) !== 'yes' && version_compare( get_option( 'whtp_version' ), '1.4.6', '<' ) ) {
 			self::update_count();
 		}
 	}
 
 	public static function is_installed() {
-		if ( get_option( 'whtp_installed' ) == 'yes' ) {
+		if ( get_option( 'whtp_installed' ) === 'yes' ) {
 			return true;
 		} else {
 			return false;
@@ -131,7 +134,7 @@ class WHTP_Installer {
 
 	public static function rename_table( $old_table_name, $new_table_name ) {
 		global $wpdb;
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		include_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		if ( $wpdb->query( 'RENAME TABLE `' . $old_table_name . '` TO `' . $new_table_name . '`;' ) ) {
 			return true;
 		} else {
@@ -166,7 +169,7 @@ class WHTP_Installer {
 
 	// create hits table
 	public static function create_hits_table() {
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		include_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		global $charset_collate;
 		dbDelta(
@@ -180,7 +183,7 @@ class WHTP_Installer {
 	}
 	// create hitinfo table
 	public static function create_hitinfo_table() {
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		include_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		global $charset_collate;
 		dbDelta(
@@ -198,7 +201,7 @@ class WHTP_Installer {
 	}
 
 	public static function create_visiting_countries() {
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		include_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		global $charset_collate;
 		dbDelta(
@@ -213,7 +216,7 @@ class WHTP_Installer {
 
 
 	public static function create_ip_hits_table() {
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		include_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		global $charset_collate;
 		dbDelta(
@@ -232,7 +235,7 @@ class WHTP_Installer {
 	* Create user agents table
 	*/
 	public static function create_user_agents() {
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		include_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		global $charset_collate;
 		dbDelta(
@@ -247,7 +250,7 @@ class WHTP_Installer {
 	}
 
 	public static function create_ip_2_location_country() {
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		include_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		global $charset_collate;
 		dbDelta(
