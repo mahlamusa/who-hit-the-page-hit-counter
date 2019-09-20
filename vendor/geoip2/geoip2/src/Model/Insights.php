@@ -42,6 +42,6 @@ namespace GeoIp2\Model;
  * @property-read \GeoIp2\Record\Traits $traits Data for the traits of the
  * requested IP address.
  */
-class Insights extends City {
-
+class Insights extends City
+{
 }

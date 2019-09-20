@@ -26,15 +26,15 @@ namespace GeoIp2\Record;
  * and the values are names. This attribute is returned by all location
  * databases and services besides Country.
  */
-class Subdivision extends AbstractPlaceRecord {
-
-	/**
-	 * @ignore
-	 */
-	protected $validAttributes = [
-		'confidence',
-		'geonameId',
-		'isoCode',
-		'names',
-	];
+class Subdivision extends AbstractPlaceRecord
+{
+    /**
+     * @ignore
+     */
+    protected $validAttributes = [
+        'confidence',
+        'geonameId',
+        'isoCode',
+        'names',
+    ];
 }

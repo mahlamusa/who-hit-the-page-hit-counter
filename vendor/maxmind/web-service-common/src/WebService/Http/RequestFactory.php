@@ -7,18 +7,20 @@ namespace MaxMind\WebService\Http;
  *
  * @internal
  */
-class RequestFactory {
+class RequestFactory
+{
+    public function __construct()
+    {
+    }
 
-	public function __construct() {
-	}
-
-	/**
-	 * @param $url
-	 * @param $options
-	 *
-	 * @return CurlRequest
-	 */
-	public function request( $url, $options ) {
-		return new CurlRequest( $url, $options );
-	}
+    /**
+     * @param $url
+     * @param $options
+     *
+     * @return CurlRequest
+     */
+    public function request($url, $options)
+    {
+        return new CurlRequest($url, $options);
+    }
 }

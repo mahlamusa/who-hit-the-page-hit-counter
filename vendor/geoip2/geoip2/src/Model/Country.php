@@ -27,44 +27,45 @@ namespace GeoIp2\Model;
  * @property-read \GeoIp2\Record\Traits $traits Data for the traits of the
  * requested IP address.
  */
-class Country extends AbstractModel {
+class Country extends AbstractModel
+{
+    protected $continent;
+    protected $country;
+    protected $locales;
+    protected $maxmind;
+    protected $registeredCountry;
+    protected $representedCountry;
+    protected $traits;
 
-	protected $continent;
-	protected $country;
-	protected $locales;
-	protected $maxmind;
-	protected $registeredCountry;
-	protected $representedCountry;
-	protected $traits;
+    /**
+     * @ignore
+     *
+     * @param mixed $raw
+     * @param mixed $locales
+     */
+    public function __construct($raw, $locales = ['en'])
+    {
+        parent::__construct($raw);
 
-	/**
-	 * @ignore
-	 *
-	 * @param mixed $raw
-	 * @param mixed $locales
-	 */
-	public function __construct( $raw, $locales = [ 'en' ] ) {
-		parent::__construct( $raw );
+        $this->continent = new \GeoIp2\Record\Continent(
+            $this->get('continent'),
+            $locales
+        );
+        $this->country = new \GeoIp2\Record\Country(
+            $this->get('country'),
+            $locales
+        );
+        $this->maxmind = new \GeoIp2\Record\MaxMind($this->get('maxmind'));
+        $this->registeredCountry = new \GeoIp2\Record\Country(
+            $this->get('registered_country'),
+            $locales
+        );
+        $this->representedCountry = new \GeoIp2\Record\RepresentedCountry(
+            $this->get('represented_country'),
+            $locales
+        );
+        $this->traits = new \GeoIp2\Record\Traits($this->get('traits'));
 
-		$this->continent          = new \GeoIp2\Record\Continent(
-			$this->get( 'continent' ),
-			$locales
-		);
-		$this->country            = new \GeoIp2\Record\Country(
-			$this->get( 'country' ),
-			$locales
-		);
-		$this->maxmind            = new \GeoIp2\Record\MaxMind( $this->get( 'maxmind' ) );
-		$this->registeredCountry  = new \GeoIp2\Record\Country(
-			$this->get( 'registered_country' ),
-			$locales
-		);
-		$this->representedCountry = new \GeoIp2\Record\RepresentedCountry(
-			$this->get( 'represented_country' ),
-			$locales
-		);
-		$this->traits             = new \GeoIp2\Record\Traits( $this->get( 'traits' ) );
-
-		$this->locales = $locales;
-	}
+        $this->locales = $locales;
+    }
 }

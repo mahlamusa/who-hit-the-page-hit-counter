@@ -20,10 +20,10 @@ namespace GeoIp2\Record;
  * and the values are names. This attribute is returned by all location
  * services and databases.
  */
-class City extends AbstractPlaceRecord {
-
-	/**
-	 * @ignore
-	 */
-	protected $validAttributes = [ 'confidence', 'geonameId', 'names' ];
+class City extends AbstractPlaceRecord
+{
+    /**
+     * @ignore
+     */
+    protected $validAttributes = ['confidence', 'geonameId', 'names'];
 }

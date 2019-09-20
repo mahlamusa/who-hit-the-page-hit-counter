@@ -11,20 +11,21 @@ namespace GeoIp2\Model;
  * @property-read string $ipAddress The IP address that the data in the model is
  *     for.
  */
-class ConnectionType extends AbstractModel {
+class ConnectionType extends AbstractModel
+{
+    protected $connectionType;
+    protected $ipAddress;
 
-	protected $connectionType;
-	protected $ipAddress;
+    /**
+     * @ignore
+     *
+     * @param mixed $raw
+     */
+    public function __construct($raw)
+    {
+        parent::__construct($raw);
 
-	/**
-	 * @ignore
-	 *
-	 * @param mixed $raw
-	 */
-	public function __construct( $raw ) {
-		parent::__construct( $raw );
-
-		$this->connectionType = $this->get( 'connection_type' );
-		$this->ipAddress      = $this->get( 'ip_address' );
-	}
+        $this->connectionType = $this->get('connection_type');
+        $this->ipAddress = $this->get('ip_address');
+    }
 }

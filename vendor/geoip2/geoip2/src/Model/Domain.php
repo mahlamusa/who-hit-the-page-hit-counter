@@ -11,20 +11,21 @@ namespace GeoIp2\Model;
  * @property-read string $ipAddress The IP address that the data in the model is
  *     for.
  */
-class Domain extends AbstractModel {
+class Domain extends AbstractModel
+{
+    protected $domain;
+    protected $ipAddress;
 
-	protected $domain;
-	protected $ipAddress;
+    /**
+     * @ignore
+     *
+     * @param mixed $raw
+     */
+    public function __construct($raw)
+    {
+        parent::__construct($raw);
 
-	/**
-	 * @ignore
-	 *
-	 * @param mixed $raw
-	 */
-	public function __construct( $raw ) {
-		parent::__construct( $raw );
-
-		$this->domain    = $this->get( 'domain' );
-		$this->ipAddress = $this->get( 'ip_address' );
-	}
+        $this->domain = $this->get('domain');
+        $this->ipAddress = $this->get('ip_address');
+    }
 }
